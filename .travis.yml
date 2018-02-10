@@ -2,17 +2,7 @@ language: csharp
 dist: trusty
 sudo: required
 mono: none
-branches:
- only:
-  - master
 dotnet: 2.1.2
-solution: ./FileParserSolution/FileParserSolution.sln
-before_script:
- - chmod 777 ./FileParserSolution/travis-build.sh
 script:
- - ./FileParserSolution/travis-build.sh
- - grep "Test Results" build.log
- notifications:
-  email:
-    on_success: always
-    on_failure: always
+ - dotnet restore ./FileParserSolution
+ - dotnet build ./FileParserSolution
