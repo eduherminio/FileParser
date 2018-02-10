@@ -11,6 +11,7 @@ before_script:
     - chmod 777 ./travis-test.sh
 script:
     - ./travis-build.sh
+after_success:
     - ./travis-test.sh
 notifications:
     email:
