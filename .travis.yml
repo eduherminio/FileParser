@@ -6,6 +6,8 @@ dotnet: 2.1.2
 branches:
     only:
         - master
+before_script:
+    - chmod 777 ./FileParserSolution/travis-build.sh 
 script:
     - ./FileParserSolution/travis-build.sh
 notifications:
