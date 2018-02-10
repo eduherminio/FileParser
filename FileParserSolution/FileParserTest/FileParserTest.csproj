@@ -18,16 +18,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Sample_commas.txt">
+    <None Update="TestFiles\Sample_commas.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Sample_doubleslashes.txt">
+    <None Update="TestFiles\Sample_doubleslashes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Sample_spaces.txt">
+    <None Update="TestFiles\Sample_spaces.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SlightlyModified_Sample_doubleslashes.txt">
+    <None Update="TestFiles\SlightlyModified_Sample_doubleslashes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -8,12 +8,14 @@ namespace FileParserTest
 {
     public class FileReaderTest
     {
+        private string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
+
         [Fact]
         public void SameFileDifferentSeparators()
         {
-            ICollection<string> sampleSpaces = FileReader.Parse("Sample_spaces.txt");
-            ICollection<string> sampleCommas = FileReader.Parse("Sample_commas.txt", new char[] { ',' });
-            ICollection<string> sampleSlashes = FileReader.Parse("Sample_doubleslashes.txt", new char[] { '/', '/' });
+            ICollection<string> sampleSpaces = FileReader.Parse(_sampleFolderPath + "Sample_spaces.txt");
+            ICollection<string> sampleCommas = FileReader.Parse(_sampleFolderPath + "Sample_commas.txt", new char[] { ',' });
+            ICollection<string> sampleSlashes = FileReader.Parse(_sampleFolderPath + "Sample_doubleslashes.txt", new char[] { '/', '/' });
 
             Assert.True(sampleSpaces.Count > 1);
 
@@ -24,8 +26,8 @@ namespace FileParserTest
         [Fact]
         public void DifferentFilesSameSeparators()
         {
-            ICollection<string> sampleSlashes = FileReader.Parse("Sample_doubleslashes.txt", new char[] { '/', '/' });
-            ICollection<string> modiifedSampleSlashes = FileReader.Parse("SlightlyModified_Sample_doubleslashes.txt", new char[] { '/', '/' });
+            ICollection<string> sampleSlashes = FileReader.Parse(_sampleFolderPath + "Sample_doubleslashes.txt", new char[] { '/', '/' });
+            ICollection<string> modiifedSampleSlashes = FileReader.Parse(_sampleFolderPath + "SlightlyModified_Sample_doubleslashes.txt", new char[] { '/', '/' });
 
             Assert.True(sampleSlashes.Count > 1);
             Assert.Equal(sampleSlashes.Count, modiifedSampleSlashes.Count);
