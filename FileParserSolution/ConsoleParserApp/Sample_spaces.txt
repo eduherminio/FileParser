@@ -1,0 +1,6 @@
+Esta es una frase de una linea
+Aquí van dos  espacios   tres    cuatro
+ Empieza con espacio
+Acaba con espacio 
+ 
+La linea de arriba era sólamente un espacio

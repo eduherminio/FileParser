@@ -1,0 +1,6 @@
+**This**//is//a//single//line.
+This//is//a//single////line////with//////multiple////////WhiteSpaces
+//This//line//starts//with//a//WhiteSpace
+This//line//ends//with//a//WhiteSpace////
+//
+Line//above//was//only//a//WhiteSpace
