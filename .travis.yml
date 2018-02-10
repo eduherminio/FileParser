@@ -3,13 +3,13 @@ dist: trusty
 sudo: required
 mono: none
 dotnet: 2.1.2
-branches: 
- only: 
-  - master 
+branches:
+    only:
+        - master
 script:
- - dotnet restore ./FileParserSolution
- - dotnet build ./FileParserSolution
- notifications: 
-  email: 
-    on_success: always 
-    on_failure: always 
+    - dotnet restore ./FileParserSolution
+    - dotnet build ./FileParserSolution
+notifications:
+    email:
+        - on_success: always
+        - on_failure: always
