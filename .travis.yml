@@ -7,8 +7,7 @@ branches:
     only:
         - master
 script:
-    - dotnet restore ./FileParserSolution
-    - dotnet build ./FileParserSolution
+    - ./FileParserSolution/travis-build.sh
 notifications:
     email:
         - on_success: always
