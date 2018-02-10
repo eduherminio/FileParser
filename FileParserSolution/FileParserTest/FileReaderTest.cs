@@ -20,7 +20,7 @@ namespace FileParserTest
             Assert.True(sampleSpaces.Count > 1);
 
             Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleCommas));
-            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleSlashes));
+            Assert.False(Enumerable.SequenceEqual(sampleSpaces, sampleSlashes));
         }
 
         [Fact]
