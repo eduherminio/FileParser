@@ -4,6 +4,7 @@ using System.IO;
 using Xunit;
 
 using FileParser;
+using System;
 
 namespace FileParserTest
 {
@@ -23,7 +24,7 @@ namespace FileParserTest
             }
 
             List<string> parsedArray = FileReader.Parse<string>(fileName, separator).ToList();
-            Assert.Equal(parsedArray, new List<string>() { "one", "two", "three", "four"});
+            Assert.Equal(parsedArray, new List<string>() { "one", "two", "three", "four" });
 
         }
 
@@ -40,7 +41,7 @@ namespace FileParserTest
             }
 
             List<bool> parsedArray = FileReader.Parse<bool>(fileName).ToList();
-            Assert.Equal(parsedArray, new List<bool>() { true, false, true });
+            Assert.Equal(new List<bool>() { true, false, true }, parsedArray);
         }
 
         [Fact]
@@ -56,7 +57,7 @@ namespace FileParserTest
             }
 
             List<short> parsedArray = FileReader.Parse<short>(fileName).ToList();
-            Assert.Equal(parsedArray, new List<short>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+            Assert.Equal(new List<short>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
         [Fact]
@@ -72,7 +73,7 @@ namespace FileParserTest
             }
 
             List<int> parsedArray = FileReader.Parse<int>(fileName).ToList();
-            Assert.Equal(parsedArray, new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+            Assert.Equal(new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
         [Fact]
@@ -88,23 +89,24 @@ namespace FileParserTest
             }
 
             List<long> parsedArray = FileReader.Parse<long>(fileName).ToList();
-            Assert.Equal(parsedArray, new List<long>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+            Assert.Equal(new List<long>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
         [Fact]
         public void ArrayOfDoubles()
         {
             string fileName = "Sample_arrayofdoubles.txt";
-            string sampleContent = " 0,0 1,1 2,2  3,3  4    5,5 6,6 7,7 8,8 9 ";
+            ICollection<double> vectorOfDoubles = new List<double>() { 0.0, 1.10, 2.2, 3.30, 4, 5.5, 6.60, 7.7, 8.8000, 9 };
+            string vectorToWrite = String.Join(' ', vectorOfDoubles);   // Avoiding dependency on culture (. or ,)
 
             StreamWriter writer = new StreamWriter(fileName);
             using (writer)
             {
-                writer.WriteLine(sampleContent);
+                writer.WriteLine(vectorToWrite);
             }
 
             List<double> parsedArray = FileReader.Parse<double>(fileName).ToList();
-            Assert.Equal(parsedArray, new List<double>() { 0, 1.1, 2.2, 3.3, 4.0, 5.5, 6.6, 7.7, 8.8, 9.00000 });
+            Assert.Equal(new List<double>() { 0, 1.1, 2.2, 3.3, 4.0, 5.5, 6.6, 7.7, 8.8, 9.00000 }, parsedArray);
         }
     }
 }
