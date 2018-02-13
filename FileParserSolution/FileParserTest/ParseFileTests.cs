@@ -6,7 +6,7 @@ using FileParser;
 
 namespace FileParserTest
 {
-    public class FileReaderTest
+    public class ParseFileTests
     {
         private string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
 
