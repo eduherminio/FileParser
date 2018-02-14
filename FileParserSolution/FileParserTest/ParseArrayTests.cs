@@ -23,7 +23,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<string> parsedArray = FileReader.Parse<string>(fileName, separator).ToList();
+            List<string> parsedArray = FileReader.ParseArray<string>(fileName, separator).ToList();
             Assert.Equal(parsedArray, new List<string>() { "one", "two", "three", "four" });
 
         }
@@ -40,7 +40,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<bool> parsedArray = FileReader.Parse<bool>(fileName).ToList();
+            List<bool> parsedArray = FileReader.ParseArray<bool>(fileName).ToList();
             Assert.Equal(new List<bool>() { true, false, true }, parsedArray);
         }
 
@@ -56,7 +56,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<short> parsedArray = FileReader.Parse<short>(fileName).ToList();
+            List<short> parsedArray = FileReader.ParseArray<short>(fileName).ToList();
             Assert.Equal(new List<short>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
@@ -72,7 +72,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<int> parsedArray = FileReader.Parse<int>(fileName).ToList();
+            List<int> parsedArray = FileReader.ParseArray<int>(fileName).ToList();
             Assert.Equal(new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
@@ -88,7 +88,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<long> parsedArray = FileReader.Parse<long>(fileName).ToList();
+            List<long> parsedArray = FileReader.ParseArray<long>(fileName).ToList();
             Assert.Equal(new List<long>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
@@ -105,7 +105,7 @@ namespace FileParserTest
                 writer.WriteLine(vectorToWrite);
             }
 
-            List<double> parsedArray = FileReader.Parse<double>(fileName).ToList();
+            List<double> parsedArray = FileReader.ParseArray<double>(fileName).ToList();
             Assert.Equal(new List<double>() { 0, 1.1, 2.2, 3.3, 4.0, 5.5, 6.6, 7.7, 8.8, 9.00000 }, parsedArray);
         }
     }

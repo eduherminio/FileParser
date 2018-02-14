@@ -4,37 +4,30 @@ using System.IO;
 using Xunit;
 
 using FileParser;
+using System.Collections.Generic;
 
 namespace FileParserTest
 {
     public class ExceptionTests
     {
         [Fact]
-        void NotImplementedException()
+        void NotSupportedException()
         {
-            string fileName = "Any.txt";
-            string sampleContent = "Any";
-
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
-            {
-                writer.WriteLine(sampleContent);
-            }
-
-            Assert.Throws<NotImplementedException>(() => FileReader.Parse<uint>(fileName).ToList());
-            Assert.Throws<NotImplementedException>(() => FileReader.Parse<DateTime>(fileName).ToList());
+            Assert.Throws<NotSupportedException>(() => FileReader.ParseArray<uint>("Anything.txt"));
+            Assert.Throws<NotSupportedException>(() => FileReader.ParseArray<DateTime>("Anything.txt"));
+            Assert.Throws<NotSupportedException>(() => FileReader.Extract<ulong>(new Queue<string>()));
         }
 
         [Fact]
         void FileNotFoundException()
         {
-            Assert.Throws<FileNotFoundException>(() => FileReader.Parse("Non-existing-file.txt"));
+            Assert.Throws<FileNotFoundException>(() => FileReader.ParseFile("Non-existing-file.txt"));
         }
 
         [Fact]
         void DirectoryNotFoundException()
         {
-            Assert.Throws<DirectoryNotFoundException>(() => FileReader.Parse("NonExistingDirectory/Non-existing-file.txt"));
+            Assert.Throws<DirectoryNotFoundException>(() => FileReader.ParseFile("NonExistingDirectory/Non-existing-file.txt"));
         }
 
         [Fact(Skip ="No exception is thrown in Linux (CI env)")]
@@ -44,15 +37,15 @@ namespace FileParserTest
             StreamWriter writer = new StreamWriter(fileName);
             using (writer)
             {
-                Assert.Throws<IOException>(() => FileReader.Parse(fileName));
+                Assert.Throws<IOException>(() => FileReader.ParseFile(fileName));
             }
         }
 
         [Fact]
         void ArgumentException()
         {
-            Assert.Throws<ArgumentException>(() => FileReader.Parse<uint>(string.Empty).ToList());
-            Assert.Throws<ArgumentException>(() => FileReader.Parse<DateTime>("").ToList());
+            Assert.Throws<ArgumentException>(() => FileReader.ParseFile(string.Empty).ToList());
+            Assert.Throws<ArgumentException>(() => FileReader.ParseFile("").ToList());
         }
     }
 }
