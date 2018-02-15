@@ -11,15 +11,16 @@ namespace FileParser
     static public class FileReader
     {
         /// <summary>
-        /// Parses a file into an ICollection<string>, optionally separating lines with a given string
+        /// Parses a file into a Queue<Queue<string>>, optionally separating lines with a given string
+        /// Queue<Queue<string>> ~~ Queues of 'words' inside of a queue of lines
         /// </summary>
         /// <param name="path"></param>
         /// <param name="existingSeparator"></param>
         /// <param name="lineSeparatorToAdd"></param>
         /// <returns></returns>
-        static public ICollection<string> ParseFile(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
+        static public Queue<Queue<string>> ParseFile(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
         {
-            List<string> ParsedFile = new List<string>();
+            Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
 
             try
             {
@@ -30,14 +31,17 @@ namespace FileParser
                     string original_line;
                     while (!string.IsNullOrEmpty(original_line = reader.ReadLine()))
                     {
-                        ParsedFile.AddRange(ProcessLine(original_line, existingSeparator));
+                        Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
                         if (lineSeparatorToAdd != null)
-                            ParsedFile.Add(lineSeparatorToAdd);
+                            parsedLine.Enqueue(lineSeparatorToAdd);
+
+                        parsedFile.Enqueue(parsedLine);
                     }
                 }
 
-                return ParsedFile;
+                return parsedFile;
             }
+
             catch (FileNotFoundException e)
             {
                 Print.WriteLine("File cannot be found in path {0}", path);
@@ -63,6 +67,24 @@ namespace FileParser
                 Print.WriteLine("Internal error: " + e.Message);
                 throw e;
             }
+        }
+
+        /// <summary>
+        /// Parses a file into an ICollection<string>, optionally separating lines with a given string
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="existingSeparator"></param>
+        /// <param name="lineSeparatorToAdd"></param>
+        /// <returns></returns>
+        static public ICollection<string> ParseFileAsICollection(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
+        {
+            List<string> parsedFileAsICollection = new List<string>();
+
+            var parsedFile = ParseFile(path, existingSeparator, lineSeparatorToAdd);
+            while(parsedFile.Count > 0)
+                parsedFileAsICollection.AddRange(parsedFile.Dequeue().ToList());
+
+            return parsedFileAsICollection;
         }
 
         /// <summary>
@@ -157,22 +179,6 @@ namespace FileParser
             string stringToConvert = wordsInLine.Dequeue();
 
             return StringConverter.Convert<T>(stringToConvert);
-        }
-
-        /// <summary>
-        /// Parses a file into a LineByLineParsedFile instance
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
-        static public LineByLineParsedFile ParseFileLineByLine(string path, char[] separator = null)
-        {
-            string lineSeparator = Guid.NewGuid().ToString();
-
-            ICollection<string> parsedFileAsAWhhole = ParseFile(path, separator, lineSeparator);
-            LineByLineParsedFile parsedFile = new LineByLineParsedFile(parsedFileAsAWhhole, lineSeparator);
-
-            return parsedFile;
         }
     }
 }

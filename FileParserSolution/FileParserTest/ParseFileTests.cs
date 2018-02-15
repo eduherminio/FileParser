@@ -1,5 +1,6 @@
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 using Xunit;
 
 using FileParser;
@@ -8,31 +9,70 @@ namespace FileParserTest
 {
     public class ParseFileTests
     {
-        private string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
-
         [Fact]
-        public void SameFileDifferentSeparators()
+        void BasicParseFileTest()
         {
-            ICollection<string> sampleSpaces = FileReader.ParseFile(_sampleFolderPath + "Sample_spaces.txt");
-            ICollection<string> sampleCommas = FileReader.ParseFile(_sampleFolderPath + "Sample_commas.txt", new char[] { ',' });
-            ICollection<string> sampleSlashes = FileReader.ParseFile(_sampleFolderPath + "Sample_doubleslashes.txt", new char[] { '/', '/' });
+            // Sample file:
+            // First line has a random number and a category of aliments.
+            // Following lines firstly indicates how many numeric elements are following.
+            // After those numeric elements, they includes an unknown number of items.
 
-            Assert.True(sampleSpaces.Count > 1);
+            string fileName = "CustomFileParse.txt";
+            string line0 = " 23  food    ";
+            string line1 = "  3  100 200 300    apple peer ";
+            string line2 = " 4  400   500    600 700 banana    meat  fish       ";
 
-            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleCommas));
-            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleSlashes));
-        }
+            int expectedInitialNumber = 23;
+            string expectedCategory = "food";
+            List<string> expectedFood = new List<string>() { "apple", "peer", "banana", "meat", "fish" };
+            List<List<int>> expectedNumbers = new List<List<int>>()
+            {
+                new List<int>() { 100, 200, 300},
+                new List<int>() { 400, 500, 600, 700 }
+            };
 
-        [Fact]
-        public void DifferentFilesSameSeparators()
-        {
-            ICollection<string> sampleSlashes = FileReader.ParseFile(_sampleFolderPath + "Sample_doubleslashes.txt", new char[] { '/', '/' });
-            ICollection<string> modiifedSampleSlashes = FileReader.ParseFile(_sampleFolderPath + "SlightlyModified_Sample_doubleslashes.txt", new char[] { '/', '/' });
+            StreamWriter writer = new StreamWriter(fileName);
+            using (writer)
+            {
+                writer.WriteLine(line0);
+                writer.WriteLine(line1);
+                writer.WriteLine(line2);
+            }
 
-            Assert.True(sampleSlashes.Count > 1);
-            Assert.Equal(sampleSlashes.Count, modiifedSampleSlashes.Count);
+            int initialNumber = -1;
+            string category = null;
+            List<string> food = new List<string>();
+            List<List<int>> numbers = new List<List<int>>();
 
-            Assert.False(Enumerable.SequenceEqual(sampleSlashes, modiifedSampleSlashes));
+            {
+                Queue<Queue<string>> parsedFile = FileReader.ParseFile(fileName);
+
+                Queue<string> firstLine = parsedFile.Dequeue();
+                initialNumber = FileReader.Extract<int>(firstLine);
+                category = FileReader.Extract<string>(firstLine);
+
+                while (parsedFile.Count > 0)
+                {
+                    Queue<string> line = parsedFile.Dequeue();
+
+                    List<int> listNumbers = new List<int>(FileReader.Extract<int>(line));
+                    for (int i = 0; i < listNumbers.Capacity; ++i)
+                        listNumbers.Add(FileReader.Extract<int>(line));
+
+                    numbers.Add(listNumbers);
+
+                    while (line.Count > 0)
+                        food.Add(FileReader.Extract<string>(line));
+                }
+            }
+
+            Assert.Equal(expectedInitialNumber, initialNumber);
+            Assert.Equal(expectedCategory, category);
+            Assert.Equal(expectedFood, food);
+            for (int i = 0; i < numbers.Count; ++i)
+            {
+                Assert.Equal(expectedNumbers.ElementAt(i), numbers.ElementAt(i));
+            }
         }
     }
 }
