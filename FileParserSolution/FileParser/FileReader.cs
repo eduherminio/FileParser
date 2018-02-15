@@ -11,13 +11,13 @@ namespace FileParser
     static public class FileReader
     {
         /// <summary>
-        /// Parses a file into an ICollection<string>
-        /// Default separator: WhiteSpace
+        /// Parses a file into an ICollection<string>, optionally separating lines with a given string
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="separator"></param>
+        /// <param name="existingSeparator"></param>
+        /// <param name="lineSeparatorToAdd"></param>
         /// <returns></returns>
-        static public ICollection<string> ParseFile(string path, char[] separator = null)
+        static public ICollection<string> ParseFile(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
         {
             List<string> ParsedFile = new List<string>();
 
@@ -30,7 +30,9 @@ namespace FileParser
                     string original_line;
                     while (!string.IsNullOrEmpty(original_line = reader.ReadLine()))
                     {
-                        ParsedFile.AddRange(ProcessLine(original_line, separator));
+                        ParsedFile.AddRange(ProcessLine(original_line, existingSeparator));
+                        if (lineSeparatorToAdd != null)
+                            ParsedFile.Add(lineSeparatorToAdd);
                     }
                 }
 
@@ -64,7 +66,7 @@ namespace FileParser
         }
 
         /// <summary>
-        /// Parses a line of a file into an ICollection<string>
+        /// Parses the first line of a file into an ICollection<string>
         /// Default separator: WhiteSpace
         /// </summary>
         /// <param name="path"></param>
@@ -155,6 +157,22 @@ namespace FileParser
             string stringToConvert = wordsInLine.Dequeue();
 
             return StringConverter.Convert<T>(stringToConvert);
+        }
+
+        /// <summary>
+        /// Parses a file into a LineByLineParsedFile instance
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        static public LineByLineParsedFile ParseFileLineByLine(string path, char[] separator = null)
+        {
+            string lineSeparator = Guid.NewGuid().ToString();
+
+            ICollection<string> parsedFileAsAWhhole = ParseFile(path, separator, lineSeparator);
+            LineByLineParsedFile parsedFile = new LineByLineParsedFile(parsedFileAsAWhhole, lineSeparator);
+
+            return parsedFile;
         }
     }
 }

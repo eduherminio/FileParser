@@ -10,19 +10,19 @@ namespace FileParserTest
     public class ExtractTests
     {
         [Fact]
-        void TypicalUC()
+        void CustomLineParse()
         {
-            string fileName = "TypicalUC.txt";
+            string fileName = "CustomLineParse.txt";
             string sampleContent = "  3  1154 508 100    vegetable ";
+
+            List<long> expectedList = new List<long>() { 1154, 508, 100 };
+            string expectedString = "vegetable";
 
             StreamWriter writer = new StreamWriter(fileName);
             using (writer)
             {
                 writer.WriteLine(sampleContent);
             }
-
-            List<long> expectedList = new List<long>() { 1154, 508, 100 };
-            string expectedString = "vegetable";
 
             Queue<string> queue = new Queue<string>(FileReader.ParseLine(fileName));
 
