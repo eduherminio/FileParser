@@ -12,18 +12,30 @@ namespace FileParser
     /// </summary>
     static internal class TConverter
     {
-        static internal T ChangeType<T>(object value)
+        static internal T ChangeType<T>(object value, TypeConverter typeConverter = null)
         {
-            return (T)ChangeType(typeof(T), value);
+            return typeConverter == null
+                    ? (T)ChangeType(typeof(T), value)
+                    : (T)typeConverter.ConvertFrom(value);
         }
 
-        static internal object ChangeType(Type t, object value)
+        static private object ChangeType(Type t, object value)
         {
             TypeConverter tc = TypeDescriptor.GetConverter(t);
             return tc.ConvertFrom(value);
         }
 
-        static internal void RegisterTypeConverter<T, TC>() where TC : System.ComponentModel.TypeConverter
+        static internal TypeConverter GetTypeConverter(Type t)
+        {
+            return TypeDescriptor.GetConverter(t);
+        }
+
+        /// <summary>
+        /// Currently unused
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TC"></typeparam>
+        static internal void RegisterTypeConverter<T, TC>() where TC : TypeConverter
         {
             TypeDescriptor.AddAttributes(typeof(T), new TypeConverterAttribute(typeof(TC)));
         }

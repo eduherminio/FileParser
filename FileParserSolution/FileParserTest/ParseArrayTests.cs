@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Diagnostics;
 using Xunit;
 
 using FileParser;
-using System;
 
 namespace FileParserTest
 {
@@ -107,6 +108,61 @@ namespace FileParserTest
 
             List<double> parsedArray = FileReader.ParseArray<double>(fileName).ToList();
             Assert.Equal(new List<double>() { 0, 1.1, 2.2, 3.3, 4.0, 5.5, 6.6, 7.7, 8.8, 9.00000 }, parsedArray);
+        }
+
+        [Fact]
+        public void HugeArrayOfDoubles()
+        {
+            long timeUsingConverter, timeNotUsingConverter;
+            int n = 25000;
+            {
+                string fileName = "Sample_hugearrayofdoublesUsing.txt";
+                ICollection<double> hugeVectorOfDoubles = new List<double>();
+                for (int i = 0; i < n; ++i)
+                    hugeVectorOfDoubles.Add(3.14159265);
+
+                string vectorToWrite = String.Join(' ', hugeVectorOfDoubles);   // Avoiding dependency on culture (. or ,)
+
+                StreamWriter writer = new StreamWriter(fileName);
+                using (writer)
+                {
+                    writer.WriteLine(vectorToWrite);
+                }
+
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                List<double> parsedArray = FileReader.ParseArray<double>(fileName).ToList();
+                sw.Stop();
+                timeUsingConverter = sw.ElapsedTicks;
+
+                Assert.Equal(hugeVectorOfDoubles, parsedArray);
+            }
+
+            n -= 1;
+            {
+                string fileName = "Sample_hugearrayofdoubles-1.txt";
+                ICollection<double> hugeVectorOfDoubles = new List<double>();
+                for (int i = 0; i < n; ++i)
+                    hugeVectorOfDoubles.Add(3.3333333);
+
+                string vectorToWrite = String.Join(' ', hugeVectorOfDoubles);   // Avoiding dependency on culture (. or ,)
+
+                StreamWriter writer = new StreamWriter(fileName);
+                using (writer)
+                {
+                    writer.WriteLine(vectorToWrite);
+                }
+
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                List<double> parsedArray = FileReader.ParseArray<double>(fileName).ToList();
+                sw.Stop();
+                timeNotUsingConverter = sw.ElapsedTicks;
+
+                Assert.Equal(hugeVectorOfDoubles, parsedArray);
+            }
+
+            Assert.True(timeUsingConverter < timeNotUsingConverter);
         }
     }
 }

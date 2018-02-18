@@ -10,6 +10,8 @@ namespace FileParser
 {
     static public class FileReader
     {
+        private const long _minimumElementsToUseConverter = 25000;
+
         /// <summary>
         /// Parses a file into a Queue<Queue<string>>, optionally separating lines with a given string
         /// Queue<Queue<string>> ~~ Queues of 'words' inside of a queue of lines
@@ -105,19 +107,43 @@ namespace FileParser
         /// <summary>
         /// Parses a line of a file into an ICollection<T>
         /// Default separator: WhiteSpace
+        /// Default minimum elements needed to avoid instantiating a TypeConverter for each conversion: 25000
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
         /// <param name="separator"></param>
+        /// <param name="minimumElementsToUseConverter"></param>
         /// <returns></returns>
-        static public ICollection<T> ParseArray<T>(string path, char[] separator = null)
+        static public ICollection<T> ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = _minimumElementsToUseConverter)
         {
             if (!StringConverter.SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not supported yet");
 
-            ICollection<string> wordsInLine = new List<string>(ParseLine(path, separator));
+            List<string> wordsInLine = new List<string>(ParseLine(path, separator));
+            if (typeof(T) == typeof(string))
+                return (ICollection<T>)wordsInLine.ToList();
 
-            return wordsInLine.Select(str => StringConverter.Convert<T>(str)).ToList();
+            if (wordsInLine.Count < minimumElementsToUseConverter)
+            {
+                return wordsInLine.Select(str => StringConverter.Convert<T>(str)).ToList();
+            }
+            else
+            {
+                var converter = StringConverter.GetConverter<T>();
+                return wordsInLine.Select(str => (T)converter.ConvertFrom(str)).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Syntatic sugar of ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = 25000)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <param name="minimumElementsToUseConverter"></param>
+        /// <returns></returns>
+        static public ICollection<T> ParseArray<T>(string path, long minimumElementsToUseConverter)
+        {
+            return ParseArray<T>(path, null, minimumElementsToUseConverter).ToList();
         }
 
         /// <summary>
