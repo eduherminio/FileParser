@@ -41,30 +41,13 @@ namespace FileParser
 
                 return parsedFile;
             }
-
-            catch (FileNotFoundException e)
-            {
-                Print.WriteLine("File cannot be found in path {0}", path);
-                throw e;
-            }
-            catch (DirectoryNotFoundException e)
-            {
-                Print.WriteLine("Invalid directory in file path, {0}", path);
-                throw e;
-            }
-            catch (IOException e)
-            {
-                Print.WriteLine("File at the end of {0} cannot be opened", path);
-                throw e;
-            }
-            catch (ArgumentException e)
-            {
-                Print.WriteLine(e.Message);
-                throw e;
-            }
             catch (Exception e)
             {
-                Print.WriteLine("Internal error: " + e.Message);
+                // Possible exceptions:
+                // FileNotFoundException, DirectoryNotFoundException, IOException, ArgumentException
+
+                Print.WriteLine(e.Message);
+                Print.WriteLine("(path: {0}", path);
                 throw e;
             }
         }
@@ -81,7 +64,7 @@ namespace FileParser
             List<string> parsedFileAsICollection = new List<string>();
 
             var parsedFile = ParseFile(path, existingSeparator, lineSeparatorToAdd);
-            while(parsedFile.Count > 0)
+            while (parsedFile.Count > 0)
                 parsedFileAsICollection.AddRange(parsedFile.Dequeue().ToList());
 
             return parsedFileAsICollection;
@@ -108,44 +91,16 @@ namespace FileParser
                 }
 
             }
-            catch (FileNotFoundException e)
-            {
-                Print.WriteLine("File cannot be found in path {0}", path);
-                throw e;
-            }
-            catch (DirectoryNotFoundException e)
-            {
-                Print.WriteLine("Invalid directory in file path, {0}", path);
-                throw e;
-            }
-            catch (IOException e)
-            {
-                Print.WriteLine("File at the end of {0} cannot be opened", path);
-                throw e;
-            }
-            catch (ArgumentException e)
-            {
-                Print.WriteLine(e.Message);
-                throw e;
-            }
             catch (Exception e)
             {
-                Print.WriteLine("Internal error: " + e.Message);
+                // Possible exceptions:
+                // FileNotFoundException, DirectoryNotFoundException, IOException, ArgumentException
+
+                Print.WriteLine(e.Message);
+                Print.WriteLine("(path: {0}", path);
                 throw e;
             }
         }
-
-        static private ICollection<string> ProcessLine(string original_line, char[] separator)
-        {
-            List<string> wordsInLine = original_line
-                .Split(separator)
-                .Select(str => str.Trim()).ToList();    // Probably not needed, but just in case
-
-            wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);
-
-            return wordsInLine;
-        }
-
 
         /// <summary>
         /// Parses a line of a file into an ICollection<T>
@@ -179,6 +134,17 @@ namespace FileParser
             string stringToConvert = wordsInLine.Dequeue();
 
             return StringConverter.Convert<T>(stringToConvert);
+        }
+
+        static private ICollection<string> ProcessLine(string original_line, char[] separator)
+        {
+            List<string> wordsInLine = original_line
+                .Split(separator)
+                .Select(str => str.Trim()).ToList();    // Probably not needed, but just in case
+
+            wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);
+
+            return wordsInLine;
         }
     }
 }
