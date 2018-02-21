@@ -4,28 +4,28 @@ namespace FileParser
 {
     public class ParsedLine : IParsedLine
     {
-        private Queue<string> Value { get; set; }
+        private Queue<string> _value;
 
-        public int Count { get => Value.Count; }
+        public int Count { get => _value.Count; }
 
         public bool Empty { get => Count == 0; }
 
         public ParsedLine(Queue<string> parsedLine)
         {
-            Value = parsedLine;
+            _value = parsedLine;
         }
 
         public T NextElement<T>()
         {
             return !Empty
-                ? FileReader.Extract<T>(Value)
+                ? FileReader.Extract<T>(ref _value)
                 : throw new ParsingException("End of ParsedLine reached");
         }
 
         public T PeekNextElement<T>()
         {
             return !Empty
-                ? FileReader.Peek<T>(Value)
+                ? FileReader.Peek<T>(_value)
                 : throw new ParsingException("End of ParsedLine reached");
         }
     }

@@ -10,7 +10,7 @@ namespace FileParser
 {
     static public class FileReader
     {
-        private const long _minimumElementsToUseConverter = 25000;
+        private const long _minimumElementsToUseConverter = 30000;
 
         /// <summary>
         /// Parses a file into a Queue<Queue<string>>, optionally separating lines with a given string
@@ -107,7 +107,7 @@ namespace FileParser
         /// <summary>
         /// Parses a line of a file into an ICollection<T>
         /// Default separator: WhiteSpace
-        /// Default minimum elements needed to avoid instantiating a TypeConverter for each conversion: 25000
+        /// Default minimum elements needed to avoid instantiating a TypeConverter for each conversion: 30000
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
@@ -135,7 +135,7 @@ namespace FileParser
         }
 
         /// <summary>
-        /// Syntatic sugar of ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = 25000)
+        /// Syntatic sugar of ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = 30000)
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
@@ -147,12 +147,12 @@ namespace FileParser
         }
 
         /// <summary>
-        /// Extracts the next element of a Queue of strings, converting it to T
+        /// Returns next element of a Queue<string>, converting it to T and removing it from the Queue
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>
         /// <returns></returns>
-        static public T Extract<T>(/*ref*/ Queue<string> wordsInLine)
+        static public T Extract<T>(ref Queue<string> wordsInLine)
         {
             if (!StringConverter.SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
@@ -163,7 +163,7 @@ namespace FileParser
         }
 
         /// <summary>
-        /// Shows the next element of a Queue of strings, without mofifying it, converting it to T
+        /// Returns next element of a Queue<string>, converting it to T but WITHOUT removing it from the Queue
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>

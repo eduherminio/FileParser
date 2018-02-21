@@ -17,7 +17,8 @@ namespace FileParserTest
         {
             Assert.Throws<NotSupportedException>(() => FileReader.ParseArray<uint>("Anything.txt"));
             Assert.Throws<NotSupportedException>(() => FileReader.ParseArray<DateTime>("Anything.txt"));
-            Assert.Throws<NotSupportedException>(() => FileReader.Extract<ulong>(new Queue<string>()));
+            var aux = new Queue<string>();
+            Assert.Throws<NotSupportedException>(() => FileReader.Extract<ulong>(ref aux));
         }
 
         [Fact]

@@ -26,16 +26,16 @@ namespace FileParserTest
 
             Queue<string> queue = new Queue<string>(FileReader.ParseLine(fileName));
 
-            int n_ints = FileReader.Extract<int>(queue);
+            int n_ints = FileReader.Extract<int>(ref queue);
 
             for (int i = 0; i < n_ints; ++i)
             {
-                long data = FileReader.Extract<long>(queue);
+                long data = FileReader.Extract<long>(ref queue);
                 Assert.Equal(expectedList.ElementAt(i), data);
             }
 
             string rawString = queue.Peek();    // Raw string
-            string lastString = FileReader.Extract<string>(queue); // Converted string => string
+            string lastString = FileReader.Extract<string>(ref queue); // Converted string => string
             Assert.Equal(rawString, lastString);
 
             Assert.Equal(expectedString, lastString);

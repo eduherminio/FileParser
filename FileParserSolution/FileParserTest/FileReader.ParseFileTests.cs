@@ -48,21 +48,21 @@ namespace FileParserTest
                 Queue<Queue<string>> parsedFile = FileReader.ParseFile(fileName);
 
                 Queue<string> firstLine = parsedFile.Dequeue();
-                initialNumber = FileReader.Extract<int>(firstLine);
-                category = FileReader.Extract<string>(firstLine);
+                initialNumber = FileReader.Extract<int>(ref firstLine);
+                category = FileReader.Extract<string>(ref firstLine);
 
                 while (parsedFile.Count > 0)
                 {
                     Queue<string> line = parsedFile.Dequeue();
 
-                    List<int> listNumbers = new List<int>(FileReader.Extract<int>(line));
+                    List<int> listNumbers = new List<int>(FileReader.Extract<int>(ref line));
                     for (int i = 0; i < listNumbers.Capacity; ++i)
-                        listNumbers.Add(FileReader.Extract<int>(line));
+                        listNumbers.Add(FileReader.Extract<int>(ref line));
 
                     numbers.Add(listNumbers);
 
                     while (line.Count > 0)
-                        food.Add(FileReader.Extract<string>(line));
+                        food.Add(FileReader.Extract<string>(ref line));
                 }
             }
 
