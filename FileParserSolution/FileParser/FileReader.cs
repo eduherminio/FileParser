@@ -10,7 +10,7 @@ namespace FileParser
 {
     static public class FileReader
     {
-        private const long _minimumElementsToUseConverter = 30000;
+        private const long _minimumElementsToUseConverter = 100000;
 
         /// <summary>
         /// Parses a file into a Queue<Queue<string>>, optionally separating lines with a given string
@@ -107,7 +107,7 @@ namespace FileParser
         /// <summary>
         /// Parses a line of a file into an ICollection<T>
         /// Default separator: WhiteSpace
-        /// Default minimum elements needed to avoid instantiating a TypeConverter for each conversion: 30000
+        /// Default minimum elements needed to avoid instantiating a TypeConverter for each conversion: 100000
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
@@ -135,7 +135,7 @@ namespace FileParser
         }
 
         /// <summary>
-        /// Syntatic sugar of ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = 30000)
+        /// Syntatic sugar of ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = 100000)
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>

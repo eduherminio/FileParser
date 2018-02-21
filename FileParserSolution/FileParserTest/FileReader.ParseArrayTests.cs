@@ -113,7 +113,7 @@ namespace FileParserTest
         public void HugeArrayOfDoubles()
         {
             long timeUsingConverter, timeNotUsingConverter;
-            int n = 30000;
+            int n = 100000;
             {
                 string fileName = "Sample_hugearrayofdoublesUsing.txt";
                 ICollection<double> hugeVectorOfDoubles = new List<double>();
