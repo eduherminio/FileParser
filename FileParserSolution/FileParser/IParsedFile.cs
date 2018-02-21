@@ -13,16 +13,22 @@
         bool Empty { get; }
 
         /// <summary>
-        /// Returns next line in form of a ParsedLine instance, removing it from ParsedFile
+        /// Returns next line (IParsedLine), removing it from ParsedFile
         /// </summary>
+        /// <exception>
+        /// ParsingException if file is already empty
+        /// </exception>
         /// <returns></returns>
-        ParsedLine NextLine();
+        IParsedLine NextLine();
 
         /// <summary>
-        /// Returns next line in form of a ParsedLine instance, not modifying ParsedFile
+        /// Returns next line (IParsedLine), not modifying ParsedFile
         /// </summary>
+        /// <exception>
+        /// ParsingException if file is already empty
+        /// </exception>
         /// <returns></returns>
-        ParsedLine PeekNextLine();
+        IParsedLine PeekNextLine();
 
     }
 }

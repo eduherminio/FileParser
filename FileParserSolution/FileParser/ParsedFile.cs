@@ -2,7 +2,7 @@
 
 namespace FileParser
 {
-    public class ParsedFile :IParsedFile
+    public class ParsedFile : IParsedFile
     {
         private Queue<Queue<string>> _value;
 
@@ -22,20 +22,20 @@ namespace FileParser
 
         // TODO: DECIDE
         // Is it worth keeping a null as return value, or throw exception as in ParsedLine (compulsory behavior in that case)
-        public ParsedLine NextLine()
+        public IParsedLine NextLine()
         {
             return _value.Count != 0
                 ? new ParsedLine(_value.Dequeue())
-                : null;
+                : throw new ParsingException("End of ParsedFile reached");
         }
 
         // TODO: DECIDE
         // Is it worth keeping a null as return value, or throw exception as in ParsedLine (compulsory behavior in that case)
-        public ParsedLine PeekNextLine()
+        public IParsedLine PeekNextLine()
         {
             return _value.Count != 0
                 ? new ParsedLine(_value.Peek())
-                : null;
+                : throw new ParsingException("End of ParsedFile reached");
         }
     }
 }

@@ -22,9 +22,12 @@
         T NextElement<T>();
 
         /// <summary>
-        /// Returns next element iof type T, NOT modifying ParsedLine
+        /// Returns next element of type T, not modifying ParsedLine
         /// This still allows its modification
         /// </summary>
+        /// <exception>
+        /// ParsingException if line is already empty
+        /// </exception>
         /// <returns></returns>
         T PeekNextElement<T>();
     }

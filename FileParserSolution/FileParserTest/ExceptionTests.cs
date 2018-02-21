@@ -54,14 +54,14 @@ namespace FileParserTest
         [Fact]
         void ParsingException()
         {
-            ParsedFile file = new ParsedFile(_validPath + "Sample_file.txt");
+            IParsedFile file = new ParsedFile(_validPath + "Sample_file.txt");
 
-            ParsedLine line = file.NextLine();
+            IParsedLine line = file.NextLine();
 
             while (!file.Empty)
                 line = file.NextLine();
 
-            Assert.Null(file.NextLine());
+            Assert.Throws<ParsingException>(() => file.NextLine());
 
             while (!line.Empty)
                 line.NextElement<object>();

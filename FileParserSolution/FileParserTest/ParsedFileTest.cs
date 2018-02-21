@@ -16,16 +16,16 @@ namespace FileParserTest
             List<int> numberList = new List<int>();
             List<string> stringList = new List<string>();
 
-            ParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
+            IParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
 
-            ParsedLine firstLine = file.NextLine();
+            IParsedLine firstLine = file.NextLine();
 
             int n = firstLine.NextElement<int>();
             string str = firstLine.NextElement<string>();
 
             while (!file.Empty)
             {
-                ParsedLine line = file.NextLine();
+                IParsedLine line = file.NextLine();
                 int counter = line.NextElement<int>();
                 for (int j = 0; j < counter; ++j)
                     numberList.Add(line.NextElement<int>());
@@ -43,16 +43,16 @@ namespace FileParserTest
         [Fact]
         public void PeekTestNotModifiyngFile()
         {
-            ParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
+            IParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
 
             for (int i = 0; i < 10; ++i)
             {
-                ParsedLine peekedFirstLine = file.PeekNextLine();       // Allows its modification without extracting it
+                IParsedLine peekedFirstLine = file.PeekNextLine();       // Allows its modification without extracting it
 
                 int peekedN = peekedFirstLine.PeekNextElement<int>();
                 Assert.Equal(peekedN, peekedFirstLine.PeekNextElement<int>());
 
-                ParsedLine peekedFirstLine2 = file.PeekNextLine();
+                IParsedLine peekedFirstLine2 = file.PeekNextLine();
 
                 int peekedN2 = peekedFirstLine.PeekNextElement<int>();
                 Assert.Equal(peekedN2, peekedFirstLine2.PeekNextElement<int>());
@@ -64,9 +64,9 @@ namespace FileParserTest
         [Fact]
         public void PeekTestEmptyingFile()
         {
-            ParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
+            IParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
 
-            ParsedLine peekedFirstLine = file.PeekNextLine();   // Allows its modification without extracting it
+            IParsedLine peekedFirstLine = file.PeekNextLine();   // Allows its modification without extracting it
 
             int peekedN = peekedFirstLine.PeekNextElement<int>();
             Assert.Equal(peekedN, peekedFirstLine.NextElement<int>());          // Extracting the element
@@ -82,7 +82,7 @@ namespace FileParserTest
                 List<int> numberList = new List<int>();
                 List<string> stringList = new List<string>();
 
-                ParsedLine peekedLine = file.PeekNextLine();
+                IParsedLine peekedLine = file.PeekNextLine();
                 int peekedCounter = peekedLine.PeekNextElement<int>();
                 Assert.Equal(peekedCounter, peekedLine.NextElement<int>());
                 for (int j = 0; j < peekedCounter; ++j)
@@ -97,7 +97,7 @@ namespace FileParserTest
                     Assert.Equal(peekedStringList.Last(), peekedLine.NextElement<string>());   // Extracting the element
                 }
 
-                ParsedLine line = file.NextLine(); ;   // Extracting the line, already emotied, to allow the test to finish
+                IParsedLine line = file.NextLine(); ;   // Extracting the line, already emotied, to allow the test to finish
                 Assert.True(line.Empty);
             }
         }
@@ -105,17 +105,17 @@ namespace FileParserTest
         [Fact]
         public void PeekTestChangesNotAffectingOriginalFile()
         {
-            ParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
+            IParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
 
             for (int i = 0; i < 10; ++i)
             {
-                ParsedLine peekedFirstLine = file.PeekNextLine();       // Allows its modification without extracting it
+                IParsedLine peekedFirstLine = file.PeekNextLine();       // Allows its modification without extracting it
 
                 int peekedN = peekedFirstLine.PeekNextElement<int>();
                 peekedN *= 2;
                 Assert.Equal(peekedN, 2*peekedFirstLine.PeekNextElement<int>());
 
-                ParsedLine peekedFirstLine2 = file.PeekNextLine();
+                IParsedLine peekedFirstLine2 = file.PeekNextLine();
 
                 int peekedN2 = peekedFirstLine.PeekNextElement<int>();
                 peekedN2 *= 2;
