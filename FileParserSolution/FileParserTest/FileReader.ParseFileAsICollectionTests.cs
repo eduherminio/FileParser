@@ -27,12 +27,11 @@ namespace FileParserTest
         public void DifferentFilesSameSeparators()
         {
             ICollection<string> sampleSlashes = FileReader.ParseFileAsICollection(_sampleFolderPath + "Sample_doubleslashes.txt", new char[] { '/', '/' });
-            ICollection<string> modiifedSampleSlashes = FileReader.ParseFileAsICollection(_sampleFolderPath + "SlightlyModified_Sample_doubleslashes.txt", new char[] { '/', '/' });
+            ICollection<string> modififedSampleSlashes = FileReader.ParseFileAsICollection(_sampleFolderPath + "SlightlyModified_Sample_doubleslashes.txt", new char[] { '/', '/' });
 
             Assert.True(sampleSlashes.Count > 1);
-            Assert.Equal(sampleSlashes.Count, modiifedSampleSlashes.Count);
 
-            Assert.False(Enumerable.SequenceEqual(sampleSlashes, modiifedSampleSlashes));
+            Assert.NotEqual(sampleSlashes, modififedSampleSlashes);
         }
     }
 }

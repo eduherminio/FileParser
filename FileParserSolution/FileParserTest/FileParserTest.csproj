@@ -24,6 +24,9 @@
     <None Update="TestFiles\Sample_doubleslashes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Sample_file.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Sample_spaces.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

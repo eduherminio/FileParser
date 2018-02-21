@@ -25,8 +25,7 @@ namespace FileParserTest
             }
 
             List<string> parsedArray = FileReader.ParseArray<string>(fileName, separator).ToList();
-            Assert.Equal(parsedArray, new List<string>() { "one", "two", "three", "four" });
-
+            Assert.Equal(new List<string>() { "one", "two", "three", "four" }, parsedArray);
         }
 
         [Fact]

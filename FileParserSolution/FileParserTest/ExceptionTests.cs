@@ -10,6 +10,8 @@ namespace FileParserTest
 {
     public class ExceptionTests
     {
+        private readonly string _validPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
+
         [Fact]
         void NotSupportedException()
         {
@@ -46,6 +48,24 @@ namespace FileParserTest
         {
             Assert.Throws<ArgumentException>(() => FileReader.ParseFile(string.Empty).ToList());
             Assert.Throws<ArgumentException>(() => FileReader.ParseFile("").ToList());
+        }
+
+        [Fact]
+        void ParsingException()
+        {
+            ParsedFile file = new ParsedFile(_validPath + "Sample_file.txt");
+
+            ParsedLine line = file.NextLine();
+
+            while (!file.Empty)
+                line = file.NextLine();
+
+            Assert.Null(file.NextLine());
+
+            while (!line.Empty)
+                line.NextElement<object>();
+
+            Assert.Throws<ParsingException>(() => line.NextElement<object>());
         }
     }
 }

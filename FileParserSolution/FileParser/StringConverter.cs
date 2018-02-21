@@ -18,7 +18,8 @@ namespace FileParser
                 typeof(short),
                 typeof(int),
                 typeof(long),
-                typeof(double)
+                typeof(double),
+                typeof(object)
             };
         }
 

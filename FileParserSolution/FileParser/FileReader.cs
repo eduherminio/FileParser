@@ -152,7 +152,7 @@ namespace FileParser
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>
         /// <returns></returns>
-        static public T Extract<T>(Queue<string> wordsInLine)
+        static public T Extract<T>(/*ref*/ Queue<string> wordsInLine)
         {
             if (!StringConverter.SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
@@ -162,13 +162,29 @@ namespace FileParser
             return StringConverter.Convert<T>(stringToConvert);
         }
 
+        /// <summary>
+        /// Shows the next element of a Queue of strings, without mofifying it, converting it to T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="wordsInLine"></param>
+        /// <returns></returns>
+        static public T Peek<T>(Queue<string> wordsInLine)
+        {
+            if (!StringConverter.SupportedTypes.Contains(typeof(T)))
+                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
+
+            string stringToConvert = wordsInLine.Peek();
+
+            return StringConverter.Convert<T>(stringToConvert);
+        }
+
         static private ICollection<string> ProcessLine(string original_line, char[] separator)
         {
             List<string> wordsInLine = original_line
                 .Split(separator)
-                .Select(str => str.Trim()).ToList();    // Probably not needed, but just in case
+                .Select(str => str.Trim()).ToList();
 
-            wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);
+            wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);   // Probably not needed, but just in case
 
             return wordsInLine;
         }
