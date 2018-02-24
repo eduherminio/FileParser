@@ -1,18 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>FileParser</Title>
     <PackageId>FileParser</PackageId>
-    <PackageVersion>0.1-alpha</PackageVersion>
-	<NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
+    <Version>0.0.0</Version>
+    <PackageTags>FileParser, File, Parser, Text, txt, Read, Reader</PackageTags>
+    <Tags>$(PackageTags)</Tags>
+    <Authors>Eduardo Cáceres</Authors>
+    <Description>
+      File parser designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
+    </Description>
+    <PackageLicenseUrl>https://github.com/eduherminio/TextParser/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/eduherminio/TextParser</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/eduherminio/TextParser</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
-  <Target Name="SetPackageProperties" BeforeTargets="GenerateNuspec">
-    <PropertyGroup>
-      <NuspecProperties>
-        id=$(PackageId);
-        version=$(PackageVersion);
-      </NuspecProperties>
-    </PropertyGroup>
-  </Target>
+  <Import Project="FileParser.targets" />
+  <Import Project="FileParser.tasks" />
 
 </Project>
