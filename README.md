@@ -8,7 +8,7 @@
 
 **.NET Standard 2.0** project
 
-This project was born with a very specific purpose: providing a tool with whom easily parse files with a known structure, ideally being  as flexible and easy to use as C++ standard IO approach.
+This project was born with a very specific purpose: providing a tool with whom easily parse files with a known structure, ideally being as flexible and easy to use as C++ standard IO approach.
 
 For those who don't understand what I mean, here's a simple Use Case:
 
