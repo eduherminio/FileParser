@@ -19,6 +19,12 @@ namespace FileParserTest
             Assert.Throws<NotSupportedException>(() => FileReader.ParseArray<DateTime>("Anything.txt"));
             var aux = new Queue<string>();
             Assert.Throws<NotSupportedException>(() => FileReader.Extract<ulong>(ref aux));
+
+
+            Queue<Queue<string>> parsedFile = FileReader.ParseFile(_validPath + "Sample_file.txt");
+            Queue<string> firstParsedLine = parsedFile.Dequeue();
+
+            Assert.Throws<NotSupportedException>(() => FileReader.Extract<char>(ref firstParsedLine));
         }
 
         [Fact]
@@ -67,6 +73,11 @@ namespace FileParserTest
                 line.NextElement<object>();
 
             Assert.Throws<ParsingException>(() => line.NextElement<object>());
+
+            string stringEmpty = string.Empty;
+            Assert.Throws<ParsingException>(() => FileReader.ExtractChar(ref stringEmpty));
+            string stringNull = null;
+            Assert.Throws<ParsingException>(() => FileReader.ExtractChar(ref stringNull));
         }
     }
 }

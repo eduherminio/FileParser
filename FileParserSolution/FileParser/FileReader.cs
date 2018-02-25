@@ -116,7 +116,7 @@ namespace FileParser
         /// <returns></returns>
         static public ICollection<T> ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = _minimumElementsToUseConverter)
         {
-            if (!StringConverter.SupportedTypes.Contains(typeof(T)))
+            if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not supported yet");
 
             List<string> wordsInLine = new List<string>(ParseLine(path, separator));
@@ -154,12 +154,45 @@ namespace FileParser
         /// <returns></returns>
         static public T Extract<T>(ref Queue<string> wordsInLine)
         {
-            if (!StringConverter.SupportedTypes.Contains(typeof(T)))
-                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
+            if (!SupportedTypes.Contains(typeof(T)))
+                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not suppoerted yet");
 
             string stringToConvert = wordsInLine.Dequeue();
 
+            if (typeof(T) == typeof(string))
+            {
+                return (T)(object)stringToConvert;
+            }
+            else if (typeof(T) == typeof(char))
+            {
+                if (wordsInLine.Count != 0)
+                    throw new NotSupportedException("Extract<char> can only be used with one-length Queues" +
+                        " Try using ExtractChar<string> instead, after parsing each string with Extract<string>(Queue<string>)");
+
+                char nextChar = ExtractChar(ref stringToConvert);
+                if (stringToConvert.Length > 0)
+                    wordsInLine.Enqueue(stringToConvert);
+
+                return (T)(object)nextChar;
+            }
+
             return StringConverter.Convert<T>(stringToConvert);
+        }
+
+        /// <summary>
+        /// Returns next char of a string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        static public char ExtractChar(ref string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                throw new ParsingException("String is empty");
+
+            char nextChar = str.First();
+            str = str.Substring(1);
+
+            return nextChar;
         }
 
         /// <summary>
@@ -170,7 +203,7 @@ namespace FileParser
         /// <returns></returns>
         static public T Peek<T>(Queue<string> wordsInLine)
         {
-            if (!StringConverter.SupportedTypes.Contains(typeof(T)))
+            if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
 
             string stringToConvert = wordsInLine.Peek();
@@ -188,5 +221,24 @@ namespace FileParser
 
             return wordsInLine;
         }
+
+        /// <summary>
+        /// Supported parsing conversions
+        /// </summary>
+        static private HashSet<Type> SupportedTypes
+        {
+            get => new HashSet<Type>()
+            {
+                typeof(bool),
+                typeof(char),
+                typeof(string),
+                typeof(short),
+                typeof(int),
+                typeof(long),
+                typeof(double),
+                typeof(object)
+            };
+        }
     }
 }
+

@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/eduherminio/TextParser.svg?branch=master)](https://travis-ci.org/eduherminio/TextParser)
 
-**File parser** designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
+**FileParser** is a C# file parser designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
 
 **.NET Standard 2.0** project
 
@@ -10,7 +10,7 @@ This project was born with a very specific purpose: providing a tool with whom e
 
 For those who don't understand what I mean, here's a simple Use Case:
 
-Given the following `input.txt`,
+Given the following `input.txt`, which contains an integer n (>=0) followed by n doubles and a final string,
 ```txt
 5   1.1 3.14159265 2.2265       5.5 10              fish
 ```
@@ -22,6 +22,7 @@ A simple `.cpp` snippet like the following one could process `input.txt`, provid
 ```cpp
 #include <iostream>
 #include <list>
+#include <string>
 
 int main()
 {
@@ -55,4 +56,4 @@ int main()
 
 Seems effortless to process these kind of simple `.txt` files using C++, right?
 
-Well, using C# things are not that straight-forward, and that's why FileParser was created for.
+Well, using C# things are not so straight-forward, and that's why `FileParser` was created for.

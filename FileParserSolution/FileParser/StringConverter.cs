@@ -7,23 +7,6 @@ namespace FileParser
     static public class StringConverter
     {
         /// <summary>
-        /// Tested conversions
-        /// </summary>
-        static public HashSet<Type> SupportedTypes
-        {
-            get => new HashSet<Type>()
-            {
-                typeof(bool),
-                typeof(string),
-                typeof(short),
-                typeof(int),
-                typeof(long),
-                typeof(double),
-                typeof(object)
-            };
-        }
-
-        /// <summary>
         /// Converts strings to basic, nullable types
         /// Optional parameter: an already known typeConverter
         /// </summary>
