@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/eduherminio/TextParser.svg?branch=master)](https://travis-ci.org/eduherminio/TextParser)
 
+[![Nuget Status](https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/FileParser)
+
 **FileParser** is a C# file parser designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
 
 **.NET Standard 2.0** project

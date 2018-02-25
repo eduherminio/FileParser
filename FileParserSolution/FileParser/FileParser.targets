@@ -87,12 +87,17 @@
     <Exec Command="dotnet test $(NugetTestDir)" ContinueOnError="false"></Exec>
   </Target>
 
-  <Target Name="PushToNuget" Condition="$(ApiKey) != ''" DependsOnTargets="TestNugetPackageLocally">
+  <!--Currently not working. Manually, from Artifacts folder, the following command works:-->
+  <!--nuget push FileParser.0.1.0.nupkg -Source https://api.nuget.org/v3/index.json -Verbosity detailed-->
+  <Target Name="PushToNuget" Condition="$(ApiKey) != '' AND $(VersionTag) != '' " DependsOnTargets="TestNugetPackageLocally">
     <PropertyGroup>
-      <NugetPackageName>$(AssemblyName).$(Version).nupkg</NugetPackageName>
+      <NugetPackageName>$(AssemblyName).$(VersionTag).nupkg</NugetPackageName>
     </PropertyGroup>
     <Message Text="***Pushing $(NugetPackageName) to Nuget***" Importance="high"></Message>
-    <Exec Command="nuget push $(NugetPackageName) -Source https://api.nuget.org/v3/index.json -ApiKey $(ApiKey)"></Exec>
-    <Message Text="***$(NugetPackageName) has been successfully pushed to Nuget***" Importance="high"></Message>
+    <!--<Exec Command="cd $(NugetPackagesDir)"></Exec>-->
+    <Exec Command="nuget push $(NugetPackagesDir)\$(NugetPackageName) -Source https://api.nuget.org/v3/index.json -Verbosity detailed"
+          Condition="$(ApiKey) == 'RealApiKey' AND Exists('$(NugetPackagesDir)\$(NugetPackageName)')" ContinueOnError="false"></Exec>
+    <Message Text="***$(NugetPackageName) has been successfully pushed to Nuget***" Importance="high"
+             Condition="$(ApiKey) == 'RealApiKey' AND Exists('$(NugetPackagesDir)\$(NugetPackageName)')"></Message>
   </Target>
 </Project>
