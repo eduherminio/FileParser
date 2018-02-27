@@ -13,98 +13,6 @@ namespace FileParser
         private const long _minimumElementsToUseConverter = 100000;
 
         /// <summary>
-        /// Parses a file into a Queue<Queue<string>>, optionally separating lines with a given string
-        /// Queue<Queue<string>> ~~ Queues of 'words' inside of a queue of lines
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="existingSeparator"></param>
-        /// <param name="lineSeparatorToAdd"></param>
-        /// <returns></returns>
-        static public Queue<Queue<string>> ParseFile(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
-        {
-            Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
-
-            try
-            {
-                StreamReader reader = new StreamReader(path);
-
-                using (reader)
-                {
-                    string original_line;
-                    while (!string.IsNullOrEmpty(original_line = reader.ReadLine()))
-                    {
-                        Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
-                        if (lineSeparatorToAdd != null)
-                            parsedLine.Enqueue(lineSeparatorToAdd);
-
-                        parsedFile.Enqueue(parsedLine);
-                    }
-                }
-
-                return parsedFile;
-            }
-            catch (Exception e)
-            {
-                // Possible exceptions:
-                // FileNotFoundException, DirectoryNotFoundException, IOException, ArgumentException
-
-                Print.WriteLine(e.Message);
-                Print.WriteLine("(path: {0}", path);
-                throw e;
-            }
-        }
-
-        /// <summary>
-        /// Parses a file into an ICollection<string>, optionally separating lines with a given string
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="existingSeparator"></param>
-        /// <param name="lineSeparatorToAdd"></param>
-        /// <returns></returns>
-        static public ICollection<string> ParseFileAsICollection(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
-        {
-            List<string> parsedFileAsICollection = new List<string>();
-
-            var parsedFile = ParseFile(path, existingSeparator, lineSeparatorToAdd);
-            while (parsedFile.Count > 0)
-                parsedFileAsICollection.AddRange(parsedFile.Dequeue().ToList());
-
-            return parsedFileAsICollection;
-        }
-
-        /// <summary>
-        /// Parses the first line of a file into an ICollection<string>
-        /// Default separator: WhiteSpace
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
-        static public ICollection<string> ParseLine(string path, char[] separator = null)
-        {
-            try
-            {
-                StreamReader reader = new StreamReader(path);
-
-                using (reader)
-                {
-                    string original_line = reader.ReadLine();
-
-                    return ProcessLine(original_line, separator);
-                }
-
-            }
-            catch (Exception e)
-            {
-                // Possible exceptions:
-                // FileNotFoundException, DirectoryNotFoundException, IOException, ArgumentException
-
-                Print.WriteLine(e.Message);
-                Print.WriteLine("(path: {0}", path);
-                throw e;
-            }
-        }
-
-        /// <summary>
         /// Parses a line of a file into an ICollection<T>
         /// Default separator: WhiteSpace
         /// Default minimum elements needed to avoid instantiating a TypeConverter for each conversion: 100000
@@ -147,12 +55,102 @@ namespace FileParser
         }
 
         /// <summary>
+        /// Parses a file into a Queue<Queue<string>>, optionally separating lines with a given string
+        /// Queue<Queue<string>> ~~ Queues of 'words' inside of a queue of lines
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="existingSeparator"></param>
+        /// <param name="lineSeparatorToAdd"></param>
+        /// <returns></returns>
+        static internal Queue<Queue<string>> ParseFile(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
+        {
+            Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
+
+            try
+            {
+                StreamReader reader = new StreamReader(path);
+
+                using (reader)
+                {
+                    string original_line;
+                    while (!string.IsNullOrEmpty(original_line = reader.ReadLine()))
+                    {
+                        Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
+                        if (lineSeparatorToAdd != null)
+                            parsedLine.Enqueue(lineSeparatorToAdd);
+
+                        parsedFile.Enqueue(parsedLine);
+                    }
+                }
+
+                return parsedFile;
+            }
+            catch (Exception e)
+            {
+                // Possible exceptions:
+                // FileNotFoundException, DirectoryNotFoundException, IOException, ArgumentException
+
+                Print.WriteLine(e.Message);
+                Print.WriteLine("(path: {0}", path);
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Parses the first line of a file into an ICollection<string>
+        /// Default separator: WhiteSpace
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        static internal ICollection<string> ParseLine(string path, char[] separator = null)
+        {
+            try
+            {
+                StreamReader reader = new StreamReader(path);
+
+                using (reader)
+                {
+                    string original_line = reader.ReadLine();
+
+                    return ProcessLine(original_line, separator);
+                }
+
+            }
+            catch (Exception e)
+            {
+                // Possible exceptions:
+                // FileNotFoundException, DirectoryNotFoundException, IOException, ArgumentException
+
+                Print.WriteLine(e.Message);
+                Print.WriteLine("(path: {0}", path);
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Returns next char of a string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        static internal char ExtractChar(ref string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                throw new ParsingException("String is empty");
+
+            char nextChar = str.First();
+            str = str.Substring(1);
+
+            return nextChar;
+        }
+
+        /// <summary>
         /// Returns next element of a Queue<string>, converting it to T and removing it from the Queue
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>
         /// <returns></returns>
-        static public T Extract<T>(ref Queue<string> wordsInLine)
+        static internal T Extract<T>(ref Queue<string> wordsInLine)
         {
             if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not suppoerted yet");
@@ -180,28 +178,12 @@ namespace FileParser
         }
 
         /// <summary>
-        /// Returns next char of a string
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        static public char ExtractChar(ref string str)
-        {
-            if (string.IsNullOrEmpty(str))
-                throw new ParsingException("String is empty");
-
-            char nextChar = str.First();
-            str = str.Substring(1);
-
-            return nextChar;
-        }
-
-        /// <summary>
         /// Returns next element of a Queue<string>, converting it to T but WITHOUT removing it from the Queue
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>
         /// <returns></returns>
-        static public T Peek<T>(Queue<string> wordsInLine)
+        static internal T Peek<T>(Queue<string> wordsInLine)
         {
             if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
@@ -241,4 +223,3 @@ namespace FileParser
         }
     }
 }
-

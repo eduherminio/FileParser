@@ -35,12 +35,12 @@ namespace FileParserSample
             // Data Processing
 
             // Output start
-
             StreamWriter writer = new StreamWriter("..\\C#SimpleOutput.txt");
             using (writer)
             {
                 writer.WriteLine(_integer + " " + String.Join(null, listDouble));
             }
+            // Output end
         }
     }
 }

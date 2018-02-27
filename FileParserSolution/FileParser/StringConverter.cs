@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace FileParser
 {
-    static public class StringConverter
+    static internal class StringConverter
     {
         /// <summary>
         /// Converts strings to basic, nullable types

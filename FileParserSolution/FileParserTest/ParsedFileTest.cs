@@ -13,6 +13,11 @@ namespace FileParserTest
         [Fact]
         public void BasicTest()
         {
+            // Sample file:
+            // First line has a random number and a category of aliments.
+            // Following lines firstly indicate how many numeric elements are following.
+            // After those numeric elements, they include an unknown number of items.
+
             List<int> numberList = new List<int>();
             List<string> stringList = new List<string>();
 

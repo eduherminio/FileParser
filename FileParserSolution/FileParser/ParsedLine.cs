@@ -28,5 +28,15 @@ namespace FileParser
                 ? FileReader.Peek<T>(_value)
                 : throw new ParsingException("End of ParsedLine reached");
         }
+
+        public List<T> ToList<T>()
+        {
+            List<T> list = new List<T>();
+
+            while (!Empty)
+                list.Add(NextElement<T>());
+
+            return list;
+        }
     }
 }

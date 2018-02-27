@@ -1,4 +1,6 @@
-﻿namespace FileParser
+﻿using System.Collections.Generic;
+
+namespace FileParser
 {
     public interface IParsedFile
     {
@@ -30,5 +32,12 @@
         /// <returns></returns>
         IParsedLine PeekNextLine();
 
+        /// <summary>
+        /// Returns remaining elements as a list
+        /// TODO test, with T != string
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        List<T> ToList<T>();
     }
 }

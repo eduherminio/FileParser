@@ -2,17 +2,17 @@
 {
     public class ParsingException : System.Exception
     {
-        private const string _parsingExceptionMessage = "Exception triggered during parsing process";
+        private const string _genericMessage = "Exception triggered during parsing process";
 
-        public ParsingException()
+        public ParsingException() : base(_genericMessage)
         {
         }
 
-        public ParsingException(string message) : base(message)
+        public ParsingException(string message) : base(message ?? _genericMessage)
         {
         }
 
-        public ParsingException(string message, System.Exception inner) : base(message, inner)
+        public ParsingException(string message, System.Exception inner) : base(message ?? _genericMessage, inner)
         {
         }
     }

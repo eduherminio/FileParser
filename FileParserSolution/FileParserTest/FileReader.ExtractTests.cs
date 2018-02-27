@@ -8,8 +8,10 @@ using FileParser;
 
 namespace FileParserTest
 {
+    // TODO: refactor tests
     public class ExtractTests
     {
+        /*
         [Fact]
         void CustomLineParse()
         {
@@ -48,7 +50,7 @@ namespace FileParserTest
         void ExtractCharUsingFileReader()
         {
             string fileName = "ExtractChar.txt";
-            string line1 = "+-*/!?#$%&";
+            string line1 = "+-/*!?#$%&";
             string line2 = "@()[]{}\"";
 
             string parsedFile = string.Empty;
@@ -77,9 +79,10 @@ namespace FileParserTest
 
             Assert.Equal(line1 + '\\' + line2 + '\\', parsedFile);
         }
+        */
 
         [Fact]
-        void ExtractCharUsingParsedFile()
+        void ExtractChar()
         {
             string fileName = "ExtractChar.txt";
             string line1 = "+-*/!?#$%&";
