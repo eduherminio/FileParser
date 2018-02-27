@@ -1,6 +1,6 @@
 # FileParser
 
-[![Build Status](https://travis-ci.org/eduherminio/TextParser.svg?branch=master)](https://travis-ci.org/eduherminio/TextParser)
+[![Build Status](https://travis-ci.org/eduherminio/FileParser.svg?branch=master)](https://travis-ci.org/eduherminio/FileParser)
 
 [![Nuget Status](https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/FileParser)
 
@@ -59,3 +59,8 @@ int main()
 Seems effortless to process these kind of simple `.txt` files using C++, right?
 
 Well, using C# things are not so straight-forward, and that's why `FileParser` was created for.
+
+# Documentation
+*Coming soon!*
+
+[These tests ](https://github.com/eduherminio/FileParser/blob/master/FileParserSolution/FileParserTest/ParsedFileTest.cs) can serve as example meanwhile.
