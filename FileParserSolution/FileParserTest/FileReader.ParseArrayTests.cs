@@ -24,7 +24,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<string> parsedArray = FileReader.ParseArray<string>(fileName, separator).ToList();
+            List<string> parsedArray = new ParsedFile(fileName, separator).ToList<string>();
             Assert.Equal(new List<string>() { "one", "two", "three", "four" }, parsedArray);
         }
 
@@ -40,7 +40,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<bool> parsedArray = FileReader.ParseArray<bool>(fileName).ToList();
+            List<bool> parsedArray = new ParsedFile(fileName).ToList<bool>();
             Assert.Equal(new List<bool>() { true, false, true }, parsedArray);
         }
 
@@ -56,7 +56,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<short> parsedArray = FileReader.ParseArray<short>(fileName).ToList();
+            List<short> parsedArray = new ParsedFile(fileName).ToList<short>();
             Assert.Equal(new List<short>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
@@ -72,7 +72,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<int> parsedArray = FileReader.ParseArray<int>(fileName).ToList();
+            List<int> parsedArray = new ParsedFile(fileName).ToList<int>();
             Assert.Equal(new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
@@ -88,7 +88,7 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<long> parsedArray = FileReader.ParseArray<long>(fileName).ToList();
+            List<long> parsedArray = new ParsedFile(fileName).ToList<long>();
             Assert.Equal(new List<long>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, parsedArray);
         }
 
@@ -105,63 +105,8 @@ namespace FileParserTest
                 writer.WriteLine(vectorToWrite);
             }
 
-            List<double> parsedArray = FileReader.ParseArray<double>(fileName).ToList();
+            List<double> parsedArray = new ParsedFile(fileName).ToList<double>();
             Assert.Equal(new List<double>() { 0, 1.1, 2.2, 3.3, 4.0, 5.5, 6.6, 7.7, 8.8, 9.00000 }, parsedArray);
-        }
-
-        [Fact]
-        public void HugeArrayOfDoubles()
-        {
-            long timeUsingConverter, timeNotUsingConverter;
-            int n = 100000;
-            {
-                string fileName = "Sample_hugearrayofdoublesUsing.txt";
-                ICollection<double> hugeVectorOfDoubles = new List<double>();
-                for (int i = 0; i < n; ++i)
-                    hugeVectorOfDoubles.Add(3.14159265);
-
-                string vectorToWrite = String.Join(' ', hugeVectorOfDoubles);   // Avoiding dependency on culture (. or ,)
-
-                StreamWriter writer = new StreamWriter(fileName);
-                using (writer)
-                {
-                    writer.WriteLine(vectorToWrite);
-                }
-
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                List<double> parsedArray = FileReader.ParseArray<double>(fileName).ToList();
-                sw.Stop();
-                timeUsingConverter = sw.ElapsedTicks;
-
-                Assert.Equal(hugeVectorOfDoubles, parsedArray);
-            }
-
-            n -= 1;
-            {
-                string fileName = "Sample_hugearrayofdoubles-1.txt";
-                ICollection<double> hugeVectorOfDoubles = new List<double>();
-                for (int i = 0; i < n; ++i)
-                    hugeVectorOfDoubles.Add(3.3333333);
-
-                string vectorToWrite = String.Join(' ', hugeVectorOfDoubles);   // Avoiding dependency on culture (. or ,)
-
-                StreamWriter writer = new StreamWriter(fileName);
-                using (writer)
-                {
-                    writer.WriteLine(vectorToWrite);
-                }
-
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                List<double> parsedArray = FileReader.ParseArray<double>(fileName).ToList();
-                sw.Stop();
-                timeNotUsingConverter = sw.ElapsedTicks;
-
-                Assert.Equal(hugeVectorOfDoubles, parsedArray);
-            }
-
-            Assert.True(timeUsingConverter < timeNotUsingConverter);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace FileParser
         /// <param name="separator"></param>
         /// <param name="minimumElementsToUseConverter"></param>
         /// <returns></returns>
-        static public ICollection<T> ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = _minimumElementsToUseConverter)
+        static internal ICollection<T> ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = _minimumElementsToUseConverter)
         {
             if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not supported yet");
@@ -49,7 +49,7 @@ namespace FileParser
         /// <param name="path"></param>
         /// <param name="minimumElementsToUseConverter"></param>
         /// <returns></returns>
-        static public ICollection<T> ParseArray<T>(string path, long minimumElementsToUseConverter)
+        static internal ICollection<T> ParseArray<T>(string path, long minimumElementsToUseConverter)
         {
             return ParseArray<T>(path, null, minimumElementsToUseConverter).ToList();
         }

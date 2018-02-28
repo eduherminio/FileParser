@@ -15,8 +15,8 @@ namespace FileParserTest
         [Fact]
         void NotSupportedException()
         {
-            Assert.Throws<NotSupportedException>(() => FileReader.ParseArray<uint>("Anything.txt"));
-            Assert.Throws<NotSupportedException>(() => FileReader.ParseArray<DateTime>("Anything.txt"));
+            Assert.Throws<NotSupportedException>(() => new ParsedFile(_validPath + "Sample_file.txt").ToList<uint>());
+            Assert.Throws<NotSupportedException>(() => new ParsedFile(_validPath + "Sample_file.txt").ToList<DateTime>());
             var line = new ParsedLine(new Queue<string> ( new string[] { "1234" } ));
             Assert.Throws<NotSupportedException>(() => line.NextElement<ulong>());
 
