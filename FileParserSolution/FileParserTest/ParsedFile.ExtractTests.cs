@@ -1,17 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Xunit;
 
 using FileParser;
 
 namespace FileParserTest
 {
-    // TODO: refactor tests
     public class ExtractTests
     {
-        /*
         [Fact]
         void CustomLineParse()
         {
@@ -27,59 +25,24 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            Queue<string> queue = new Queue<string>(FileReader.ParseLine(fileName));
+            IParsedLine line = new ParsedFile(fileName).NextLine();
 
-            int n_ints = FileReader.Extract<int>(ref queue);
+            int n_ints = line.NextElement<int>();
 
             for (int i = 0; i < n_ints; ++i)
             {
-                long data = FileReader.Extract<long>(ref queue);
+                long data = line.NextElement<long>();
                 Assert.Equal(expectedList.ElementAt(i), data);
             }
 
-            string rawString = queue.Peek();    // Raw string
-            string lastString = FileReader.Extract<string>(ref queue); // Converted string => string
+            string rawString = line.PeekNextElement<string>();    // Raw string
+            string lastString = line.NextElement<string>(); // Converted string => string
             Assert.Equal(rawString, lastString);
 
             Assert.Equal(expectedString, lastString);
 
-            Assert.Empty(queue);
+            Assert.True(line.Empty);
         }
-
-        [Fact]
-        void ExtractCharUsingFileReader()
-        {
-            string fileName = "ExtractChar.txt";
-            string line1 = "+-/*!?#$%&";
-            string line2 = "@()[]{}\"";
-
-            string parsedFile = string.Empty;
-
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
-            {
-                writer.WriteLine(Math.PI.ToString());
-                writer.WriteLine(line1);
-                writer.WriteLine(line2);
-            }
-
-            Queue<Queue<string>> file = FileReader.ParseFile(fileName);
-            Queue<string> firstParsedLine = file.Dequeue();
-            int nLines = Convert.ToInt32(Math.Floor(FileReader.Extract<double>(ref firstParsedLine))) - 1;
-            for (int iLine = 0; iLine < nLines; ++iLine)
-            {
-                Queue<string> parsedLine = file.Dequeue();
-                while (parsedLine.Count > 0)
-                    parsedFile += FileReader.Extract<char>(ref parsedLine);
-
-                parsedFile += '\\';
-                Assert.Empty(parsedLine);
-            }
-            Assert.Empty(file);
-
-            Assert.Equal(line1 + '\\' + line2 + '\\', parsedFile);
-        }
-        */
 
         [Fact]
         void ExtractChar()

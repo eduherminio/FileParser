@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
 using FileParser;
-using System.Collections.Generic;
 
 namespace FileParserTest
 {
     public class ExceptionTests
     {
-        private readonly string _validPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
+        private readonly string _validPath = "TestFiles" + Path.DirectorySeparatorChar;
 
         [Fact]
         void NotSupportedException()
         {
             Assert.Throws<NotSupportedException>(() => new ParsedFile(_validPath + "Sample_file.txt").ToList<uint>());
             Assert.Throws<NotSupportedException>(() => new ParsedFile(_validPath + "Sample_file.txt").ToList<DateTime>());
-            var line = new ParsedLine(new Queue<string> ( new string[] { "1234" } ));
+            var line = new ParsedLine(new Queue<string>(new string[] { "1234" }));
             Assert.Throws<NotSupportedException>(() => line.NextElement<ulong>());
 
 
@@ -39,7 +38,7 @@ namespace FileParserTest
             Assert.Throws<DirectoryNotFoundException>(() => new ParsedFile("NonExistingDirectory/Non-existing-file.txt"));
         }
 
-        [Fact(Skip ="No exception is thrown in Linux (CI env)")]
+        [Fact(Skip = "No exception is thrown in Linux (CI env)")]
         void IOException()
         {
             string fileName = "Any.txt";

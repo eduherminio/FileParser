@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FileParserTest
 {
-    public class ParsedFileTest
+    public class ParsedFileTests
     {
         private string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
 
@@ -118,13 +118,13 @@ namespace FileParserTest
 
                 int peekedN = peekedFirstLine.PeekNextElement<int>();
                 peekedN *= 2;
-                Assert.Equal(peekedN, 2*peekedFirstLine.PeekNextElement<int>());
+                Assert.Equal(peekedN, 2 * peekedFirstLine.PeekNextElement<int>());
 
                 IParsedLine peekedFirstLine2 = file.PeekNextLine();
 
                 int peekedN2 = peekedFirstLine.PeekNextElement<int>();
                 peekedN2 *= 2;
-                Assert.Equal(peekedN2, 2*peekedFirstLine2.PeekNextElement<int>());
+                Assert.Equal(peekedN2, 2 * peekedFirstLine2.PeekNextElement<int>());
 
                 Assert.Equal(peekedN, peekedN2);
             }
