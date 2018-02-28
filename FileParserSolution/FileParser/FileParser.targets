@@ -7,8 +7,6 @@
     <NugetTestDir>$(MSBuildProjectDirectory)\..\..\NugetTest\NugetTest\NugetTest.csproj</NugetTestDir>
   </PropertyGroup>
 
-  <!--<Import Project="FileParser.tasks"></Import>-->
-
   <Target Name="PushNugetPackage" Condition="$(VersionTag) != '' AND $(ApiKey) != ''">
     <Message Text="***Preparing to push Nuget Package...***" Importance="high"></Message>
     <CallTarget Targets="PrepareNugetPackage" ContinueOnError="false"></CallTarget>
@@ -69,14 +67,14 @@
   <Target Name="ReplaceVersion" Condition="$(VersionTag) != ''" DependsOnTargets="Build">
     <Message Text="***Replacing current version $(Version) by new version $(VersionTag)***" Importance="high"></Message>
     <PropertyGroup>
-      <ExistingVersion>>$(Version)</ExistingVersion>
-      <NewVersion>>$(VersionTag)</NewVersion>
-      <ExistingReference>Include=&quot;$(AssemblyName)&quot; Version=&quot;$(Version)&quot;</ExistingReference>
+      <ExistingVersionRegex>&lt;Version>.*&lt;/Version</ExistingVersionRegex>
+      <NewVersionRegex>&lt;Version>$(VersionTag)&lt;/Version</NewVersionRegex>
+      <ExistingReference>Include=&quot;$(AssemblyName)&quot; Version=&quot;.*&quot;</ExistingReference>
       <NewReference>Include=&quot;$(AssemblyName)&quot; Version=&quot;$(VersionTag)&quot;</NewReference>
     </PropertyGroup>
     <!--<Message Text="***Replacing '$(ExistingVersion)' by '$(NewVersion)'" Importance="high"></Message>-->
     <ReplaceFileText InputFilename="FileParser.csproj" OutputFilename="FileParser.csproj"
-                     MatchExpression="$(ExistingVersion)" ReplacementText="$(NewVersion)" />
+                     MatchExpression="$(ExistingVersionRegex)" ReplacementText="$(NewVersionRegex)" />
     <!--<Message Text="***Replacing '$(ExistingReference)' by '$(NewReference)'" Importance="high"></Message>-->
     <ReplaceFileText InputFilename="$(NugetTestDir)" OutputFilename="$(NugetTestDir)"
                      MatchExpression="$(ExistingReference)" ReplacementText="$(NewReference)" />
