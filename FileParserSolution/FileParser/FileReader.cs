@@ -8,52 +8,8 @@ using Print = System.Diagnostics.Debug;
 
 namespace FileParser
 {
-    static public class FileReader
+    static internal class FileReader
     {
-        private const long _minimumElementsToUseConverter = 100000;
-
-        /// <summary>
-        /// Parses a line of a file into an ICollection<T>
-        /// Default separator: WhiteSpace
-        /// Default minimum elements needed to avoid instantiating a TypeConverter for each conversion: 100000
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="separator"></param>
-        /// <param name="minimumElementsToUseConverter"></param>
-        /// <returns></returns>
-        static internal ICollection<T> ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = _minimumElementsToUseConverter)
-        {
-            if (!SupportedTypes.Contains(typeof(T)))
-                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not supported yet");
-
-            List<string> wordsInLine = new List<string>(ParseLine(path, separator));
-            if (typeof(T) == typeof(string))
-                return (ICollection<T>)wordsInLine.ToList();
-
-            if (wordsInLine.Count < minimumElementsToUseConverter)
-            {
-                return wordsInLine.Select(str => StringConverter.Convert<T>(str)).ToList();
-            }
-            else
-            {
-                var converter = StringConverter.GetConverter<T>();
-                return wordsInLine.Select(str => (T)converter.ConvertFrom(str)).ToList();
-            }
-        }
-
-        /// <summary>
-        /// Syntatic sugar of ParseArray<T>(string path, char[] separator = null, long minimumElementsToUseConverter = 100000)
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="minimumElementsToUseConverter"></param>
-        /// <returns></returns>
-        static internal ICollection<T> ParseArray<T>(string path, long minimumElementsToUseConverter)
-        {
-            return ParseArray<T>(path, null, minimumElementsToUseConverter).ToList();
-        }
-
         /// <summary>
         /// Parses a file into a Queue<Queue<string>>, optionally separating lines with a given string
         /// Queue<Queue<string>> ~~ Queues of 'words' inside of a queue of lines
@@ -62,7 +18,7 @@ namespace FileParser
         /// <param name="existingSeparator"></param>
         /// <param name="lineSeparatorToAdd"></param>
         /// <returns></returns>
-        static internal Queue<Queue<string>> ParseFile(string path, char[] existingSeparator = null)
+        static public Queue<Queue<string>> ParseFile(string path, char[] existingSeparator = null)
         {
             Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
 
@@ -100,7 +56,7 @@ namespace FileParser
         /// <param name="path"></param>
         /// <param name="separator"></param>
         /// <returns></returns>
-        static internal ICollection<string> ParseLine(string path, char[] separator = null)
+        static public ICollection<string> ParseLine(string path, char[] separator = null)
         {
             try
             {
@@ -130,7 +86,7 @@ namespace FileParser
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        static internal char ExtractChar(ref string str)
+        static public char ExtractChar(ref string str)
         {
             if (string.IsNullOrEmpty(str))
                 throw new ParsingException("String is empty");
@@ -147,7 +103,7 @@ namespace FileParser
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>
         /// <returns></returns>
-        static internal T Extract<T>(ref Queue<string> wordsInLine)
+        static public T Extract<T>(ref Queue<string> wordsInLine)
         {
             if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not suppoerted yet");
@@ -180,7 +136,7 @@ namespace FileParser
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>
         /// <returns></returns>
-        static internal T Peek<T>(Queue<string> wordsInLine)
+        static public T Peek<T>(Queue<string> wordsInLine)
         {
             if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
