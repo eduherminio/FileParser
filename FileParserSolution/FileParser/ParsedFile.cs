@@ -38,9 +38,9 @@ namespace FileParser
         {
             List<T> list = new List<T>();
 
-            if(!string.IsNullOrEmpty(lineSeparatorToAdd))
+            if (!string.IsNullOrEmpty(lineSeparatorToAdd))
             {
-                foreach(Queue<string> queue in _value)
+                foreach (Queue<string> queue in _value)
                     queue.Enqueue(lineSeparatorToAdd);
             }
 
