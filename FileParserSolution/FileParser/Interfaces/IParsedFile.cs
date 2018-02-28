@@ -34,7 +34,6 @@ namespace FileParser
 
         /// <summary>
         /// Returns remaining elements as a list
-        /// TODO test, with T != string
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
