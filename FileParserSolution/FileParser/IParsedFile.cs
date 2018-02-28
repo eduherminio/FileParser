@@ -38,6 +38,6 @@ namespace FileParser
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        List<T> ToList<T>();
+        List<T> ToList<T>(string lineSeparatorToAdd = null);
     }
 }

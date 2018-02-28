@@ -62,7 +62,7 @@ namespace FileParser
         /// <param name="existingSeparator"></param>
         /// <param name="lineSeparatorToAdd"></param>
         /// <returns></returns>
-        static internal Queue<Queue<string>> ParseFile(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
+        static internal Queue<Queue<string>> ParseFile(string path, char[] existingSeparator = null)
         {
             Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
 
@@ -76,9 +76,6 @@ namespace FileParser
                     while (!string.IsNullOrEmpty(original_line = reader.ReadLine()))
                     {
                         Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
-                        if (lineSeparatorToAdd != null)
-                            parsedLine.Enqueue(lineSeparatorToAdd);
-
                         parsedFile.Enqueue(parsedLine);
                     }
                 }

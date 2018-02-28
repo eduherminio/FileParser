@@ -4,10 +4,6 @@ namespace FileParser
 {
     public class ParsedFile : IParsedFile
     {
-        private string _path;
-        private char[] _existingSeparator;
-        private string _lineSeparatorToAdd;
-
         private Queue<Queue<string>> _value;
 
         public int Count { get => _value.Count; }
@@ -21,10 +17,7 @@ namespace FileParser
 
         public ParsedFile(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
         {
-            _path = path;
-            _existingSeparator = existingSeparator;
-            _lineSeparatorToAdd = lineSeparatorToAdd;
-            _value = FileReader.ParseFile(_path, _existingSeparator, _lineSeparatorToAdd);
+            _value = FileReader.ParseFile(path, existingSeparator);
         }
 
         public IParsedLine NextLine()
@@ -41,9 +34,15 @@ namespace FileParser
                 : throw new ParsingException("End of ParsedFile reached");
         }
 
-        public List<T> ToList<T>()
+        public List<T> ToList<T>(string lineSeparatorToAdd = null)
         {
             List<T> list = new List<T>();
+
+            if(!string.IsNullOrEmpty(lineSeparatorToAdd))
+            {
+                foreach(Queue<string> queue in _value)
+                    queue.Enqueue(lineSeparatorToAdd);
+            }
 
             while (!Empty)
                 list.AddRange(NextLine().ToList<T>());
