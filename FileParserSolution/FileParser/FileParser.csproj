@@ -10,18 +10,13 @@
     <Description>
       File parser designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
     </Description>
-    <PackageLicenseUrl>https://github.com/eduherminio/TextParser/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/eduherminio/TextParser</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/eduherminio/TextParser</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/eduherminio/FileParser/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/eduherminio/FileParser</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/eduherminio/FileParser</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <Import Project="FileParser.targets" />
   <Import Project="FileParser.tasks" />
-  <ItemGroup>
-    <Compile Remove="PublishOutput\**" />
-    <EmbeddedResource Remove="PublishOutput\**" />
-    <None Remove="PublishOutput\**" />
-  </ItemGroup>
 
 </Project>
