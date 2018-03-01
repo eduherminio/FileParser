@@ -129,5 +129,12 @@ namespace FileParserTest
                 Assert.Equal(peekedN, peekedN2);
             }
         }
+
+        [Fact]
+        public void FileWithEmptyLines()
+        {
+            IParsedFile file = new ParsedFile(_sampleFolderPath + "FileWithEmtpyLines.txt");
+            Assert.True(file.Count == 5);
+        }
     }
 }

@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestFiles\FileWithEmtpyLines.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Sample_commas.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

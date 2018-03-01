@@ -28,9 +28,13 @@ namespace FileParser
 
                 using (reader)
                 {
-                    string original_line;
-                    while (!string.IsNullOrEmpty(original_line = reader.ReadLine()))
+                    while (!reader.EndOfStream)
                     {
+                        string original_line = reader.ReadLine();
+                        // TODO: Evaluate if is it worth giving the user the option of detecting these kind of lines?
+                        if (string.IsNullOrWhiteSpace(original_line) || string.IsNullOrWhiteSpace(original_line))
+                            continue;
+                        // end TODO
                         Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
                         parsedFile.Enqueue(parsedLine);
                     }
