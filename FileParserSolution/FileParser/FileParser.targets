@@ -51,7 +51,7 @@
 
   <Target Name="Tests">
     <Message Text="***Running $(AssemblyName) tests***" Importance="high"></Message>
-    <Exec Command="dotnet test ../FileParserTest/FileParserTest.csproj --no-build" ContinueOnError="false" />
+    <Exec Command="dotnet test ../FileParserTest/FileParserTest.csproj -c Release" ContinueOnError="false" />
   </Target>
 
   <Target Name ="DotnetPublish">
