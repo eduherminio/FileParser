@@ -119,7 +119,7 @@ namespace FileParser
             }
             else if (typeof(T) == typeof(char))
             {
-                if (!wordsInLine.Any())
+                if (wordsInLine.Any())
                     throw new NotSupportedException("Extract<char> can only be used with one-length Queues" +
                         " Try using ExtractChar<string> instead, after parsing each string with Extract<string>(Queue<string>)");
 
