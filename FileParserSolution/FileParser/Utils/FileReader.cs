@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
-//using Print = System.Console;
 using Print = System.Diagnostics.Debug;
 
 namespace FileParser
@@ -32,7 +31,7 @@ namespace FileParser
                     {
                         string original_line = reader.ReadLine();
                         // TODO: Evaluate if is it worth giving the user the option of detecting these kind of lines?
-                        if (string.IsNullOrWhiteSpace(original_line) || string.IsNullOrWhiteSpace(original_line))
+                        if (string.IsNullOrWhiteSpace(original_line) || string.IsNullOrEmpty(original_line))
                             continue;
                         // end TODO
                         Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
@@ -49,7 +48,7 @@ namespace FileParser
 
                 Print.WriteLine(e.Message);
                 Print.WriteLine("(path: {0}", path);
-                throw e;
+                throw;
             }
         }
 
@@ -81,7 +80,7 @@ namespace FileParser
 
                 Print.WriteLine(e.Message);
                 Print.WriteLine("(path: {0}", path);
-                throw e;
+                throw;
             }
         }
 
@@ -164,9 +163,7 @@ namespace FileParser
         /// <summary>
         /// Supported parsing conversions
         /// </summary>
-        static private HashSet<Type> SupportedTypes
-        {
-            get => new HashSet<Type>()
+        static private HashSet<Type> SupportedTypes { get; } = new HashSet<Type>()
             {
                 typeof(bool),
                 typeof(char),
@@ -177,6 +174,5 @@ namespace FileParser
                 typeof(double),
                 typeof(object)
             };
-        }
     }
 }

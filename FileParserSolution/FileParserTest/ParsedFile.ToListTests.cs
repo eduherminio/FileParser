@@ -10,7 +10,7 @@ namespace FileParserTest
 {
     public class ToListTests
     {
-        private string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
+        private readonly string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
 
         [Fact]
         public void SameFileDifferentSeparators()

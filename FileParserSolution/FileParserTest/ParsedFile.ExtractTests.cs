@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 using System.IO;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace FileParserTest
     public class ExtractTests
     {
         [Fact]
-        void CustomLineParse()
+        public void CustomLineParse()
         {
             string fileName = "CustomLineParse.txt";
             string sampleContent = "  3  1154 508 100    vegetable ";
@@ -45,13 +46,13 @@ namespace FileParserTest
         }
 
         [Fact]
-        void ExtractChar()
+        public void ExtractChar()
         {
             string fileName = "ExtractChar.txt";
             string line1 = "+-*/!?#$%&";
             string line2 = "@()[]{}\"";
 
-            string parsedFile = string.Empty;
+            StringBuilder parsedFile = new StringBuilder(string.Empty);
 
             StreamWriter writer = new StreamWriter(fileName);
             using (writer)
@@ -68,14 +69,14 @@ namespace FileParserTest
             {
                 IParsedLine parsedLine = file.NextLine();
                 while (parsedLine.Count > 0)
-                    parsedFile += parsedLine.NextElement<char>();
+                    parsedFile.Append(parsedLine.NextElement<char>());
 
-                parsedFile += '\\';
+                parsedFile.Append('\\');
                 Assert.True(parsedLine.Empty);
             }
             Assert.True(file.Empty);
 
-            Assert.Equal(line1 + '\\' + line2 + '\\', parsedFile);
+            Assert.Equal(line1 + '\\' + line2 + '\\', parsedFile.ToString());
         }
     }
 }

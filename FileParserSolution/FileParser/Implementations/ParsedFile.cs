@@ -4,7 +4,7 @@ namespace FileParser
 {
     public class ParsedFile : IParsedFile
     {
-        private Queue<Queue<string>> _value;
+        private readonly Queue<Queue<string>> _value;
 
         public int Count { get => _value.Count; }
 
