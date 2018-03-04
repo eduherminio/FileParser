@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.0;net47;net461;net46</TargetFrameworks>
     <Title>FileParser</Title>
     <PackageId>FileParser</PackageId>
     <Version>0.2.1</Version>

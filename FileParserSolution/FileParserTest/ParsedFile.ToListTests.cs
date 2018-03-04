@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -122,7 +121,7 @@ namespace FileParserTest
         {
             string fileName = "Sample_ListOfdoubles.txt";
             ICollection<double> vectorOfDoubles = new List<double>() { 0.0, 1.10, 2.2, 3.30, 4, 5.5, 6.60, 7.7, 8.8000, 9 };
-            string vectorToWrite = String.Join(' ', vectorOfDoubles);   // Avoiding dependency on culture (. or ,)
+            string vectorToWrite = string.Join(" ", vectorOfDoubles);   // Avoiding dependency on culture (. or ,)
 
             StreamWriter writer = new StreamWriter(fileName);
             using (writer)
