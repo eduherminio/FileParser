@@ -38,7 +38,7 @@ namespace FileParserSample
             StreamWriter writer = new StreamWriter("..\\C#SimpleOutput.txt");
             using (writer)
             {
-                writer.WriteLine(_integer + " " + String.Join(null, listDouble));
+                writer.WriteLine(_integer + " " + string.Join(null, listDouble));
             }
             // Output end
         }
