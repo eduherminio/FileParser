@@ -19,14 +19,14 @@
   <Target Name="PrepareNugetPackage" DependsOnTargets="EnsureTrailingSlash">
     <Message Text="***Preparing Nuget Package***" Importance="high"></Message>
     <CallTarget Targets="Cleaning"></CallTarget>
-    <CallTarget Targets="ReplaceVersion" ContinueOnError="false"></CallTarget>
+    <Exec Command="dotnet msbuild /t:ReplaceVersion /p:VersionTag=$(VersionTag) /p:TargetFramework=netstandard2.0"></Exec>
     <CallTarget Targets="FreshBuilding" ContinueOnError="false"></CallTarget>
     <CallTarget Targets="Tests" ContinueOnError="false"></CallTarget>
     <CallTarget Targets="DotnetPublish" ContinueOnError="false"></CallTarget>
     <CallTarget Targets="DotnetPack" ContinueOnError="false"></CallTarget>
   </Target>
 
-  <Target Name="EnsureTrailingSlash" >
+  <Target Name="EnsureTrailingSlash">
     <PropertyGroup>
       <!--Ensure paths have a trailing slash, so they can be concatenated-->
       <PublishDir Condition="!HasTrailingSlash('$(PublishDir)')">$(PublishDir)\</PublishDir>
@@ -40,7 +40,7 @@
     <RemoveDir Directories=".\bin" Condition="Exists('.\bin')"></RemoveDir>
     <RemoveDir Directories=".\obj" Condition="Exists('.\obj')"></RemoveDir>
     <RemoveDir Directories=".\$(PublishDir)" Condition="Exists('.\$(PublishDir)')"></RemoveDir>
-    <Exec Command="dotnet restore"></Exec>
+    <Exec Command="dotnet restore --force"></Exec>
   </Target>
 
   <Target Name="FreshBuilding">
@@ -71,8 +71,8 @@
     <Exec Command ="dotnet pack -c Release Fileparser.csproj --no-build -o $(NugetPackagesDir)"></Exec>
   </Target>
 
-    <Target Name="ReplaceVersion" Condition="$(VersionTag) != '' AND $(TargetFrameworkVersion)=='netstandard2.0'" DependsOnTargets="Build">
-    <Message Text="$(TargetFrameworkVersion)***Replacing current version $(Version) by new version $(VersionTag)***" Importance="high"></Message>
+  <Target Name="ReplaceVersion" Condition="$(VersionTag) != '' AND $(TargetFramework)=='netstandard2.0'" DependsOnTargets="Build">
+    <Message Text="***Replacing current version $(Version) by new version $(VersionTag)***" Importance="high"></Message>
     <PropertyGroup>
       <ExampleRoute>$(ProjectDir)\..\..\Examples\FileParserExample\FileParserExample.csproj</ExampleRoute>
       <ExistingVersionRegex>&lt;Version>.*&lt;/Version</ExistingVersionRegex>
