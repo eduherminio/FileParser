@@ -60,9 +60,6 @@
     </PropertyGroup>
     <Message Text="***Publishing package***" Importance="high"></Message>
     <Exec Command="dotnet publish -c Release -f netstandard2.0  -o $(RootPath)\netstandard2.0\"></Exec>
-    <Exec Command="dotnet publish -c Release -f netcoreapp2.0   -o $(RootPath)\netcoreapp2.0\"></Exec>
-    <Exec Command="dotnet publish -c Release -f net47           -o $(RootPath)\net47\"></Exec>
-    <Exec Command="dotnet publish -c Release -f net461          -o $(RootPath)\net461\"></Exec>
     <Exec Command="dotnet publish -c Release -f net46           -o $(RootPath)\net46\"></Exec>
   </Target>
 

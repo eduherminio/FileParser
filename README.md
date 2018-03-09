@@ -8,7 +8,7 @@
 
 **.NET Standard 2.0** library.
 
-Versions for .NET Framework 4.7, 4.61 & 4.6 have been added (v1.0), since code is fully compatible now; but that support isn't guaranteed in future FileParser versions.
+FileParser is also available (since v1.0) for .NET Framework 4.6+, and I'll do my best to keep it that way in future FileParser versions. More info about .NET Standard & .NET Framework compatibility can be found [here](https://docs.microsoft.com/es-es/dotnet/standard/net-standard#net-implementation-support).
 
 ## Purpose
 This project was born with a very specific purpose: providing a tool with whom easily parse files with a known structure, ideally being as flexible and easy to use as C++ standard IO approach.
