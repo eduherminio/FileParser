@@ -16,12 +16,16 @@ namespace FileParserTest
         {
             ICollection<string> sampleSpaces = new ParsedFile(_sampleFolderPath + "Sample_spaces.txt").ToList<string>();
             ICollection<string> sampleCommas = new ParsedFile(_sampleFolderPath + "Sample_commas.txt", new char[] { ',' }).ToList<string>();
+            ICollection<string> sampleCommas2 = new ParsedFile(_sampleFolderPath + "Sample_commas.txt", ",").ToList<string>();
             ICollection<string> sampleSlashes = new ParsedFile(_sampleFolderPath + "Sample_doubleslashes.txt", new char[] { '/', '/' }).ToList<string>();
+            ICollection<string> sampleSlashes2 = new ParsedFile(_sampleFolderPath + "Sample_doubleslashes.txt", "//").ToList<string>();
 
             Assert.True(sampleSpaces.Count > 1);
 
             Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleCommas));
+            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleCommas2));
             Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleSlashes));
+            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleSlashes2));
         }
 
         [Fact]
@@ -29,17 +33,19 @@ namespace FileParserTest
         {
             ICollection<string> sampleSlashes = new ParsedFile(_sampleFolderPath + "Sample_doubleslashes.txt", new char[] { '/', '/' }).ToList<string>();
             ICollection<string> modififedSampleSlashes = new ParsedFile(_sampleFolderPath + "SlightlyModified_Sample_doubleslashes.txt", new char[] { '/', '/' }).ToList<string>();
+            ICollection<string> modififedSampleSlashes2 = new ParsedFile(_sampleFolderPath + "SlightlyModified_Sample_doubleslashes.txt", "//").ToList<string>();
 
             Assert.True(sampleSlashes.Count > 1);
 
             Assert.NotEqual(sampleSlashes, modififedSampleSlashes);
+            Assert.NotEqual(sampleSlashes, modififedSampleSlashes2);
         }
 
         [Fact]
         public void ListOfStrings()
         {
             string fileName = "Sample_ListOfints.txt";
-            char[] separator = "$$$$$$$".ToCharArray();
+            string separator = "$$$$$$$";
             string sampleContent = "   $$$$$$$one$$$$$$$two$$$$$$$three$$$$$$$four$$$$$$$   ";
 
             StreamWriter writer = new StreamWriter(fileName);
@@ -48,8 +54,10 @@ namespace FileParserTest
                 writer.WriteLine(sampleContent);
             }
 
-            List<string> parsedArray = new ParsedFile(fileName, separator).ToList<string>();
+            List<string> parsedArray = new ParsedFile(fileName, separator.ToCharArray()).ToList<string>();
+            List<string> parsedArray2 = new ParsedFile(fileName, separator).ToList<string>();
             Assert.Equal(new List<string>() { "one", "two", "three", "four" }, parsedArray);
+            Assert.Equal(new List<string>() { "one", "two", "three", "four" }, parsedArray2);
         }
 
         [Fact]

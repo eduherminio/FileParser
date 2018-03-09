@@ -17,7 +17,7 @@ namespace FileParser
         /// <param name="existingSeparator"></param>
         /// <param name="lineSeparatorToAdd"></param>
         /// <returns></returns>
-        static public Queue<Queue<string>> ParseFile(string path, char[] existingSeparator = null)
+        static public Queue<Queue<string>> ParseFile(string path, string existingSeparator = null)
         {
             Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
 
@@ -59,7 +59,7 @@ namespace FileParser
         /// <param name="path"></param>
         /// <param name="separator"></param>
         /// <returns></returns>
-        static public ICollection<string> ParseLine(string path, char[] separator = null)
+        static public ICollection<string> ParseLine(string path, string separator = null)
         {
             try
             {
@@ -149,10 +149,10 @@ namespace FileParser
             return StringConverter.Convert<T>(stringToConvert);
         }
 
-        static private ICollection<string> ProcessLine(string original_line, char[] separator)
+        static private ICollection<string> ProcessLine(string original_line, string separator)
         {
             List<string> wordsInLine = original_line
-                .Split(separator)
+                .Split(separator?.ToCharArray())
                 .Select(str => str.Trim()).ToList();
 
             wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);   // Probably not needed, but just in case

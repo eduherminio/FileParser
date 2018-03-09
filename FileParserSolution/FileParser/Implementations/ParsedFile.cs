@@ -15,7 +15,12 @@ namespace FileParser
             _value = parsedFile;
         }
 
-        public ParsedFile(string path, char[] existingSeparator = null, string lineSeparatorToAdd = null)
+        public ParsedFile(string path, char[] existingSeparator, string lineSeparatorToAdd = null)
+            : this(path, new string(existingSeparator), lineSeparatorToAdd)
+        {
+        }
+
+        public ParsedFile(string path, string existingSeparator = null, string lineSeparatorToAdd = null)
         {
             _value = FileReader.ParseFile(path, existingSeparator);
         }
