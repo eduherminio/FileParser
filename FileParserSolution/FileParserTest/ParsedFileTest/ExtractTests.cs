@@ -7,7 +7,7 @@ using Xunit;
 
 using FileParser;
 
-namespace FileParserTest
+namespace FileParserTest.ParsedFileTest
 {
     public class ExtractTests
     {

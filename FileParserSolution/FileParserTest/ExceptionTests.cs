@@ -38,7 +38,7 @@ namespace FileParserTest
             Assert.Throws<DirectoryNotFoundException>(() => new ParsedFile("NonExistingDirectory/Non-existing-file.txt"));
         }
 
-        [Fact(Skip = "No exception is thrown in Linux (CI env)")]
+        [Fact(Skip = "No exception is thrown in Linux (CI env), Issue #1")]
         void IOException()
         {
             string fileName = "Any.txt";

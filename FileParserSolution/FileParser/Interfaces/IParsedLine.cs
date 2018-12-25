@@ -39,5 +39,12 @@ namespace FileParser
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         List<T> ToList<T>();
+
+        /// <summary>
+        /// Returns remaining elements as a single string, separated by wordSeparator
+        /// </summary>
+        /// <param name="wordSeparator"></param>
+        /// <returns></returns>
+        string ToSingleString(string wordSeparator = " ");
     }
 }

@@ -38,5 +38,21 @@ namespace FileParser
 
             return list;
         }
+
+        public string ToSingleString(string wordSeparator = " ")
+        {
+            string lastingString = string.Empty;
+
+            while (!Empty)
+            {
+                lastingString += NextElement<string>();
+                if (!Empty)
+                {
+                    lastingString += wordSeparator;
+                }
+            }
+
+            return lastingString;
+        }
     }
 }

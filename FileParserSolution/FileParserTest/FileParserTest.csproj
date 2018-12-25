@@ -1,8 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0;net471;net47;net461;net46</TargetFrameworks>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -18,24 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestFiles\FileWithEmtpyLines.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFiles\Sample_commas.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFiles\Sample_doubleslashes.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFiles\Sample_file.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFiles\Sample_spaces.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFiles\SlightlyModified_Sample_doubleslashes.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ItemsToCopy Include="$(MSBuildThisFileDirectory)\TestFiles\*.*" />
   </ItemGroup>
+
+  <Target Name="CopyInputFilesToOutputDir" AfterTargets="Build">
+    <Copy SourceFiles="@(ItemsToCopy)" DestinationFolder="$(OutputPath)\TestFiles" />
+  </Target>
 
 </Project>

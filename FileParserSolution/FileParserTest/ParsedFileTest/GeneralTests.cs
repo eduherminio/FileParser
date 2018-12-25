@@ -4,11 +4,11 @@ using Xunit;
 using FileParser;
 using System.Linq;
 
-namespace FileParserTest
+namespace FileParserTest.ParsedFileTest
 {
-    public class ParsedFileTests
+    public class GeneralTests
     {
-        private string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
+        private readonly string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
 
         [Fact]
         public void BasicTest()

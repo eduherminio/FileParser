@@ -46,13 +46,34 @@ namespace FileParser
             if (!string.IsNullOrEmpty(lineSeparatorToAdd))
             {
                 foreach (Queue<string> queue in _value)
+                {
                     queue.Enqueue(lineSeparatorToAdd);
+                }
             }
 
             while (!Empty)
+            {
                 list.AddRange(NextLine().ToList<T>());
+            }
 
             return list;
+        }
+
+        public string ToSingleString(string wordSeparator = " ", string lineSeparator = null)
+        {
+            string lastingString = string.Empty;
+
+            while (!Empty)
+            {
+                lastingString += NextLine().ToSingleString(wordSeparator);
+
+                if (!Empty)
+                {
+                    lastingString += (!string.IsNullOrEmpty(lineSeparator) ? lineSeparator : wordSeparator);
+                }
+            }
+
+            return lastingString;
         }
     }
 }
