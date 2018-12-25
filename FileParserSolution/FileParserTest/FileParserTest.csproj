@@ -19,7 +19,7 @@
   <ItemGroup>
     <ItemsToCopy Include="$(MSBuildThisFileDirectory)\TestFiles\*.*" />
   </ItemGroup>
-
+  
   <Target Name="CopyInputFilesToOutputDir" AfterTargets="Build">
     <Copy SourceFiles="@(ItemsToCopy)" DestinationFolder="$(OutputPath)\TestFiles" />
   </Target>

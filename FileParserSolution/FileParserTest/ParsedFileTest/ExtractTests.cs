@@ -68,8 +68,10 @@ namespace FileParserTest.ParsedFileTest
             for (int iLine = 0; iLine < nLines; ++iLine)
             {
                 IParsedLine parsedLine = file.NextLine();
-                while (!parsedLine.Empty) 
+                while (!parsedLine.Empty)
+                {
                     parsedFile.Append(parsedLine.NextElement<char>());
+                }
 
                 parsedFile.Append('\\');
                 Assert.True(parsedLine.Empty);
