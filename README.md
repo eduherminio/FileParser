@@ -109,9 +109,17 @@ namespace FileParserSample
 }
 ```
 
-# Documentation
-*Coming soon!*
+## Documentation
 
-[These tests](https://github.com/eduherminio/FileParser/blob/master/FileParserSolution/FileParserTest/ParsedFileTest.cs) can serve as example meanwhile.
+I've done my best to create a [WIKI](https://github.com/eduherminio/FileParser/wiki) describing FileParser API.
 
-A real project using it can be found [here](https://github.com/eduherminio/Google_HashCode_2018/blob/master/GoogleHashCode2018/Project/Manager.cs#L63) too.
+Besides the WIKI, some real (own) projects where it has been used are:
+
+* [Google #HashCode 2018](https://github.com/eduherminio/Google_HashCode_2018/blob/master/GoogleHashCode2018/Project/Manager.cs#L63).
+* [Advent of Code 2018](https://github.com/eduherminio/advent-of-code-2018).
+
+## Contributing, issues, suggestions, doubts
+
+If anyone else ever happens to use FileParser, I'll be happy to accept suggestions and solve any doubts.
+
+Just open an issue :)
