@@ -9,7 +9,7 @@ namespace FileParserTest.ParsedFileTest
 {
     public class ToListTests
     {
-        private readonly string _sampleFolderPath = "TestFiles" + System.IO.Path.DirectorySeparatorChar;
+        private readonly string _sampleFolderPath = "TestFiles" + Path.DirectorySeparatorChar;
 
         [Fact]
         public void SameFileDifferentSeparators()
@@ -22,10 +22,10 @@ namespace FileParserTest.ParsedFileTest
 
             Assert.True(sampleSpaces.Count > 1);
 
-            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleCommas));
-            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleCommas2));
-            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleSlashes));
-            Assert.True(Enumerable.SequenceEqual(sampleSpaces, sampleSlashes2));
+            Assert.True(sampleSpaces.SequenceEqual(sampleCommas));
+            Assert.True(sampleSpaces.SequenceEqual(sampleCommas2));
+            Assert.True(sampleSpaces.SequenceEqual(sampleSlashes));
+            Assert.True(sampleSpaces.SequenceEqual(sampleSlashes2));
         }
 
         [Fact]
@@ -44,12 +44,11 @@ namespace FileParserTest.ParsedFileTest
         [Fact]
         public void ListOfStrings()
         {
-            string fileName = "Sample_ListOfints.txt";
-            string separator = "$$$$$$$";
-            string sampleContent = "   $$$$$$$one$$$$$$$two$$$$$$$three$$$$$$$four$$$$$$$   ";
+            const string fileName = "Sample_ListOfints.txt";
+            const string separator = "$$$$$$$";
+            const string sampleContent = "   $$$$$$$one$$$$$$$two$$$$$$$three$$$$$$$four$$$$$$$   ";
 
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -63,11 +62,10 @@ namespace FileParserTest.ParsedFileTest
         [Fact]
         public void ListOfBools()
         {
-            string fileName = "Sample_ListOfbools.txt";
-            string sampleContent = " true false true";
+            const string fileName = "Sample_ListOfbools.txt";
+            const string sampleContent = " true false true";
 
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -79,11 +77,10 @@ namespace FileParserTest.ParsedFileTest
         [Fact]
         public void ListOfShorts()
         {
-            string fileName = "Sample_ListOfints.txt";
-            string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
+            const string fileName = "Sample_ListOfints.txt";
+            const string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
 
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -95,11 +92,10 @@ namespace FileParserTest.ParsedFileTest
         [Fact]
         public void ListOfInts()
         {
-            string fileName = "Sample_ListOfints.txt";
-            string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
+            const string fileName = "Sample_ListOfints.txt";
+            const string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
 
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -111,11 +107,10 @@ namespace FileParserTest.ParsedFileTest
         [Fact]
         public void ListOfLongs()
         {
-            string fileName = "Sample_ListOfints.txt";
-            string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
+            const string fileName = "Sample_ListOfints.txt";
+            const string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
 
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -127,12 +122,11 @@ namespace FileParserTest.ParsedFileTest
         [Fact]
         public void ListOfDoubles()
         {
-            string fileName = "Sample_ListOfdoubles.txt";
+            const string fileName = "Sample_ListOfdoubles.txt";
             ICollection<double> vectorOfDoubles = new List<double>() { 0.0, 1.10, 2.2, 3.30, 4, 5.5, 6.60, 7.7, 8.8000, 9 };
             string vectorToWrite = string.Join(" ", vectorOfDoubles);   // Avoiding dependency on culture (. or ,)
 
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.WriteLine(vectorToWrite);
             }

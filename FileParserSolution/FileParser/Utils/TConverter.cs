@@ -43,28 +43,28 @@ namespace FileParser
             string doubleAsString = value.ToString();
             IEnumerable<char> doubleAsCharList = doubleAsString.ToList();
 
-            if (doubleAsCharList.Where(ch => ch == '.' || ch == ',').Count() <= 1)
+            if (doubleAsCharList.Count(ch => ch == '.' || ch == ',') <= 1)
             {
                 double.TryParse(doubleAsString.Replace(',', '.'),
-                    System.Globalization.NumberStyles.Any,
+                    NumberStyles.Any,
                     CultureInfo.InvariantCulture,
                     out result);
             }
             else
             {
-                if (doubleAsCharList.Where(ch => ch == '.').Count() <= 1
-                    && doubleAsCharList.Where(ch => ch == ',').Count() > 1)
+                if (doubleAsCharList.Count(ch => ch == '.') <= 1
+                    && doubleAsCharList.Count(ch => ch == ',') > 1)
                 {
                     double.TryParse(doubleAsString.Replace(",", string.Empty),
-                        System.Globalization.NumberStyles.Any,
+                        NumberStyles.Any,
                         CultureInfo.InvariantCulture,
                         out result);
                 }
-                else if (doubleAsCharList.Where(ch => ch == ',').Count() <= 1
-                    && doubleAsCharList.Where(ch => ch == '.').Count() > 1)
+                else if (doubleAsCharList.Count(ch => ch == ',') <= 1
+                    && doubleAsCharList.Count(ch => ch == '.') > 1)
                 {
                     double.TryParse(doubleAsString.Replace(".", string.Empty).Replace(',', '.'),
-                        System.Globalization.NumberStyles.Any,
+                        NumberStyles.Any,
                         CultureInfo.InvariantCulture,
                         out result);
                 }

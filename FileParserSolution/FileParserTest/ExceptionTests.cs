@@ -12,13 +12,12 @@ namespace FileParserTest
         private readonly string _validPath = "TestFiles" + Path.DirectorySeparatorChar;
 
         [Fact]
-        void NotSupportedException()
+        public void NotSupportedException()
         {
             Assert.Throws<NotSupportedException>(() => new ParsedFile(_validPath + "Sample_file.txt").ToList<uint>());
             Assert.Throws<NotSupportedException>(() => new ParsedFile(_validPath + "Sample_file.txt").ToList<DateTime>());
             var line = new ParsedLine(new Queue<string>(new string[] { "1234" }));
             Assert.Throws<NotSupportedException>(() => line.NextElement<ulong>());
-
 
             IParsedFile parsedFile = new ParsedFile(_validPath + "Sample_file.txt");
             IParsedLine firstParsedLine = parsedFile.NextLine();
@@ -27,37 +26,37 @@ namespace FileParserTest
         }
 
         [Fact]
-        void FileNotFoundException()
+        public void FileNotFoundException()
         {
             Assert.Throws<FileNotFoundException>(() => new ParsedFile("Non-existing-file.txt"));
         }
 
         [Fact]
-        void DirectoryNotFoundException()
+        public void DirectoryNotFoundException()
         {
             Assert.Throws<DirectoryNotFoundException>(() => new ParsedFile("NonExistingDirectory/Non-existing-file.txt"));
         }
 
         [Fact(Skip = "No exception is thrown in Linux (CI env), Issue #1")]
-        void IOException()
+        public void IOException()
         {
-            string fileName = "Any.txt";
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            const string fileName = "Any.txt";
+
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 Assert.Throws<IOException>(() => new ParsedFile(fileName));
             }
         }
 
         [Fact]
-        void ArgumentException()
+        public void ArgumentException()
         {
             Assert.Throws<ArgumentException>(() => new ParsedFile(string.Empty));
             Assert.Throws<ArgumentException>(() => new ParsedFile(""));
         }
 
         [Fact]
-        void ParsingException()
+        public void ParsingException()
         {
             IParsedFile file = new ParsedFile(_validPath + "Sample_file.txt");
 
@@ -77,7 +76,7 @@ namespace FileParserTest
             ParsedLine testLine = new ParsedLine(testQueue);
             Assert.Throws<ParsingException>(() => testLine.NextElement<char>());
 
-            string stringNull = null;
+            const string stringNull = null;
             testQueue = new Queue<string>(new string[] { stringNull });
             testLine = new ParsedLine(testQueue);
 

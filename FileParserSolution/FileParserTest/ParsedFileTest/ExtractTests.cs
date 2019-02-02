@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -14,14 +13,13 @@ namespace FileParserTest.ParsedFileTest
         [Fact]
         public void CustomLineParse()
         {
-            string fileName = "CustomLineParse.txt";
-            string sampleContent = "  3  1154 508 100    vegetable ";
+            const string fileName = "CustomLineParse.txt";
+            const string sampleContent = "  3  1154 508 100    vegetable ";
 
             List<long> expectedList = new List<long>() { 1154, 508, 100 };
-            string expectedString = "vegetable";
+            const string expectedString = "vegetable";
 
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -33,7 +31,7 @@ namespace FileParserTest.ParsedFileTest
             for (int i = 0; i < n_ints; ++i)
             {
                 long data = line.NextElement<long>();
-                Assert.Equal(expectedList.ElementAt(i), data);
+                Assert.Equal(expectedList[i], data);
             }
 
             string rawString = line.PeekNextElement<string>();    // Raw string
@@ -48,14 +46,13 @@ namespace FileParserTest.ParsedFileTest
         [Fact]
         public void ExtractChar()
         {
-            string fileName = "ExtractChar.txt";
-            string line1 = "+-*/!?#$%&";
-            string line2 = "@()[]{}\"";
+            const string fileName = "ExtractChar.txt";
+            const string line1 = "+-*/!?#$%&";
+            const string line2 = "@()[]{}\"";
 
             StringBuilder parsedFile = new StringBuilder(string.Empty);
 
-            StreamWriter writer = new StreamWriter(fileName);
-            using (writer)
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.WriteLine(Math.PI.ToString());
                 writer.WriteLine(line1);

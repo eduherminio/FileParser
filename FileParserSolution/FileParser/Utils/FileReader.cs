@@ -10,12 +10,11 @@ namespace FileParser
     static internal class FileReader
     {
         /// <summary>
-        /// Parses a file into a Queue<Queue<string>>, optionally separating lines with a given string
+        /// Parses a file into a Queue<Queue<string>>
         /// Queue<Queue<string>> ~~ Queues of 'words' inside of a queue of lines
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="existingSeparator"></param>
-        /// <param name="lineSeparatorToAdd"></param>
+        /// <param name="existingSeparator">Word separator</param>
         /// <returns></returns>
         static public Queue<Queue<string>> ParseFile(string path, string existingSeparator = null)
         {
@@ -71,7 +70,6 @@ namespace FileParser
 
                     return ProcessLine(original_line, separator);
                 }
-
             }
             catch (Exception e)
             {
@@ -120,8 +118,10 @@ namespace FileParser
             else if (typeof(T) == typeof(char))
             {
                 if (wordsInLine.Any())
+                {
                     throw new NotSupportedException("Extract<char> can only be used with one-length Queues" +
-                        " Try using ExtractChar<string> instead, after parsing each string with Extract<string>(Queue<string>)");
+                       " Try using ExtractChar<string> instead, after parsing each string with Extract<string>(Queue<string>)");
+                }
 
                 char nextChar = ExtractChar(ref stringToConvert);
                 if (stringToConvert.Length > 0)

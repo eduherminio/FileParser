@@ -102,7 +102,7 @@ namespace FileParserTest.ParsedFileTest
                     Assert.Equal(peekedStringList.Last(), peekedLine.NextElement<string>());   // Extracting the element
                 }
 
-                IParsedLine line = file.NextLine(); ;   // Extracting the line, already emotied, to allow the test to finish
+                IParsedLine line = file.NextLine();   // Extracting the line, already emotied, to allow the test to finish
                 Assert.True(line.Empty);
             }
         }
