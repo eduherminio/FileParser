@@ -84,8 +84,6 @@ namespace FileParserTest.ParsedFileTest
             {
                 List<int> peekedNumberList = new List<int>();
                 List<string> peekedStringList = new List<string>();
-                List<int> numberList = new List<int>();
-                List<string> stringList = new List<string>();
 
                 IParsedLine peekedLine = file.PeekNextLine();
                 int peekedCounter = peekedLine.PeekNextElement<int>();

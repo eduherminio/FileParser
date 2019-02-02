@@ -30,7 +30,7 @@ namespace FileParser
                     {
                         string original_line = reader.ReadLine();
                         // TODO: Evaluate if is it worth giving the user the option of detecting these kind of lines?
-                        if (string.IsNullOrWhiteSpace(original_line) || string.IsNullOrEmpty(original_line))
+                        if (string.IsNullOrWhiteSpace(original_line))
                             continue;
                         // end TODO
                         Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
