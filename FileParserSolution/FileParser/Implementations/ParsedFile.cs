@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Print = System.Diagnostics.Debug;
 
 namespace FileParser
 {
@@ -27,7 +31,7 @@ namespace FileParser
         /// <param name="existingSeparator">Word separator (space by default)</param>
         public ParsedFile(string path, string existingSeparator = null)
         {
-            _value = FileReader.ParseFile(path, existingSeparator);
+            _value = ParseFile(path, existingSeparator);
         }
 
         public IParsedLine NextLine()
@@ -80,5 +84,64 @@ namespace FileParser
 
             return lastingString;
         }
+
+        #region Private methods
+
+        /// <summary>
+        /// Parses a file into a Queue<Queue<string>>
+        /// Queue<Queue<string>> ~~ Queues of 'words' inside of a queue of lines
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="existingSeparator">Word separator</param>
+        /// <returns></returns>
+        public static Queue<Queue<string>> ParseFile(string path, string existingSeparator = null)
+        {
+            Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
+
+            try
+            {
+                StreamReader reader = new StreamReader(path);
+
+                using (reader)
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        string original_line = reader.ReadLine();
+                        // TODO: Evaluate if is it worth giving the user the option of detecting these kind of lines?
+                        if (string.IsNullOrWhiteSpace(original_line))
+                        {
+                            continue;
+                        }
+                        // end TODO
+                        Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
+                        parsedFile.Enqueue(parsedLine);
+                    }
+                }
+
+                return parsedFile;
+            }
+            catch (Exception e)
+            {
+                // Possible exceptions:
+                // FileNotFoundException, DirectoryNotFoundException, IOException, ArgumentException
+
+                Print.WriteLine(e.Message);
+                Print.WriteLine("(path: {0}", path);
+                throw;
+            }
+        }
+
+        private static ICollection<string> ProcessLine(string original_line, string separator)
+        {
+            List<string> wordsInLine = original_line
+                .Split(separator?.ToCharArray())
+                .Select(str => str.Trim()).ToList();
+
+            wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);   // Probably not needed, but just in case
+
+            return wordsInLine;
+        }
+
+        #endregion
     }
 }
