@@ -2,7 +2,7 @@ language: csharp
 dist: xenial
 sudo: required
 mono: none
-dotnet: 2.1.2
+dotnet: 2.2
 branches:
     only:
         - master
