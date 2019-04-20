@@ -7,7 +7,7 @@ using Print = System.Diagnostics.Debug;
 
 namespace FileParser
 {
-    static internal class FileReader
+    internal static class FileReader
     {
         /// <summary>
         /// Parses a file into a Queue<Queue<string>>
@@ -16,7 +16,7 @@ namespace FileParser
         /// <param name="path"></param>
         /// <param name="existingSeparator">Word separator</param>
         /// <returns></returns>
-        static public Queue<Queue<string>> ParseFile(string path, string existingSeparator = null)
+        public static Queue<Queue<string>> ParseFile(string path, string existingSeparator = null)
         {
             Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
 
@@ -58,7 +58,7 @@ namespace FileParser
         /// <param name="path"></param>
         /// <param name="separator"></param>
         /// <returns></returns>
-        static public ICollection<string> ParseLine(string path, string separator = null)
+        public static ICollection<string> ParseLine(string path, string separator = null)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace FileParser
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        static public char ExtractChar(ref string str)
+        public static char ExtractChar(ref string str)
         {
             if (string.IsNullOrEmpty(str))
                 throw new ParsingException("String is empty");
@@ -104,7 +104,7 @@ namespace FileParser
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>
         /// <returns></returns>
-        static public T Extract<T>(ref Queue<string> wordsInLine)
+        public static T Extract<T>(ref Queue<string> wordsInLine)
         {
             if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not suppoerted yet");
@@ -139,7 +139,7 @@ namespace FileParser
         /// <typeparam name="T"></typeparam>
         /// <param name="wordsInLine"></param>
         /// <returns></returns>
-        static public T Peek<T>(Queue<string> wordsInLine)
+        public static T Peek<T>(Queue<string> wordsInLine)
         {
             if (!SupportedTypes.Contains(typeof(T)))
                 throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
@@ -149,7 +149,7 @@ namespace FileParser
             return StringConverter.Convert<T>(stringToConvert);
         }
 
-        static private ICollection<string> ProcessLine(string original_line, string separator)
+        private static ICollection<string> ProcessLine(string original_line, string separator)
         {
             List<string> wordsInLine = original_line
                 .Split(separator?.ToCharArray())
@@ -163,7 +163,7 @@ namespace FileParser
         /// <summary>
         /// Supported parsing conversions
         /// </summary>
-        static private HashSet<Type> SupportedTypes { get; } = new HashSet<Type>()
+        private static HashSet<Type> SupportedTypes { get; } = new HashSet<Type>()
             {
                 typeof(bool),
                 typeof(char),

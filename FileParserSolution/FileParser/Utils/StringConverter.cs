@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace FileParser
 {
-    static internal class StringConverter
+    internal static class StringConverter
     {
         /// <summary>
         /// Converts strings to basic, nullable types
@@ -12,7 +12,7 @@ namespace FileParser
         /// <typeparam name="T"></typeparam>
         /// <param name="str"></param>
         /// <returns></returns>
-        static public T Convert<T>(string str, TypeConverter typeConverter = null)
+        public static T Convert<T>(string str, TypeConverter typeConverter = null)
         {
             if (typeof(T).IsPrimitive)
             {
@@ -27,7 +27,7 @@ namespace FileParser
             }
         }
 
-        static public TypeConverter GetConverter<T>()
+        public static TypeConverter GetConverter<T>()
         {
             if (typeof(T).IsPrimitive)
             {

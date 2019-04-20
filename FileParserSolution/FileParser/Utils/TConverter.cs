@@ -13,16 +13,16 @@ namespace FileParser
     /// https://stackoverflow.com/questions/8625/generic-type-conversion-from-string
     /// http://web.archive.org/web/20101214042641/http://dogaoztuzun.com/post/C-Generic-Type-Conversion.aspx
     /// </summary>
-    static internal class TConverter
+    internal static class TConverter
     {
-        static internal T ChangeType<T>(object value, TypeConverter typeConverter = null)
+        internal static T ChangeType<T>(object value, TypeConverter typeConverter = null)
         {
             return typeConverter == null
                     ? (T)ChangeType(typeof(T), value)
                     : (T)typeConverter.ConvertFrom(value);
         }
 
-        static private object ChangeType(Type t, object value)
+        private static object ChangeType(Type t, object value)
         {
             if (t == typeof(double))
             {
@@ -77,7 +77,7 @@ namespace FileParser
             return result as object;
         }
 
-        static internal TypeConverter GetTypeConverter(Type t)
+        internal static TypeConverter GetTypeConverter(Type t)
         {
             return TypeDescriptor.GetConverter(t);
         }
@@ -87,7 +87,7 @@ namespace FileParser
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TC"></typeparam>
-        static internal void RegisterTypeConverter<T, TC>() where TC : TypeConverter
+        internal static void RegisterTypeConverter<T, TC>() where TC : TypeConverter
         {
             TypeDescriptor.AddAttributes(typeof(T), new TypeConverterAttribute(typeof(TC)));
         }
