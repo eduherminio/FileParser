@@ -1,10 +1,9 @@
-﻿using FileParser;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace FileParserTest.ParsedFileTest
+namespace FileParser.Test.ParsedFileTest
 {
     public class GeneralTests
     {

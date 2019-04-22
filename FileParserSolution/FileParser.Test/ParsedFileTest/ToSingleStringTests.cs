@@ -1,8 +1,7 @@
-﻿using FileParser;
-using System.IO;
+﻿using System.IO;
 using Xunit;
 
-namespace FileParserTest.ParsedFileTest
+namespace FileParser.Test.ParsedFileTest
 {
     public class ToSingleStringTests
     {

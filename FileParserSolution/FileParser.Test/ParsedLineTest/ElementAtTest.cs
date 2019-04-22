@@ -1,9 +1,8 @@
-﻿using FileParser;
-using System;
+﻿using System;
 using System.IO;
 using Xunit;
 
-namespace FileParserTest.ParsedLineTest
+namespace FileParser.Test.ParsedLineTest
 {
     public class ElementAtTest
     {
