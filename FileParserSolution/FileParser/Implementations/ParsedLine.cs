@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace FileParser
 {
@@ -57,18 +58,18 @@ namespace FileParser
 
         public string ToSingleString(string wordSeparator = " ")
         {
-            string lastingString = string.Empty;
+            StringBuilder stringBuilder = new StringBuilder();
 
             while (!Empty)
             {
-                lastingString += NextElement<string>();
+                stringBuilder.Append(NextElement<string>());
                 if (!Empty)
                 {
-                    lastingString += wordSeparator;
+                    stringBuilder.Append(wordSeparator);
                 }
             }
 
-            return lastingString;
+            return stringBuilder.ToString();
         }
 
         #region Private methods

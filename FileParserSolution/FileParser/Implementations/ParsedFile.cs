@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Print = System.Diagnostics.Debug;
 
 namespace FileParser
@@ -84,21 +85,21 @@ namespace FileParser
 
         public string ToSingleString(string wordSeparator = " ", string lineSeparator = null)
         {
-            string lastingString = string.Empty;
+            StringBuilder stringBuilder = new StringBuilder();
 
             while (!Empty)
             {
-                lastingString += NextLine().ToSingleString(wordSeparator);
+                stringBuilder.Append(NextLine().ToSingleString(wordSeparator));
 
                 if (!Empty)
                 {
-                    lastingString += (!string.IsNullOrEmpty(lineSeparator)
+                    stringBuilder.Append(!string.IsNullOrEmpty(lineSeparator)
                         ? lineSeparator
                         : wordSeparator);
                 }
             }
 
-            return lastingString;
+            return stringBuilder.ToString();
         }
 
         #region Private methods
