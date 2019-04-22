@@ -147,10 +147,10 @@ namespace FileParserTest.ParsedFileTest
 
             int n = lineAt0.PeekNextElement<int>();
             Assert.Equal(23, n);
-            string nPlusOne = (n + 1).ToString();
+            int nPlusOne = n + 1;
             lineAt0.Append($" {nPlusOne}");
 
-            file.Append(new ParsedLine(new[] { nPlusOne }));
+            file.Append(new ParsedLine(new[] { nPlusOne.ToString() }));
             int totalNumberOfLines = file.Count;
 
             IParsedLine firstLine = file.NextLine();
@@ -158,7 +158,7 @@ namespace FileParserTest.ParsedFileTest
             string str = firstLine.NextElement<string>();
             int incrementedN = firstLine.NextElement<int>();
             Assert.Equal(n, nAgain);
-            Assert.Equal(n + 1, incrementedN);
+            Assert.Equal(nPlusOne, incrementedN);
             Assert.Equal("food", str);
 
             for (int lineIndex = 1; lineIndex < totalNumberOfLines - 1; ++lineIndex)

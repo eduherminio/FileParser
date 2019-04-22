@@ -44,6 +44,15 @@ namespace FileParser
                 : throw new ParsingException("End of ParsedLine reached");
         }
 
+        public T ElementAt<T>(int index)
+        {
+            ValidateSupportedType<T>();
+
+            string element = this.ElementAt(index);
+
+            return StringConverter.Convert<T>(element);
+        }
+
         public List<T> ToList<T>()
         {
             List<T> list = new List<T>();
@@ -83,10 +92,7 @@ namespace FileParser
         /// <returns></returns>
         private T Extract<T>()
         {
-            if (!SupportedTypes.Contains(typeof(T)))
-            {
-                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not suppoerted yet");
-            }
+            ValidateSupportedType<T>();
 
             string stringToConvert = Dequeue();
 
@@ -99,7 +105,7 @@ namespace FileParser
                 if (this.Any())
                 {
                     throw new NotSupportedException("Extract<char> can only be used with one-length Queues" +
-                       " Try using ExtractChar<string> instead, after parsing each string with Extract<string>(Queue<string>)");
+                       " Try using ExtractChar<string> instead, after parsing each string with Extract<string>()");
                 }
 
                 char nextChar = ExtractChar(ref stringToConvert);
@@ -121,14 +127,19 @@ namespace FileParser
         /// <returns></returns>
         private T Peek<T>()
         {
-            if (!SupportedTypes.Contains(typeof(T)))
-            {
-                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
-            }
+            ValidateSupportedType<T>();
 
             string stringToConvert = Peek();
 
             return StringConverter.Convert<T>(stringToConvert);
+        }
+
+        private static void ValidateSupportedType<T>()
+        {
+            if (!SupportedTypes.Contains(typeof(T)))
+            {
+                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not supported yet");
+            }
         }
 
         /// <summary>

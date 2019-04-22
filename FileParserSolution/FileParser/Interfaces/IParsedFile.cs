@@ -17,11 +17,16 @@ namespace FileParser
         /// <summary>
         /// Returns next line (IParsedLine), removing it from ParsedFile
         /// </summary>
-        /// <exception>
-        /// ParsingException if file is already empty
-        /// </exception>
-        /// <returns></returns>
+        /// <exception cref="ParsingException">File is already empty</exception>
+        /// <returns>Next line</returns>
         IParsedLine NextLine();
+
+        /// <summary>
+        /// Returns next line (IParsedLine), not modifying ParsedFile
+        /// </summary>
+        /// <exception cref="ParsingException">File is already empty</exception>
+        /// <returns>Next line</returns>
+        IParsedLine PeekNextLine();
 
         /// <summary>
         /// Returns the line at a specified index
@@ -31,15 +36,6 @@ namespace FileParser
         /// <exception cref="System.ArgumentNullException">file is null</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0 or greater than or equal to the number of lines in file</exception>
         IParsedLine LineAt(int index);
-
-        /// <summary>
-        /// Returns next line (IParsedLine), not modifying ParsedFile
-        /// </summary>
-        /// <exception>
-        /// ParsingException if file is already empty
-        /// </exception>
-        /// <returns></returns>
-        IParsedLine PeekNextLine();
 
         /// <summary>
         /// Returns remaining elements as a list
