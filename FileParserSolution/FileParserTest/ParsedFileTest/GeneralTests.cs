@@ -1,4 +1,5 @@
 ﻿using FileParser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -136,6 +137,57 @@ namespace FileParserTest.ParsedFileTest
         {
             IParsedFile file = new ParsedFile(_sampleFolderPath + "FileWithEmtpyLines.txt");
             Assert.True(file.Count == 5);
+        }
+
+        [Fact]
+        public void LineAt()
+        {
+            IParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
+
+            IParsedLine lineAt0 = file.LineAt(0);
+
+            int n = lineAt0.PeekNextElement<int>();
+            Assert.Equal(23, n);
+            int nPlusOne = n + 1;
+            lineAt0.Append($" {nPlusOne}");
+
+            file.Append(new ParsedLine(new[] { nPlusOne.ToString() }));
+            int totalNumberOfLines = file.Count;
+
+            IParsedLine firstLine = file.NextLine();
+            int nAgain = firstLine.NextElement<int>();
+            string str = firstLine.NextElement<string>();
+            int incrementedN = firstLine.NextElement<int>();
+            Assert.Equal(n, nAgain);
+            Assert.Equal(nPlusOne, incrementedN);
+            Assert.Equal("food", str);
+
+            IParsedLine lastLine = file.LastLine();
+            Assert.Equal(incrementedN, lastLine.PeekNextElement<int>());
+
+            for (int lineIndex = 1; lineIndex < totalNumberOfLines - 1; ++lineIndex)
+            {
+                IParsedLine line = file.NextLine();
+                int counter = line.NextElement<int>();
+                for (int j = 0; j < counter; ++j)
+                {
+                    line.NextElement<int>();
+                }
+
+                while (!line.Empty)
+                {
+                    line.NextElement<string>();
+                }
+            }
+
+            IParsedLine extraLine = file.NextLine();
+            Assert.Equal(incrementedN, extraLine.NextElement<int>());
+            Assert.True(extraLine.Empty);
+            Assert.Throws<ArgumentOutOfRangeException>(() => extraLine.ElementAt<string>(1));
+            Assert.Throws<InvalidOperationException>(() => extraLine.LastElement<string>());
+            Assert.True(file.Empty);
+            Assert.Throws<ArgumentOutOfRangeException>(() => file.LineAt(1));
+            Assert.Throws<InvalidOperationException>(() => file.LastLine());
         }
     }
 }

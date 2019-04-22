@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Print = System.Diagnostics.Debug;
 
 namespace FileParser
@@ -62,6 +63,16 @@ namespace FileParser
                 : throw new ParsingException("End of ParsedFile reached");
         }
 
+        public IParsedLine LineAt(int index)
+        {
+            return this.ElementAt(index);
+        }
+
+        public IParsedLine LastLine()
+        {
+            return this.Last();
+        }
+
         public List<T> ToList<T>(string lineSeparatorToAdd = null)
         {
             List<T> list = new List<T>();
@@ -84,22 +95,24 @@ namespace FileParser
 
         public string ToSingleString(string wordSeparator = " ", string lineSeparator = null)
         {
-            string lastingString = string.Empty;
+            StringBuilder stringBuilder = new StringBuilder();
 
             while (!Empty)
             {
-                lastingString += NextLine().ToSingleString(wordSeparator);
+                stringBuilder.Append(NextLine().ToSingleString(wordSeparator));
 
                 if (!Empty)
                 {
-                    lastingString += (!string.IsNullOrEmpty(lineSeparator)
+                    stringBuilder.Append(!string.IsNullOrEmpty(lineSeparator)
                         ? lineSeparator
                         : wordSeparator);
                 }
             }
 
-            return lastingString;
+            return stringBuilder.ToString();
         }
+
+        public void Append(IParsedLine parsedLine) => Enqueue(parsedLine);
 
         #region Private methods
 

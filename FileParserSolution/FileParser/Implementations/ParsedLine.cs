@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace FileParser
 {
@@ -43,6 +44,24 @@ namespace FileParser
                 : throw new ParsingException("End of ParsedLine reached");
         }
 
+        public T ElementAt<T>(int index)
+        {
+            ValidateSupportedType<T>();
+
+            string element = this.ElementAt(index);
+
+            return StringConverter.Convert<T>(element);
+        }
+
+        public T LastElement<T>()
+        {
+            ValidateSupportedType<T>();
+
+            string element = this.Last();
+
+            return StringConverter.Convert<T>(element);
+        }
+
         public List<T> ToList<T>()
         {
             List<T> list = new List<T>();
@@ -57,19 +76,21 @@ namespace FileParser
 
         public string ToSingleString(string wordSeparator = " ")
         {
-            string lastingString = string.Empty;
+            StringBuilder stringBuilder = new StringBuilder();
 
             while (!Empty)
             {
-                lastingString += NextElement<string>();
+                stringBuilder.Append(NextElement<string>());
                 if (!Empty)
                 {
-                    lastingString += wordSeparator;
+                    stringBuilder.Append(wordSeparator);
                 }
             }
 
-            return lastingString;
+            return stringBuilder.ToString();
         }
+
+        public void Append(string str) => Enqueue(str);
 
         #region Private methods
 
@@ -80,10 +101,7 @@ namespace FileParser
         /// <returns></returns>
         private T Extract<T>()
         {
-            if (!SupportedTypes.Contains(typeof(T)))
-            {
-                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + " is not suppoerted yet");
-            }
+            ValidateSupportedType<T>();
 
             string stringToConvert = Dequeue();
 
@@ -96,7 +114,7 @@ namespace FileParser
                 if (this.Any())
                 {
                     throw new NotSupportedException("Extract<char> can only be used with one-length Queues" +
-                       " Try using ExtractChar<string> instead, after parsing each string with Extract<string>(Queue<string>)");
+                       " Try using ExtractChar<string> instead, after parsing each string with Extract<string>()");
                 }
 
                 char nextChar = ExtractChar(ref stringToConvert);
@@ -118,14 +136,19 @@ namespace FileParser
         /// <returns></returns>
         private T Peek<T>()
         {
-            if (!SupportedTypes.Contains(typeof(T)))
-            {
-                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not suppoerted yet");
-            }
+            ValidateSupportedType<T>();
 
             string stringToConvert = Peek();
 
             return StringConverter.Convert<T>(stringToConvert);
+        }
+
+        private static void ValidateSupportedType<T>()
+        {
+            if (!SupportedTypes.Contains(typeof(T)))
+            {
+                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not supported yet");
+            }
         }
 
         /// <summary>
@@ -145,8 +168,6 @@ namespace FileParser
 
             return nextChar;
         }
-
-        public void Append(string str) => Enqueue(str);
 
         /// <summary>
         /// Supported parsing conversions
