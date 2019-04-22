@@ -56,13 +56,21 @@ namespace FileParser
                 : throw new ParsingException("End of ParsedFile reached");
         }
 
-        public IParsedLine LineAt(int index) => this.ElementAt(index);
-
         public IParsedLine PeekNextLine()
         {
             return !Empty
                 ? Peek()
                 : throw new ParsingException("End of ParsedFile reached");
+        }
+
+        public IParsedLine LineAt(int index)
+        {
+            return this.ElementAt(index);
+        }
+
+        public IParsedLine LastLine()
+        {
+            return this.Last();
         }
 
         public List<T> ToList<T>(string lineSeparatorToAdd = null)

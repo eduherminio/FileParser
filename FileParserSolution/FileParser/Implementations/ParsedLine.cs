@@ -53,6 +53,15 @@ namespace FileParser
             return StringConverter.Convert<T>(element);
         }
 
+        public T LastElement<T>()
+        {
+            ValidateSupportedType<T>();
+
+            string element = this.Last();
+
+            return StringConverter.Convert<T>(element);
+        }
+
         public List<T> ToList<T>()
         {
             List<T> list = new List<T>();

@@ -1,4 +1,5 @@
 ﻿using FileParser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -161,6 +162,9 @@ namespace FileParserTest.ParsedFileTest
             Assert.Equal(nPlusOne, incrementedN);
             Assert.Equal("food", str);
 
+            IParsedLine lastLine = file.LastLine();
+            Assert.Equal(incrementedN, lastLine.PeekNextElement<int>());
+
             for (int lineIndex = 1; lineIndex < totalNumberOfLines - 1; ++lineIndex)
             {
                 IParsedLine line = file.NextLine();
@@ -176,11 +180,14 @@ namespace FileParserTest.ParsedFileTest
                 }
             }
 
-            Assert.False(file.Empty);
-            IParsedLine lastLine = file.NextLine();
-            Assert.Equal(incrementedN, lastLine.NextElement<int>());
-            Assert.True(lastLine.Empty);
+            IParsedLine extraLine = file.NextLine();
+            Assert.Equal(incrementedN, extraLine.NextElement<int>());
+            Assert.True(extraLine.Empty);
+            Assert.Throws<ArgumentOutOfRangeException>(() => extraLine.ElementAt<string>(1));
+            Assert.Throws<InvalidOperationException>(() => extraLine.LastElement<string>());
             Assert.True(file.Empty);
+            Assert.Throws<ArgumentOutOfRangeException>(() => file.LineAt(1));
+            Assert.Throws<InvalidOperationException>(() => file.LastLine());
         }
     }
 }
