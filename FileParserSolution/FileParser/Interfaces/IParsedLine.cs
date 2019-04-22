@@ -46,5 +46,11 @@ namespace FileParser
         /// <param name="wordSeparator"></param>
         /// <returns></returns>
         string ToSingleString(string wordSeparator = " ");
+
+        /// <summary>
+        /// Appends a string to the end of the line
+        /// </summary>
+        /// <param name="str"></param>
+        void Append(string str);
     }
 }

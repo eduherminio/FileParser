@@ -6,19 +6,33 @@ using Print = System.Diagnostics.Debug;
 
 namespace FileParser
 {
-    public class ParsedFile : IParsedFile
+    public class ParsedFile : Queue<IParsedLine>, IParsedFile
     {
-        private readonly Queue<Queue<string>> _value;
-
-        public int Count { get => _value.Count; }
-
         public bool Empty { get => Count == 0; }
 
-        public ParsedFile(Queue<Queue<string>> parsedFile)
+        /// <summary>
+        /// Parses a file
+        /// </summary>
+        /// <param name="parsedFile"></param>
+        public ParsedFile(IEnumerable<IParsedLine> parsedFile)
+            : base(new Queue<IParsedLine>(parsedFile))
         {
-            _value = parsedFile;
         }
 
+        /// <summary>
+        /// Parses a file
+        /// </summary>
+        /// <param name="parsedFile"></param>
+        public ParsedFile(Queue<IParsedLine> parsedFile)
+            : base(parsedFile)
+        {
+        }
+
+        /// <summary>
+        /// Parses a file
+        /// </summary>
+        /// <param name="path">FilePath</param>
+        /// <param name="existingSeparator">Word separator (space by default)</param>
         public ParsedFile(string path, char[] existingSeparator)
             : this(path, new string(existingSeparator))
         {
@@ -30,21 +44,21 @@ namespace FileParser
         /// <param name="path">FilePath</param>
         /// <param name="existingSeparator">Word separator (space by default)</param>
         public ParsedFile(string path, string existingSeparator = null)
+            : base(ParseFile(path, existingSeparator))
         {
-            _value = ParseFile(path, existingSeparator);
         }
 
         public IParsedLine NextLine()
         {
-            return _value.Count != 0
-                ? new ParsedLine(_value.Dequeue())
+            return !Empty
+                ? Dequeue()
                 : throw new ParsingException("End of ParsedFile reached");
         }
 
         public IParsedLine PeekNextLine()
         {
-            return _value.Count != 0
-                ? new ParsedLine(_value.Peek())
+            return !Empty
+                ? Peek()
                 : throw new ParsingException("End of ParsedFile reached");
         }
 
@@ -54,9 +68,9 @@ namespace FileParser
 
             if (!string.IsNullOrEmpty(lineSeparatorToAdd))
             {
-                foreach (Queue<string> queue in _value)
+                foreach (IParsedLine parsedLine in this)
                 {
-                    queue.Enqueue(lineSeparatorToAdd);
+                    parsedLine.Append(lineSeparatorToAdd);
                 }
             }
 
@@ -78,7 +92,9 @@ namespace FileParser
 
                 if (!Empty)
                 {
-                    lastingString += (!string.IsNullOrEmpty(lineSeparator) ? lineSeparator : wordSeparator);
+                    lastingString += (!string.IsNullOrEmpty(lineSeparator)
+                        ? lineSeparator
+                        : wordSeparator);
                 }
             }
 
@@ -88,15 +104,15 @@ namespace FileParser
         #region Private methods
 
         /// <summary>
-        /// Parses a file into a Queue<Queue<string>>
-        /// Queue<Queue<string>> ~~ Queues of 'words' inside of a queue of lines
+        /// Parses a file into a Queue<IParsedLine>
+        /// Queue<IParsedLine> ~~ Queues of 'words' inside of a queue of lines
         /// </summary>
         /// <param name="path"></param>
         /// <param name="existingSeparator">Word separator</param>
         /// <returns></returns>
-        public static Queue<Queue<string>> ParseFile(string path, string existingSeparator = null)
+        public static Queue<IParsedLine> ParseFile(string path, string existingSeparator = null)
         {
-            Queue<Queue<string>> parsedFile = new Queue<Queue<string>>();
+            Queue<IParsedLine> parsedFile = new Queue<IParsedLine>();
 
             try
             {
@@ -107,13 +123,15 @@ namespace FileParser
                     while (!reader.EndOfStream)
                     {
                         string original_line = reader.ReadLine();
+
                         // TODO: Evaluate if is it worth giving the user the option of detecting these kind of lines?
                         if (string.IsNullOrWhiteSpace(original_line))
                         {
                             continue;
                         }
                         // end TODO
-                        Queue<string> parsedLine = new Queue<string>(ProcessLine(original_line, existingSeparator));
+
+                        IParsedLine parsedLine = new ParsedLine(ProcessLine(original_line, existingSeparator));
                         parsedFile.Enqueue(parsedLine);
                     }
                 }

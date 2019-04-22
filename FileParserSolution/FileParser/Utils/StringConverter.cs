@@ -35,7 +35,7 @@ namespace FileParser
             }
             else
             {
-                throw new NotImplementedException($"Converter for {typeof(T).Name} yet to be implemented");
+                throw new NotSupportedException($"Converter for {typeof(T).Name} yet to be implemented");
             }
         }
     }

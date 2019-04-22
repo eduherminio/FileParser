@@ -11,7 +11,21 @@ namespace FileParser
     {
         public bool Empty { get => Count == 0; }
 
-        public ParsedLine(Queue<string> parsedLine) : base(parsedLine)
+        /// <summary>
+        /// Parses a line
+        /// </summary>
+        /// <param name="parsedLine"></param>
+        public ParsedLine(IEnumerable<string> parsedLine)
+            : base(new Queue<string>(parsedLine))
+        {
+        }
+
+        /// <summary>
+        /// Parses a line
+        /// </summary>
+        /// <param name="parsedLine"></param>
+        public ParsedLine(Queue<string> parsedLine)
+            : base(parsedLine)
         {
         }
 
@@ -131,6 +145,8 @@ namespace FileParser
 
             return nextChar;
         }
+
+        public void Append(string str) => Enqueue(str);
 
         /// <summary>
         /// Supported parsing conversions

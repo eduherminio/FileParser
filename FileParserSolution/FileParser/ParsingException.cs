@@ -1,6 +1,8 @@
-﻿namespace FileParser
+﻿using System;
+
+namespace FileParser
 {
-    public class ParsingException : System.Exception
+    public class ParsingException : Exception
     {
         private const string _genericMessage = "Exception triggered during parsing process";
 
@@ -12,7 +14,7 @@
         {
         }
 
-        public ParsingException(string message, System.Exception inner) : base(message ?? _genericMessage, inner)
+        public ParsingException(string message, Exception inner) : base(message ?? _genericMessage, inner)
         {
         }
     }
