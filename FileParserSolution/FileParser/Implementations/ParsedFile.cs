@@ -56,6 +56,8 @@ namespace FileParser
                 : throw new ParsingException("End of ParsedFile reached");
         }
 
+        public IParsedLine LineAt(int index) => this.ElementAt(index);
+
         public IParsedLine PeekNextLine()
         {
             return !Empty
@@ -101,6 +103,8 @@ namespace FileParser
 
             return stringBuilder.ToString();
         }
+
+        public void Append(IParsedLine parsedLine) => Enqueue(parsedLine);
 
         #region Private methods
 

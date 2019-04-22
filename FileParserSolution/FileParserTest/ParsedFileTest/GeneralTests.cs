@@ -137,5 +137,50 @@ namespace FileParserTest.ParsedFileTest
             IParsedFile file = new ParsedFile(_sampleFolderPath + "FileWithEmtpyLines.txt");
             Assert.True(file.Count == 5);
         }
+
+        [Fact]
+        public void LineAt()
+        {
+            IParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
+
+            IParsedLine lineAt0 = file.LineAt(0);
+
+            int n = lineAt0.PeekNextElement<int>();
+            Assert.Equal(23, n);
+            string nPlusOne = (n + 1).ToString();
+            lineAt0.Append($" {nPlusOne}");
+
+            file.Append(new ParsedLine(new[] { nPlusOne }));
+            int totalNumberOfLines = file.Count;
+
+            IParsedLine firstLine = file.NextLine();
+            int nAgain = firstLine.NextElement<int>();
+            string str = firstLine.NextElement<string>();
+            int incrementedN = firstLine.NextElement<int>();
+            Assert.Equal(n, nAgain);
+            Assert.Equal(n + 1, incrementedN);
+            Assert.Equal("food", str);
+
+            for (int lineIndex = 1; lineIndex < totalNumberOfLines - 1; ++lineIndex)
+            {
+                IParsedLine line = file.NextLine();
+                int counter = line.NextElement<int>();
+                for (int j = 0; j < counter; ++j)
+                {
+                    line.NextElement<int>();
+                }
+
+                while (!line.Empty)
+                {
+                    line.NextElement<string>();
+                }
+            }
+
+            Assert.False(file.Empty);
+            IParsedLine lastLine = file.NextLine();
+            Assert.Equal(incrementedN, lastLine.NextElement<int>());
+            Assert.True(lastLine.Empty);
+            Assert.True(file.Empty);
+        }
     }
 }

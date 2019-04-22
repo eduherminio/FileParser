@@ -72,6 +72,8 @@ namespace FileParser
             return stringBuilder.ToString();
         }
 
+        public void Append(string str) => Enqueue(str);
+
         #region Private methods
 
         /// <summary>
@@ -146,8 +148,6 @@ namespace FileParser
 
             return nextChar;
         }
-
-        public void Append(string str) => Enqueue(str);
 
         /// <summary>
         /// Supported parsing conversions

@@ -24,6 +24,15 @@ namespace FileParser
         IParsedLine NextLine();
 
         /// <summary>
+        /// Returns the line at a specified index
+        /// </summary>
+        /// <param name="index">zero-based index</param>
+        /// <returns>The line at the specified position in file</returns>
+        /// <exception cref="System.ArgumentNullException">file is null</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">index is less than 0 or greater than or equal to the number of lines in file</exception>
+        IParsedLine LineAt(int index);
+
+        /// <summary>
         /// Returns next line (IParsedLine), not modifying ParsedFile
         /// </summary>
         /// <exception>
@@ -46,5 +55,11 @@ namespace FileParser
         /// <param name="lineSeparator"></param>
         /// <returns></returns>
         string ToSingleString(string wordSeparator = " ", string lineSeparator = null);
+
+        /// <summary>
+        /// Appends a line to the end of the file
+        /// </summary>
+        /// <param name="str"></param>
+        void Append(IParsedLine parsedLine);
     }
 }
