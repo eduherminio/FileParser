@@ -1,11 +1,10 @@
-﻿using FileParser;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
 
-namespace FileParserTest.ParsedFileTest
+namespace FileParser.Test.ParsedFileTest
 {
     public class ExtractTests
     {

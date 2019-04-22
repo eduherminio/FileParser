@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-#exit if any command fails 
-set -e 
+#exit if any command fails
+set -e
 
-dotnet restore ./FileParserSolution 
+dotnet restore ./FileParserSolution
 dotnet build ./FileParserSolution/FileParser --configuration Release --force --no-incremental --framework=netstandard2.0
 
 revision=${TRAVIS_JOB_ID:=1}

@@ -1,8 +1,7 @@
-﻿using FileParser;
-using System.IO;
+﻿using System.IO;
 using Xunit;
 
-namespace FileParserTest.ParsedLineTest
+namespace FileParser.Test.ParsedLineTest
 {
     public class ParseDoubleTests
     {
