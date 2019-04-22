@@ -1,9 +1,8 @@
-﻿using System;
+﻿using FileParser;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
-
-using FileParser;
 
 namespace FileParserTest
 {
@@ -63,12 +62,16 @@ namespace FileParserTest
             IParsedLine line = file.NextLine();
 
             while (!file.Empty)
+            {
                 line = file.NextLine();
+            }
 
             Assert.Throws<ParsingException>(() => file.NextLine());
 
             while (!line.Empty)
+            {
                 line.NextElement<object>();
+            }
 
             Assert.Throws<ParsingException>(() => line.NextElement<object>());
 

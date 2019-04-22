@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using Xunit;
-
-using FileParser;
+﻿using FileParser;
+using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace FileParserTest.ParsedFileTest
 {
@@ -33,10 +32,14 @@ namespace FileParserTest.ParsedFileTest
                 IParsedLine line = file.NextLine();
                 int counter = line.NextElement<int>();
                 for (int j = 0; j < counter; ++j)
+                {
                     numberList.Add(line.NextElement<int>());
+                }
 
                 while (!line.Empty)
+                {
                     stringList.Add(line.NextElement<string>());
+                }
             }
 
             Assert.Equal(23, n);
@@ -100,7 +103,7 @@ namespace FileParserTest.ParsedFileTest
                     Assert.Equal(peekedStringList.Last(), peekedLine.NextElement<string>());   // Extracting the element
                 }
 
-                IParsedLine line = file.NextLine();   // Extracting the line, already emotied, to allow the test to finish
+                IParsedLine line = file.NextLine();   // Extracting the line, already emptied, to allow the test to finish
                 Assert.True(line.Empty);
             }
         }

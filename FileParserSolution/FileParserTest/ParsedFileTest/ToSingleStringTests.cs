@@ -1,8 +1,5 @@
 ﻿using FileParser;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 
 namespace FileParserTest.ParsedFileTest
@@ -42,7 +39,7 @@ namespace FileParserTest.ParsedFileTest
 
             Assert.Equal(
                 "0This1234isalinewithsomelinesoftext404\nSecondline1234\nend",
-                parsedFile.ToSingleString(wordSeparator: string.Empty, lineSeparator:"\n"));
+                parsedFile.ToSingleString(wordSeparator: string.Empty, lineSeparator: "\n"));
 
             Assert.True(parsedFile.Empty);
         }
