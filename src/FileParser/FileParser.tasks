@@ -40,7 +40,7 @@
       <Reference Include="System.IO.Compression.ZipFile" />
       <Using Namespace="System.IO.Compression" />
       <Code Type="Fragment" Language="cs">
-        <![CDATA[        
+        <![CDATA[
         if (File.Exists(OutputFileName))
         {
             if (!OverwriteExistingFile)
@@ -51,7 +51,7 @@
         }
         ZipFile.CreateFromDirectory
         (
-            InputBaseDirectory, OutputFileName, 
+            InputBaseDirectory, OutputFileName,
             CompressionLevel.Optimal, IncludeBaseDirectory
         );
       ]]>
