@@ -1,23 +1,25 @@
 version: 2.1
-workflows:
-  build-test:
-    jobs:
-      build:
-        docker:
-          - image: mcr.microsoft.com/dotnet/core/sdk:2.2
-        working_directory: ~/FileParser
-        steps:
-          - checkout
-          - run:
-              name: Restore packages
-              command: |
-                chmod 777 ./ci/build.sh
-                chmod 777 ./ci/test.sh
-          - run:
-              name: Build
-              command:
-                (cd ci; ./build.sh)
-          - run:
-              name: Test
-              command:
-                (cd ci; ./test.sh)
+executors:
+  FileParser-executor:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    working_directory: ~/FileParser
+
+jobs:
+  build:
+    executor: FileParser-executor
+    steps:
+      - checkout
+      - run:
+          name: Restore packages
+          command: |
+            chmod 777 ./ci/build.sh
+            chmod 777 ./ci/test.sh
+      - run:
+          name: Build
+          command:
+            (cd ci; ./build.sh)
+      - run:
+          name: Test
+          command:
+            (cd ci; ./test.sh)
