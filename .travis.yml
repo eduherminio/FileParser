@@ -4,15 +4,15 @@ sudo: required
 mono: none
 dotnet: 2.2
 branches:
-    only:
-        - master
+	only:
+		- master
 before_script:
-    - chmod 777 ./travis-build.sh
-    - chmod 777 ./travis-test.sh
+	- chmod 777 ./ci/build.sh
+	- chmod 777 ./ci/test.sh
 script:
-    - ./travis-build.sh
-    - ./travis-test.sh
+	- (cd ci; ./build.sh)
+	- (cd ci; ./test.sh)
 notifications:
-    email:
-        - on_success: always
-        - on_failure: always
+	email:
+		- on_success: always
+		- on_failure: always
