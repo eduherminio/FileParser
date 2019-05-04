@@ -10,8 +10,8 @@ before_script:
 	- chmod 777 ./ci/build.sh
 	- chmod 777 ./ci/test.sh
 script:
-	- (cd ci; ./build.sh)
-	- (cd ci; ./test.sh)
+	- ./build.sh
+	- ./test.sh
 notifications:
 	email:
 		- on_success: always
