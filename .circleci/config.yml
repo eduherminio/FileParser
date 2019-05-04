@@ -1,13 +1,13 @@
 version: 2.1
 executors:
-  FileParser-executor:
+  fileparser-executor:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
     working_directory: ~/FileParser
 
 jobs:
   build:
-    executor: FileParser-executor
+    executor: fileparser-executor
     steps:
       - checkout
       - run:
