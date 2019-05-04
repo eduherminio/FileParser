@@ -19,7 +19,7 @@
   <Target Name="PrepareNugetPackage" DependsOnTargets="EnsureTrailingSlash">
     <Message Text="***Preparing Nuget Package***" Importance="high"></Message>
     <CallTarget Targets="Cleaning"></CallTarget>
-    <Exec Command="dotnet msbuild /t:ReplaceVersion /p:VersionTag=$(VersionTag) /p:TargetFramework=netstandard2.0"></Exec>
+    <Exec Command="dotnet build /t:ReplaceVersion /p:VersionTag=$(VersionTag) /p:TargetFramework=netstandard2.0"></Exec>
     <CallTarget Targets="FreshBuilding" ContinueOnError="false"></CallTarget>
     <CallTarget Targets="Tests" ContinueOnError="false"></CallTarget>
     <CallTarget Targets="DotnetPublish" ContinueOnError="false"></CallTarget>
@@ -51,7 +51,7 @@
 
   <Target Name="Tests">
     <Message Text="***Running $(AssemblyName) tests***" Importance="high"></Message>
-    <Exec Command="dotnet test ../FileParserTest/FileParserTest.csproj -c Release" ContinueOnError="false" />
+    <Exec Command="dotnet test ../FileParser.Test/FileParser.Test.csproj -c Release" ContinueOnError="false" />
   </Target>
 
   <Target Name ="DotnetPublish">
