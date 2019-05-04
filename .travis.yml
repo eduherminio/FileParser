@@ -10,8 +10,8 @@ before_script:
     - chmod 777 ./ci/travis-build.sh
     - chmod 777 ./ci/travis-test.sh
 script:
-    - (cd ci; ./travis-build.sh)
-    - (cd ci; ./travis-test.sh)
+    - (cd ci; ./build.sh)
+    - (cd ci; ./test.sh)
 notifications:
     email:
         - on_success: always
