@@ -19,17 +19,6 @@ trigger:
 - master
 - configure-azure-pipelines
 
-
-variables:
-  solution: '**/FileParserSolution.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-
-steps:
-- task: DotNetCoreInstaller@0
-  inputs:
-    version: '2.2'
-
 - script:   |
     chmod 777 ./ci/build.sh
     chmod 777 ./ci/test.sh
