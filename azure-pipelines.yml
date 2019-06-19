@@ -21,10 +21,14 @@ trigger:
 
 steps:
 
-- task: Bash@0
-  inputs:
-    targetType: 'filePath'
-    filePath: ci/build.sh
+# - task: Bash@0
+#   inputs:
+#     targetType: 'filePath'
+#     filePath: ci/build.sh
+
+- bash: |
+    chmod 777 ./ci/build.sh
+    chmod 777 ./ci/test.sh
 
 - script:   |
     chmod 777 ./ci/build.sh
