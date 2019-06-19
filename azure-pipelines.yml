@@ -19,6 +19,8 @@ trigger:
 - master
 - configure-azure-pipelines
 
+steps:
+
 - script:   |
     chmod 777 ./ci/build.sh
     chmod 777 ./ci/test.sh
