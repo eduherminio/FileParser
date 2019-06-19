@@ -1,14 +1,24 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# strategy:
+#   matrix:
+#     linux:
+#       imageName: 'ubuntu-18.04.2'
+#     mac:
+#       imageName: 'macos-10.15'
+#     windows:
+#       imageName: 'windows-latest'
+#       # imageName: 'vs2017-win2016'
+#
+# pool:
+#   vmImage: $(imageName)
+
+# Recommended host agent for .NET Core, see https://docs.microsoft.com/es-es/azure/devops/pipelines/agents/hosted?view=azure-devops
+pool:
+  vmImage: 'windows-2019'
 
 trigger:
 - master
 - configure-azure-pipelines
 
-pool:
-  vmImage: 'windows-latest'
 
 variables:
   solution: '**/FileParserSolution.sln'
@@ -16,24 +26,21 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@0
-  displayName: 'Using NuGet tool instaler'
-
-- task: NuGetCommand@2
-  displayName: 'Nuget restore'
+- task: DotNetCoreInstaller@0
   inputs:
-    restoreSolution: '$(solution)'
+    version: '2.2'
 
-- task: VSBuild@1
-  displayName: 'Build solution'
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+- script:   |
+    chmod 777 ./ci/build.sh
+    chmod 777 ./ci/test.sh
 
-- task: VSTest@2
-  displayName: 'Run tests'
+- script:
+    (cd ci; ./build.sh)
+
+- script:
+    (cd ci; ./test.sh)
+
+- task: PublishTestResults@2
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'

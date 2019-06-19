@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Restore packages
+          name: Give permissions to files
           command: |
             chmod 777 ./ci/build.sh
             chmod 777 ./ci/test.sh
