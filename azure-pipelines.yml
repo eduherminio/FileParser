@@ -21,24 +21,13 @@ trigger:
 
 steps:
 
-# - task: Bash@0
-#   inputs:
-#     targetType: 'filePath'
-#     filePath: ci/build.sh
-
 - bash: |
     chmod 777 ./ci/build.sh
     chmod 777 ./ci/test.sh
 
-- script:   |
-    chmod 777 ./ci/build.sh
-    chmod 777 ./ci/test.sh
+- bash: ./ci/build.sh
 
-- script:
-    (cd ci; ./build.sh)
-
-- script:
-    (cd ci; ./test.sh)
+- bash: ./ci/test.sh
 
 - task: PublishTestResults@2
   inputs:
