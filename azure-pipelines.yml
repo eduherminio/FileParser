@@ -21,7 +21,13 @@ trigger:
 
 steps:
 
+- task: Bash@0
+  inputs:
+    targetType: 'filePath'
+    filePath: ci/build.sh
+
 - script:   |
+    pwd
     chmod 777 ./ci/build.sh
     chmod 777 ./ci/test.sh
 
