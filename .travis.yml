@@ -7,11 +7,10 @@ branches:
     only:
         - master
 before_script:
-    - chmod 777 ./ci/build.sh
-    - chmod 777 ./ci/test.sh
+    - chmod -R 777 ./ci/
 script:
-    - (cd ci; ./build.sh)
-    - (cd ci; ./test.sh)
+    - ./ci/build.sh
+    - ./ci/test.sh
 notifications:
     email:
         - on_success: always

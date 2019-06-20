@@ -1,0 +1,39 @@
+# Recommended host agent for .NET Core, see https://docs.microsoft.com/es-es/azure/devops/pipelines/agents/hosted?view=azure-devops
+pool:
+  vmImage: 'windows-2019'
+
+trigger:
+- master
+
+steps:
+
+- bash: chmod -R 777 ./ci/
+  displayName: 'Give permissions to CI scripts'
+
+- bash: ./ci/build.sh
+  displayName: 'Build'
+
+- bash: ./ci/test.sh
+  displayName: 'Run tests'
+
+- task: PublishTestResults@1
+  displayName: 'Publish test results'
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+
+# To test: multiple platforms
+
+# strategy:
+#   matrix:
+#     linux:
+#       imageName: 'ubuntu-18.04.2'
+#     mac:
+#       imageName: 'macos-10.15'
+#     windows:
+#       imageName: 'windows-latest'
+#       # imageName: 'vs2017-win2016'
+#
+# pool:
+#   vmImage: $(imageName)
