@@ -17,7 +17,7 @@ steps:
   displayName: 'Run tests'
 
 - task: PublishTestResults@0
-  displayName: 'Publish test results'
+  # displayName: 'Publish test results'
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
