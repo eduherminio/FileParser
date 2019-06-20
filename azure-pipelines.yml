@@ -26,8 +26,10 @@ steps:
     chmod 777 ./ci/test.sh
 
 - bash: ./ci/build.sh
+    workingDirectory: $(Build.SourcesDirectory)/ci
 
 - bash: ./ci/test.sh
+    workingDirectory: $(Build.SourcesDirectory)/ci
 
 - task: PublishTestResults@2
   inputs:
