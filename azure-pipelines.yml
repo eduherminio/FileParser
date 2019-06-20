@@ -28,7 +28,6 @@ steps:
 - bash: ./ci/build.sh
 
 - bash: ./ci/test.sh
-    workingDirectory: $(Build.SourcesDirectory)/ci
 
 - task: PublishTestResults@2
   inputs:
