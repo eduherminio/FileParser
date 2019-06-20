@@ -1,23 +1,9 @@
-# strategy:
-#   matrix:
-#     linux:
-#       imageName: 'ubuntu-18.04.2'
-#     mac:
-#       imageName: 'macos-10.15'
-#     windows:
-#       imageName: 'windows-latest'
-#       # imageName: 'vs2017-win2016'
-#
-# pool:
-#   vmImage: $(imageName)
-
 # Recommended host agent for .NET Core, see https://docs.microsoft.com/es-es/azure/devops/pipelines/agents/hosted?view=azure-devops
 pool:
   vmImage: 'windows-2019'
 
 trigger:
 - master
-- configure-azure-pipelines
 
 steps:
 
@@ -30,7 +16,24 @@ steps:
 - bash: ./ci/test.sh
   displayName: Test
 
-- task: PublishTestResults@2
+- task: PublishTestResults@0
+  displayName: Publish test results
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+
+
+# To test: multiple platforms
+
+# strategy:
+#   matrix:
+#     linux:
+#       imageName: 'ubuntu-18.04.2'
+#     mac:
+#       imageName: 'macos-10.15'
+#     windows:
+#       imageName: 'windows-latest'
+#       # imageName: 'vs2017-win2016'
+#
+# pool:
+#   vmImage: $(imageName)
