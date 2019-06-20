@@ -25,7 +25,7 @@ steps:
     chmod 777 ./ci/build.sh
     chmod 777 ./ci/test.sh
 
-- bash: ./ci/build.sh
+- bash: (cd ./ci; ./build.sh)
     workingDirectory: $(Build.SourcesDirectory)/ci
 
 - bash: ./ci/test.sh
