@@ -16,8 +16,8 @@ steps:
 - bash: ./ci/test.sh
   displayName: 'Run tests'
 
-- task: PublishTestResults@0
-  # displayName: 'Publish test results'
+- task: PublishTestResults@1
+  displayName: 'Publish test results'
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
