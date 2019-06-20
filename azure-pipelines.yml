@@ -8,16 +8,16 @@ trigger:
 steps:
 
 - bash: chmod -R 777 ./ci/
-  displayName: Give permissions to CI scripts
+  displayName: 'Give permissions to CI scripts'
 
 - bash: ./ci/build.sh
-  displayName: Build
+  displayName: 'Build'
 
 - bash: ./ci/test.sh
-  displayName: Test
+  displayName: 'Run tests'
 
 - task: PublishTestResults@0
-  displayName: Publish test results
+  displayName: 'Publish test results'
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
