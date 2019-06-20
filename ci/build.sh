@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-#exit if any command fails
+# To be invoked from outside ci folder
+
+# exit if any command fails
 set -e
 
 dotnet restore ./src

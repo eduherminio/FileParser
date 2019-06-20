@@ -11,15 +11,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Give permissions to files
-          command: |
-            chmod 777 ./ci/build.sh
-            chmod 777 ./ci/test.sh
+          name: Give permissions to CI scripts
+          command: chmod -R 777 ./ci/
       - run:
           name: Build
-          command:
-            (cd ci; ./build.sh)
+          command: ./ci/build.sh
       - run:
           name: Test
-          command:
-            (cd ci; ./test.sh)
+          command: ./ci/test.sh

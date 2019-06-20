@@ -21,13 +21,14 @@ trigger:
 
 steps:
 
-- bash: |
-    chmod 777 ./ci/build.sh
-    chmod 777 ./ci/test.sh
+- bash: chmod -R 777 ./ci/
+  displayName: Give permissions to CI scripts
 
 - bash: ./ci/build.sh
+  displayName: Build
 
 - bash: ./ci/test.sh
+  displayName: Test
 
 - task: PublishTestResults@2
   inputs:
