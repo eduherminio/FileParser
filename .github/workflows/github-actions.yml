@@ -1,0 +1,53 @@
+name: CI GitHub Actions
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+  schedule:
+    - cron:  '* * * * 1'
+    # * is a special character in YAML so you have to quote this string
+
+jobs:
+  build-linux:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-10.14, ubuntu-16.04, ubuntu-18.04]
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Give permissions to CI scripts
+      run: chmod -R 777 ./ci/
+    - name: Build
+      run: ./ci/build.sh
+    - name: Run tests
+      run: ./ci/test.sh
+
+  build-windows:
+  # Separated workflow due to issues running dotnet in bash scripts (tried using https://github.com/actions/bin/tree/master/sh)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-2016, windows-2019]
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Build
+      run: ./ci/build.bat
+    - name: Run tests
+      run: ./ci/test.bat
