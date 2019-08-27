@@ -26,11 +26,11 @@ jobs:
     - name: Give permissions to CI scripts
       uses: "actions/bin/sh@master"
       with:
-        args = ["chmod -R 777 ./ci/"]
+        args: '"chmod -R 777 ./ci/"'
     - name: Build
       uses: "actions/bin/sh@master"
       with:
-        args = ["./ci/build.sh"]
+        args: '"./ci/build.sh"'
 
     - name: Run tests
       run: ci/test.sh
