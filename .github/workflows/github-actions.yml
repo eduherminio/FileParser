@@ -26,6 +26,6 @@ jobs:
     - name: Give permissions to CI scripts
       run: chmod -R 777 ./ci/
     - name: Build
-      run: ./ci/build.sh
+      run: ci/build.sh
     - name: Run tests
-      run: ./ci/test.sh
+      run: ci/test.sh
