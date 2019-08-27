@@ -8,8 +8,8 @@ on:
     branches:
     - master
   schedule:
-    # * is a special character in YAML so you have to quote this string
     - cron:  '* * * * 1
+    # * is a special character in YAML so you have to quote this string
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         os: [macOS-latest, ubuntu-latest]
-        # Windows excluded due to problems with bash building scripts
+      # Windows excluded due to problems with bash building scripts
       fail-fast: false
 
     steps:
