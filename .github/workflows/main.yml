@@ -21,5 +21,7 @@ jobs:
         dotnet-version: 2.2.108
     - name: Give permissions to CI scripts
       run: chmod -R 777 ./ci/
-    - name: Build with dotnet
+    - name: Build
       run: ./ci/build.sh
+    - name: Run tests
+      run: ./ci/test.sh
