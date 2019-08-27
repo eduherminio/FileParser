@@ -18,7 +18,6 @@ jobs:
     strategy:
       matrix:
         os: [macOS-10.14, ubuntu-16.04, ubuntu-18.04]
-        # Windows excluded due to problems with bash building scripts
       fail-fast: false
 
     steps:
@@ -35,7 +34,7 @@ jobs:
       run: ./ci/test.sh
 
   build-windows:
-
+  # Separated workflow due to issues running dotnet in bash scripts (tried using https://github.com/actions/bin/tree/master/sh)
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
