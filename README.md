@@ -2,9 +2,10 @@
 
 |    |     |
 |:---|:---:|
+| **GitHub Actions** |   [![Build Status](https://github.com/eduherminio/FileParser/workflows/CI%20GitHub%20Actions/badge.svg)](https://github.com/eduherminio/FileParser/actions)
+| **Azure DevOps** |   [![Build Status](https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=master)](https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=master)
 | **Travis CI** |   [![Build Status](https://travis-ci.org/eduherminio/FileParser.svg?branch=master)](https://travis-ci.org/eduherminio/FileParser)|
 | **CircleCI** |[![CircleCI](https://circleci.com/gh/eduherminio/FileParser/tree/master.svg?style=svg)](https://circleci.com/gh/eduherminio/FileParser/tree/master) |
-| **Azure DevOps** |   [![Build Status](https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=master)](https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=master)
 | **NuGet** |[![Nuget Status](https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/FileParser)|
 
 **FileParser** is a C# file parser designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).

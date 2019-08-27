@@ -34,7 +34,7 @@ jobs:
       run: ./ci/test.sh
 
   build-windows:
-  # Separated workflow due to issues running dotnet in bash scripts (tried using https://github.com/actions/bin/tree/master/sh)
+  # Separated workflow due to issues running dotnet in bash scripts (tried unsuccessfully using https://github.com/actions/bin/tree/master/sh)
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
