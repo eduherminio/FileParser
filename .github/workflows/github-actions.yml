@@ -25,7 +25,7 @@ jobs:
         dotnet-version: 2.2.108
     - name: Give permissions to CI scripts
       uses = "actions/bin/sh@master"
-      run: chmod -R 777 ./ci/
+      args = ["chmod -R 777 ./ci/"]
     - name: Build
       uses = "actions/bin/sh@master"
       args = ["./ci/build.sh"]
