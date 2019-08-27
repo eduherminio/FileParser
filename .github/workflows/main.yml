@@ -19,5 +19,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.2.108
+    - name: Give permissions to CI scripts
+      run: chmod -R 777 ./ci/
     - name: Build with dotnet
       run: ./ci/build.sh
