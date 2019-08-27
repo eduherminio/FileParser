@@ -24,11 +24,11 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Give permissions to CI scripts
-      uses = "actions/bin/sh@master"
+      uses: "actions/bin/sh@master"
       with:
         args = ["chmod -R 777 ./ci/"]
     - name: Build
-      uses = "actions/bin/sh@master"
+      uses: "actions/bin/sh@master"
       with:
         args = ["./ci/build.sh"]
 
