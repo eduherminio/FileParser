@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macOS-latest, ubuntu-latest]
+        os: [macOS-10.14, ubuntu-16.04, ubuntu-18.04]
         # Windows excluded due to problems with bash building scripts
       fail-fast: false
 
@@ -49,6 +49,6 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Build
-      run: dotnet build ./src/FileParser --configuration Release --force --no-incremental --framework netstandard2.0
+      run: ./ci/build.bat
     - name: Run tests
-      run: dotnet test ./src/FileParser.Test --framework=netcoreapp2.2 --logger trx --collect "Code coverage"
+      run: ./ci/test.bat
