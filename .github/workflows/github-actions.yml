@@ -30,7 +30,6 @@ jobs:
       uses: "actions/bin/sh@master"
       with:
         args: '"chmod -R 777 ./ci/"'
-      run: chmod -R 777 ./ci/
     - name: Build
       uses: "actions/bin/sh@master"
       with:
