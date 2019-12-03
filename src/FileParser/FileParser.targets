@@ -1,4 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
     <AssemblyName>FileParser</AssemblyName>
@@ -36,7 +36,7 @@
 
   <Target Name="Cleaning">
     <Message Text="***Cleaning***" Importance="high"></Message>
-    <Exec Command="dotnet clean" />
+    <Exec Command="dotnet clean -c Release" />
     <RemoveDir Directories=".\bin" Condition="Exists('.\bin')"></RemoveDir>
     <RemoveDir Directories=".\obj" Condition="Exists('.\obj')"></RemoveDir>
     <RemoveDir Directories=".\$(PublishDir)" Condition="Exists('.\$(PublishDir)')"></RemoveDir>
