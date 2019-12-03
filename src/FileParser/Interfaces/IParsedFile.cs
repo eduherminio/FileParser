@@ -63,7 +63,7 @@ namespace FileParser
         /// <summary>
         /// Appends a line to the end of the file
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="parsedLine"></param>
         void Append(IParsedLine parsedLine);
     }
 }
