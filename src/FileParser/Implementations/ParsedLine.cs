@@ -6,7 +6,7 @@ using System.Text;
 namespace FileParser
 {
     /// <summary>
-    /// Implementation based on Queue<string>
+    /// Implementation based on Queue&lt;string&gt;
     /// </summary>
     public class ParsedLine : Queue<string>, IParsedLine
     {

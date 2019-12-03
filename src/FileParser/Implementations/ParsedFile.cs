@@ -117,8 +117,8 @@ namespace FileParser
         #region Private methods
 
         /// <summary>
-        /// Parses a file into a Queue<IParsedLine>
-        /// Queue<IParsedLine> ~~ Queues of 'words' inside of a queue of lines
+        /// Parses a file into a Queue&lt;IParsedLine&gt;
+        /// Queue&lt;IParsedLine&gt; ~~ Queues of 'words' inside of a queue of lines
         /// </summary>
         /// <param name="path"></param>
         /// <param name="existingSeparator">Word separator</param>

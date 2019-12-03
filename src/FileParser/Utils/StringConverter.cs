@@ -11,6 +11,7 @@ namespace FileParser
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="str"></param>
+        /// <param name="typeConverter"></param>
         /// <returns></returns>
         public static T Convert<T>(string str, TypeConverter typeConverter = null)
         {
