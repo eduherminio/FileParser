@@ -16,6 +16,7 @@
     <PackageProjectUrl>https://github.com/eduherminio/FileParser</PackageProjectUrl>
     <RepositoryUrl>https://github.com/eduherminio/FileParser</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -25,5 +26,9 @@
 
   <Import Project="FileParser.targets" />
   <Import Project="FileParser.tasks" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
 
 </Project>

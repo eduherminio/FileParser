@@ -4,7 +4,7 @@
 |:---|:---:|
 | **GitHub Actions** |   [![Build Status](https://github.com/eduherminio/FileParser/workflows/CI%20GitHub%20Actions/badge.svg)](https://github.com/eduherminio/FileParser/actions)
 | **Azure DevOps** |   [![Build Status](https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=master)](https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=master)
-| **Travis CI** |   [![Build Status](https://travis-ci.org/eduherminio/FileParser.svg?branch=master)](https://travis-ci.org/eduherminio/FileParser)|
+| **Travis CI** |   [![Build Status](https://travis-ci.com/eduherminio/FileParser.svg?branch=master)](https://travis-ci.com/eduherminio/FileParser)|
 | **CircleCI** |[![CircleCI](https://circleci.com/gh/eduherminio/FileParser/tree/master.svg?style=svg)](https://circleci.com/gh/eduherminio/FileParser/tree/master) |
 | **NuGet** |[![Nuget Status](https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/FileParser)|
 
@@ -15,11 +15,13 @@
 FileParser is also available (since v1.0) for .NET Framework 4.6+, and I'll do my best to keep it that way in future FileParser versions. More info about .NET Standard & .NET Framework compatibility can be found [here](https://docs.microsoft.com/es-es/dotnet/standard/net-standard#net-implementation-support).
 
 ## Purpose
+
 This project was born with a very specific purpose: providing a tool with whom easily parse files with a known structure, ideally being as flexible and easy to use as C++ standard IO approach.
 
 For those who don't understand what I mean, here's a simple Use Case ([also reposited](https://github.com/eduherminio/FileParser/tree/master/Examples)):
 
 Given the following `input.txt`, which contains an integer n (>=0) followed by n doubles and a final string,
+
 ```txt
 5   1.1 3.14159265 2.2265       5.5 10              fish
 ```
