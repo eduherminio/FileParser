@@ -35,4 +35,3 @@ stages:
         nobuild: true
         projects: './src/*.Test.csproj'
         publishTestResults: true
-
