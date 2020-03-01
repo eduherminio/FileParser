@@ -60,7 +60,7 @@ stages:
     - task: CmdLine@2
       displayName: 'Setup Git'
       inputs:
-        workingDirectory: $(Build.SourcesDirectory)/FileParser
+        workingDirectory: $(Build.SourcesDirectory)
         script: |
             git config --replace-all user.email "azure@devops.com"
             git config --replace-all user.name "Azure DevOps"
@@ -87,20 +87,20 @@ stages:
         configuration: '$(BuildConfiguration)'
         packagesToPack: '**/*FileParser.csproj'
         nobuild: true
-        packDirectory: '$(Build.SourcesDirectory)/FileParser/Artifacts'
+        packDirectory: '$(Build.SourcesDirectory)/Artifacts'
         versioningScheme: 'off'     # We're using ReplaceVersion target instead
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish artifact with NuGet package and its symbols'
       inputs:
-        pathtoPublish: '$(Build.SourcesDirectory)/FileParser/Artifacts/'
+        pathtoPublish: '$(Build.SourcesDirectory)/Artifacts/'
         artifactName: 'FileParser'
 
     - task: NuGetCommand@2
       displayName: 'Push NuGet package'
       inputs:
         command: 'push'
-        packagesToPush: '$(Build.SourcesDirectory)/FileParser/Artifacts/*.nupkg'
+        packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
         # publishFeedCredentials: 'FileParser_NuGet'
         verbosityPush: 'Detailed'
@@ -109,7 +109,7 @@ stages:
       displayName: 'Push GitHub package'
       inputs:
         command: 'push'
-        packagesToPush: '$(Build.SourcesDirectory)/FileParser/Artifacts/*.nupkg'
+        packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
         # publishFeedCredentials: 'GitHubPackageRegistry'
         verbosityPush: 'Detailed'
@@ -117,7 +117,7 @@ stages:
     - task: CmdLine@2
       displayName: 'Commit and push version increment'
       inputs:
-        workingDirectory: $(Build.SourcesDirectory)/FileParser
+        workingDirectory: $(Build.SourcesDirectory)
         script: |
           git checkout master
           git status
