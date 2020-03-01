@@ -4,6 +4,7 @@ trigger:
   branches:
     include:
     - master
+    - move-cd-to-azure
 
 variables:
   Agent: 'windows-2019'
