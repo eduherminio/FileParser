@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build">
 
   <ItemGroup>
-    <PackageReference Include="RoslynCodeTaskFactory" Version="1.2.6" />
+    <PackageReference Include="RoslynCodeTaskFactory" Version="2.0.5" />
   </ItemGroup>
 
   <UsingTask TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(RoslynCodeTaskFactory)" Condition=" '$(RoslynCodeTaskFactory)' != '' ">

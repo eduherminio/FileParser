@@ -21,11 +21,11 @@ jobs:
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v1.4.0
       with:
-        dotnet-version: 2.2.108
+        dotnet-version: 3.1.102
     - name: Give permissions to CI scripts
       run: chmod -R 777 ./ci/
     - name: Build
@@ -42,11 +42,11 @@ jobs:
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v1.4.0
       with:
-        dotnet-version: 2.2.108
+        dotnet-version: 3.1.102
     - name: Build
       run: ./ci/build.bat
     - name: Run tests
