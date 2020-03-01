@@ -1,10 +1,9 @@
-name: CI-$(BuildID)
+name: $(BuildID)
 
 trigger:
   branches:
     include:
     - master
-    - move-cd-to-azure
 
 variables:
   Agent: 'windows-2019'
@@ -39,7 +38,7 @@ stages:
 - stage: CD
   displayName: 'Generate package(s)'
   dependsOn: 'CI'
-  condition: and(succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/move-cd-to-azure'), ne(variables['PackageVersion'], ''))
+  condition: and(succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['PackageVersion'], ''))
   jobs:
   - job: cd
     displayName: 'Generate package(s)'
@@ -103,7 +102,7 @@ stages:
         command: 'push'
         packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
-        # publishFeedCredentials: 'FileParser_NuGet'
+        publishFeedCredentials: 'FileParser_NuGet'
         verbosityPush: 'Detailed'
 
     - task: NuGetCommand@2
@@ -112,7 +111,7 @@ stages:
         command: 'push'
         packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
-        # publishFeedCredentials: 'GitHubPackageRegistry'
+        publishFeedCredentials: 'GitHubPackageRegistry'
         verbosityPush: 'Detailed'
 
     - task: CmdLine@2
