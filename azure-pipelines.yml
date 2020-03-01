@@ -1,4 +1,4 @@
-name: CD-$(BuildID)
+name: CI-$(BuildID)
 
 trigger:
   branches:
@@ -11,31 +11,35 @@ variables:
   BuildConfiguration: 'Release'   # configuration to pack, does not work with build step
 
 stages:
-
-- stage: CD-prep
-  displayName: 'Generate package(s)'
-  dependsOn: 'CI'
+- stage: CI
+  displayName: 'Build and run tests'
   jobs:
-  - job: cd
-    displayName: 'Generate package(s)'
+  - job: ci
+    displayName: 'Build and run tests'
     pool:
       vmImage: $(Agent)
     steps:
 
-    - checkout: self
-      persistCredentials: true
-      clean: true
-
-    - task: NuGetToolInstaller@1
-      displayName: 'Setup NuGet'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
       inputs:
-        versionSpec: '5.3.1'
-        checkLatest: true
+        command: build
+        arguments: '--configuration Release'
+        projects: './src/FileParserSolution.sln'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run tests'
+      inputs:
+        command: test
+        arguments: '--configuration Release --logger trx --collect "Code coverage"'
+        nobuild: true
+        projects: './src/**/*.Test.csproj'
+        publishTestResults: true
 
 - stage: CD
   displayName: 'Generate package(s)'
   dependsOn: 'CI'
-  condition: and(succeeded('CD-prep'), succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['PackageVersion'], ''))
+  condition: and(succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['PackageVersion'], ''))
   jobs:
   - job: cd
     displayName: 'Generate package(s)'

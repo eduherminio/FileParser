@@ -33,5 +33,5 @@ stages:
         command: test
         arguments: '--configuration Release --logger trx --collect "Code coverage"'
         nobuild: true
-        projects: './src/*.Test.csproj'
+        projects: './src/**/*.Test.csproj'
         publishTestResults: true
