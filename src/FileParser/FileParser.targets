@@ -51,7 +51,7 @@
 
   <Target Name="Tests">
     <Message Text="***Running $(AssemblyName) tests***" Importance="high"></Message>
-    <Exec Command="dotnet test ../FileParser.Test/FileParser.Test.csproj -c Release" ContinueOnError="false" />
+    <Exec Command="dotnet test $(MSBuildProjectDirectory)\..\FileParser.Test\FileParser.Test.csproj -c Release" ContinueOnError="false" />
   </Target>
 
   <Target Name ="DotnetPublish">
@@ -71,7 +71,7 @@
   <Target Name="ReplaceVersion" Condition="$(VersionTag) != ''" DependsOnTargets="Build">
     <Message Text="***Replacing current version $(Version) by new version $(VersionTag)***" Importance="high"></Message>
     <PropertyGroup>
-      <ExampleRoute>$(ProjectDir)\..\..\Examples\FileParserExample\FileParserExample.csproj</ExampleRoute>
+      <ExampleRoute>$(MSBuildProjectDirectory)\..\..\Examples\FileParserExample\FileParserExample.csproj</ExampleRoute>
       <ExistingVersionRegex>&lt;Version>.*&lt;/Version</ExistingVersionRegex>
       <NewVersionRegex>&lt;Version>$(VersionTag)&lt;/Version</NewVersionRegex>
       <ExistingReference>Include=&quot;$(AssemblyName)&quot; Version=&quot;.*&quot;</ExistingReference>
@@ -89,7 +89,7 @@
 
   <Target Name="TestNugetPackageLocally">
     <Message Text="***Testing created Nuget package locally***" Importance="high"></Message>
-    <Exec Command="dotnet test $(NugetTestDir)" ContinueOnError="false"></Exec>
+    <Exec Command="dotnet test $(NugetTestDir) -c Release" ContinueOnError="false"></Exec>
   </Target>
 
   <!--ApiKey cannot be inferred from a SetApiKey previously made outside of the build script-->
@@ -102,4 +102,27 @@
           Condition="Exists('$(NugetPackagesDir)$(NugetPackageName)')" ContinueOnError="false"></Exec>
     <Message Text="***$(NugetPackageName) has been successfully pushed to Nuget***" Importance="high"></Message>
   </Target>
+
+  <UsingTask TaskName="ReplaceFileText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+    <ParameterGroup>
+      <InputFilename ParameterType="System.String" Required="true" />
+      <OutputFilename ParameterType="System.String" Required="true" />
+      <MatchExpression ParameterType="System.String" Required="true" />
+      <ReplacementText ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            File.WriteAllText(
+                OutputFilename,
+                Regex.Replace(File.ReadAllText(InputFilename), MatchExpression, ReplacementText)
+                );
+          ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
 </Project>

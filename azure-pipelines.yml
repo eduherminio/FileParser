@@ -66,18 +66,18 @@ stages:
             git config --replace-all user.name "Azure DevOps"
 
     - task: DotNetCoreCLI@2
-      displayName: 'Modify project version'
-      inputs:
-        command: build
-        arguments: '--configuration Release /t:ReplaceVersion /p:VersionTag=$(PackageVersion)'
-        projects: '**/*FileParser.csproj'
-
-    - task: DotNetCoreCLI@2
       displayName: 'Build'
       inputs:
         command: build
         arguments: '--configuration Release'
         projects: 'FileParserSolution.sln'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Modify project version'
+      inputs:
+        command: build
+        arguments: '--configuration Release /t:ReplaceVersion /p:VersionTag=$(PackageVersion)'
+        projects: '**/*FileParser.csproj'
 
     - task: DotNetCoreCLI@2
       displayName: 'Generate NuGet package'
@@ -95,6 +95,14 @@ stages:
       inputs:
         pathtoPublish: '$(Build.SourcesDirectory)/Artifacts/'
         artifactName: 'FileParser'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Test Nuget package locally'
+      inputs:
+        command: test
+        arguments: '--configuration Release --logger trx"'
+        nobuild: true
+        projects: '**/*NugetTest.csproj'
 
     - task: NuGetCommand@2
       displayName: 'Push NuGet package'
