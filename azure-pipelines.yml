@@ -102,7 +102,7 @@ stages:
         command: 'push'
         packagesToPush: '$(Build.SourcesDirectory)/FileParser/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
-        publishFeedCredentials: 'FileParser_NuGet'
+        # publishFeedCredentials: 'FileParser_NuGet'
         verbosityPush: 'Detailed'
 
     - task: NuGetCommand@2
@@ -111,7 +111,7 @@ stages:
         command: 'push'
         packagesToPush: '$(Build.SourcesDirectory)/FileParser/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
-        publishFeedCredentials: 'GitHubPackageRegistry'
+        # publishFeedCredentials: 'GitHubPackageRegistry'
         verbosityPush: 'Detailed'
 
     - task: CmdLine@2

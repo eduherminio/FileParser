@@ -12,9 +12,8 @@ variables:
 
 stages:
 
-- stage: CD-prep
-  displayName: 'Generate package(s)'
-  dependsOn: 'CI'
+- stage: CD_prep
+  displayName: 'CD prep'
   jobs:
   - job: cd
     displayName: 'Generate package(s)'
@@ -35,7 +34,7 @@ stages:
 - stage: CD
   displayName: 'Generate package(s)'
   dependsOn: 'CI'
-  condition: and(succeeded('CD-prep'), succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['PackageVersion'], ''))
+  condition: and(succeeded('CD_prep'), succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['PackageVersion'], ''))
   jobs:
   - job: cd
     displayName: 'Generate package(s)'
