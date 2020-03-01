@@ -68,7 +68,7 @@
     <Exec Command ="dotnet pack -c Release Fileparser.csproj --no-build -o $(NugetPackagesDir)"></Exec>
   </Target>
 
-  <Target Name="ReplaceVersion" Condition="$(VersionTag) != '' AND $(TargetFramework)=='netstandard2.0'" DependsOnTargets="Build">
+  <Target Name="ReplaceVersion" Condition="$(VersionTag) != ''" DependsOnTargets="Build">
     <Message Text="***Replacing current version $(Version) by new version $(VersionTag)***" Importance="high"></Message>
     <PropertyGroup>
       <ExampleRoute>$(ProjectDir)\..\..\Examples\FileParserExample\FileParserExample.csproj</ExampleRoute>

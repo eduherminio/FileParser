@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileParser", "FileParser\FileParser.csproj", "{C8AA97F4-4C59-49DF-ACF4-944CA78D221F}"
 EndProject
@@ -10,7 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8E3B14F-7393-4CEF-9EDB-2E630190FACD}"
 	ProjectSection(SolutionItems) = preProject
 		..\.travis.yml = ..\.travis.yml
-		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\azure-cd.yml = ..\azure-cd.yml
+		..\azure-ci.yml = ..\azure-ci.yml
 		..\ci\build.bat = ..\ci\build.bat
 		..\ci\build.sh = ..\ci\build.sh
 		..\.circleci\config.yml = ..\.circleci\config.yml

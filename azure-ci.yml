@@ -1,0 +1,37 @@
+name: CI-$(BuildID)
+
+trigger:
+  branches:
+    include:
+    - master
+
+variables:
+  Agent: 'windows-2019'
+  BuildConfiguration: 'Release'   # configuration to pack, does not work with build step
+
+stages:
+- stage: CI
+  displayName: 'Build and run tests'
+  jobs:
+  - job: ci
+    displayName: 'Build and run tests'
+    pool:
+      vmImage: $(Agent)
+    steps:
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
+      inputs:
+        command: build
+        arguments: '--configuration Release'
+        projects: './src/FileParserSolution.sln'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run tests'
+      inputs:
+        command: test
+        arguments: '--configuration Release --logger trx --collect "Code coverage"'
+        nobuild: true
+        projects: './src/*.Test.csproj'
+        publishTestResults: true
+
