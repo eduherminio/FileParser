@@ -66,18 +66,11 @@ stages:
             git config --replace-all user.name "Azure DevOps"
 
     - task: DotNetCoreCLI@2
-      displayName: 'Build'
-      inputs:
-        command: build
-        arguments: '--configuration Release'
-        projects: 'FileParserSolution.sln'
-
-    - task: DotNetCoreCLI@2
       displayName: 'Modify project version'
       inputs:
         command: build
         arguments: '--configuration Release /t:ReplaceVersion /p:VersionTag=$(PackageVersion)'
-        projects: '**/*FileParser.csproj'
+        projects: '**/FileParser.csproj'
 
     - task: DotNetCoreCLI@2
       displayName: 'Generate NuGet package'
@@ -85,7 +78,7 @@ stages:
         command: 'pack'
         arguments: '--configuration Release'
         configuration: '$(BuildConfiguration)'
-        packagesToPack: '**/*FileParser.csproj'
+        packagesToPack: '**/FileParser.csproj'
         nobuild: true
         packDirectory: '$(Build.SourcesDirectory)/Artifacts'
         versioningScheme: 'off'     # We're using ReplaceVersion target instead
