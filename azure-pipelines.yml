@@ -1,39 +1,128 @@
-# Recommended host agent for .NET Core, see https://docs.microsoft.com/es-es/azure/devops/pipelines/agents/hosted?view=azure-devops
-pool:
-  vmImage: 'windows-2019'
+name: $(BuildID)
 
 trigger:
-- master
+  branches:
+    include:
+    - master
 
-steps:
+variables:
+  Agent: 'windows-2019'
+  BuildConfiguration: 'Release'   # configuration to pack, does not work with build step
 
-- bash: chmod -R 777 ./ci/
-  displayName: 'Give permissions to CI scripts'
+stages:
+- stage: CI
+  displayName: 'Build and run tests'
+  jobs:
+  - job: ci
+    displayName: 'Build and run tests'
+    pool:
+      vmImage: $(Agent)
+    steps:
 
-- bash: ./ci/build.sh
-  displayName: 'Build'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
+      inputs:
+        command: build
+        arguments: '--configuration Release'
+        projects: './src/FileParserSolution.sln'
 
-- bash: ./ci/test.sh
-  displayName: 'Run tests'
+    - task: DotNetCoreCLI@2
+      displayName: 'Run tests'
+      inputs:
+        command: test
+        arguments: '--configuration Release --logger trx --collect "Code coverage"'
+        nobuild: true
+        projects: '**/FileParser.Test.csproj'
+        publishTestResults: true
 
-- task: PublishTestResults@1
-  displayName: 'Publish test results'
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+- stage: CD
+  displayName: 'Generate package(s)'
+  dependsOn: 'CI'
+  condition: and(succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['PackageVersion'], ''))
+  jobs:
+  - job: cd
+    displayName: 'Generate package(s)'
+    pool:
+      vmImage: $(Agent)
+    steps:
 
+    - checkout: self
+      persistCredentials: true
+      clean: true
 
-# To test: multiple platforms
+    - task: NuGetToolInstaller@1
+      displayName: 'Setup NuGet'
+      inputs:
+        versionSpec: '5.3.1'
+        checkLatest: true
 
-# strategy:
-#   matrix:
-#     linux:
-#       imageName: 'ubuntu-18.04.2'
-#     mac:
-#       imageName: 'macos-10.15'
-#     windows:
-#       imageName: 'windows-latest'
-#       # imageName: 'vs2017-win2016'
-#
-# pool:
-#   vmImage: $(imageName)
+    - task: CmdLine@2
+      displayName: 'Setup Git'
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)
+        script: |
+            git config --replace-all user.email "azure@devops.com"
+            git config --replace-all user.name "Azure DevOps"
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Modify project version'
+      inputs:
+        command: build
+        arguments: '--configuration Release /t:ReplaceVersion /p:VersionTag=$(PackageVersion)'
+        projects: '**/FileParser.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Generate NuGet package'
+      inputs:
+        command: 'pack'
+        arguments: '--configuration Release'
+        configuration: '$(BuildConfiguration)'
+        packagesToPack: '**/FileParser.csproj'
+        nobuild: true
+        packDirectory: '$(Build.SourcesDirectory)/Artifacts'
+        versioningScheme: 'off'     # We're using ReplaceVersion target instead
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish artifact with NuGet package and its symbols'
+      inputs:
+        pathtoPublish: '$(Build.SourcesDirectory)/Artifacts/'
+        artifactName: 'FileParser'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Test Nuget package locally'
+      inputs:
+        command: test
+        arguments: '--configuration Release --logger trx"'
+        nobuild: true
+        projects: '**/*NugetTest.csproj'
+
+    - task: NuGetCommand@2
+      displayName: 'Push NuGet package'
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
+        nuGetFeedType: 'external'
+        publishFeedCredentials: 'FileParser_NuGet'
+        verbosityPush: 'Detailed'
+
+    - task: NuGetCommand@2
+      displayName: 'Push GitHub package'
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
+        nuGetFeedType: 'external'
+        publishFeedCredentials: 'GitHubPackageRegistry'
+        verbosityPush: 'Detailed'
+
+    - task: CmdLine@2
+      displayName: 'Commit and push version increment'
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)
+        script: |
+          git checkout master
+          git status
+          git add -A
+          git commit -m "Release v$(PackageVersion)"
+          git tag -a v$(PackageVersion) -m "v$(PackageVersion)"
+          git push
+          git push --tags
