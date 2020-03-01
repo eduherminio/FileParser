@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.4
+      uses: actions/setup-dotnet@v1.4.0
       with:
         dotnet-version: 3.1.102
     - name: Give permissions to CI scripts
@@ -44,7 +44,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.4
+      uses: actions/setup-dotnet@v1.4.0
       with:
         dotnet-version: 3.1.102
     - name: Build
