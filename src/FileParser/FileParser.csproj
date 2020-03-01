@@ -5,7 +5,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>FileParser</Title>
     <PackageId>FileParser</PackageId>
-    <Version>1.4.0</Version>
+    <Version>1.4.3</Version>
     <PackageTags>FileParser, TextParser, TextReader, File, Parser, Text, txt, Read, Reader</PackageTags>
     <Tags>$(PackageTags)</Tags>
     <Authors>Eduardo Cáceres</Authors>
