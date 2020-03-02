@@ -174,13 +174,5 @@ namespace FileParser
         }
 
         #endregion
-
-        private void DummyMethodToCheckSonarQube()
-        {
-            var dummyVar = 1; ;
-
-            var dummyList = new[] { "1", "2" };
-            dummyList.OrderByDescending(_ => _);
-        }
     }
 }
