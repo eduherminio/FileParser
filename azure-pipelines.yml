@@ -19,6 +19,14 @@ stages:
       vmImage: $(Agent)
     steps:
 
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'FileParser_SonarCloud'
+        organization: 'eduherminio-github'
+        scannerMode: 'MSBuild'
+        projectKey: 'FileParser'
+        projectName: 'FileParser'
+
     - task: DotNetCoreCLI@2
       displayName: 'Build'
       inputs:
@@ -30,10 +38,16 @@ stages:
       displayName: 'Run tests'
       inputs:
         command: test
-        arguments: '--configuration Release --logger trx --collect "Code coverage"'
+        arguments: '--configuration Release --no-build --logger trx --collect "Code coverage"'
         nobuild: true
         projects: '**/FileParser.Test.csproj'
         publishTestResults: true
+
+    - task: SonarCloudAnalyze@1
+
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
 
 - stage: CD
   displayName: 'Generate package(s)'
