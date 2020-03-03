@@ -1,18 +1,38 @@
 # FileParser
 
-|    |     |
-|:---|:---:|
-| **GitHub Actions** |   [![Build Status](https://github.com/eduherminio/FileParser/workflows/CI%20GitHub%20Actions/badge.svg)](https://github.com/eduherminio/FileParser/actions)
-| **Azure DevOps** |   [![Build Status](https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=master)](https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=master)
-| **Travis CI** |   [![Build Status](https://travis-ci.com/eduherminio/FileParser.svg?branch=master)](https://travis-ci.com/eduherminio/FileParser)|
-| **CircleCI** |[![CircleCI](https://circleci.com/gh/eduherminio/FileParser/tree/master.svg?style=svg)](https://circleci.com/gh/eduherminio/FileParser/tree/master) |
-| **NuGet** |[![Nuget Status](https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/FileParser)|
+[![Azure DevOps][azuredevopslogo]][azuredevopslink]
+[![GitHub Actions][githubactionslogo]][githubactionslink]
+[![Travis CI][traviscilogo]][traviscilink]
+[![Circle CI][circlecilogo]][circlecilink]
 
-**FileParser** is a C# file parser designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
+[![Sonar Quality][sonarqualitylogo]][sonarqubelink]
+[![Code coverage][sonarcoveragelogo]][sonarqubelink]
+[![Sonar vulnerabilities][sonarvulnerabilitieslogo]][sonarqubelink]
+[![Sonar bugs][sonarbugslogo]][sonarqubelink]
+[![Sonar code smells][sonarcodesmellslogo]][sonarqubelink]
 
-**.NET Standard 2.0** library.
+[![Nuget][nugetlogo]][nugetlink]
 
-FileParser is also available (since v1.0) for .NET Framework 4.6+, and I'll do my best to keep it that way in future FileParser versions. More info about .NET Standard & .NET Framework compatibility can be found [here](https://docs.microsoft.com/es-es/dotnet/standard/net-standard#net-implementation-support).
+[azuredevopslogo]: https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=master
+[azuredevopslink]: https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=master
+[githubactionslogo]: https://github.com/eduherminio/FileParser/workflows/CI%20GitHub%20Actions/badge.svg
+[githubactionslink]: https://github.com/eduherminio/FileParser/actions
+[traviscilogo]: https://travis-ci.com/eduherminio/FileParser.svg?branch=master
+[traviscilink]: https://travis-ci.com/eduherminio/FileParser
+[circlecilogo]: https://circleci.com/gh/eduherminio/FileParser/tree/master.svg?style=svg
+[circlecilink]: https://circleci.com/gh/eduherminio/FileParser/tree/master
+[nugetlogo]: https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget
+[nugetlink]: https://www.nuget.org/packages/FileParser
+[sonarqubelink]: https://sonarcloud.io/dashboard?id=FileParser
+[sonarqualitylogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=alert_status
+[sonarcoveragelogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=coverage
+[sonarvulnerabilitieslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=vulnerabilities
+[sonarbugslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=bugs
+[sonarcodesmellslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=code_smells
+
+**FileParser** is a **.NET Standard** library designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
+
+It is also available (since v1.0) for .NET Framework 4.6, and I'll do my best to keep it that way in future FileParser versions. More info about .NET Standard & .NET Framework compatibility can be found [here](https://docs.microsoft.com/es-es/dotnet/standard/net-standard#net-implementation-support).
 
 ## Purpose
 
@@ -28,7 +48,7 @@ Given the following `input.txt`, which contains an integer n (>=0) followed by n
 
 A simple `.cpp` snippet like the following one could process `input.txt`, providing that file is selected as standard input source:
 
- `./myExecutable < input.txt > output.txt`
+`./myExecutable < input.txt > output.txt`
 
 ```cpp
 #include <iostream>
@@ -104,7 +124,7 @@ namespace FileParserSample
             // Data Processing
 
             // Output start
-            StreamWriter writer = new StreamWriter("..\\C#SimpleOutput.txt");
+            StreamWriter writer = new StreamWriter("..\\CSharpSimpleOutput.txt");
             using (writer)
             {
                 writer.WriteLine(_integer + " " + string.Join(null, listDouble));
@@ -121,8 +141,10 @@ I've done my best to create a [WIKI](https://github.com/eduherminio/FileParser/w
 
 Besides the WIKI, some real (own) projects where it has been used are:
 
-* [Google #HashCode 2018](https://github.com/eduherminio/Google_HashCode_2018/blob/master/GoogleHashCode2018/Project/Manager.cs#L63).
-* [Advent of Code 2018](https://github.com/eduherminio/advent-of-code-2018).
+- [Google #HashCode 2018](https://github.com/eduherminio/Google_HashCode_2018/blob/master/GoogleHashCode2018/Project/Manager.cs#L63).
+- [Google #HashCode 2020](https://github.com/eduherminio/Google_HashCode_2020/blob/master/GoogleHashCode/BookManager.cs#L167).
+- [Advent of Code 2018](https://github.com/eduherminio/advent-of-code-2018).
+- [Advent of Code 2019](https://github.com/eduherminio/AoC2019).
 
 ## Contributing, issues, suggestions, doubts
 
