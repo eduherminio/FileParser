@@ -38,7 +38,7 @@ stages:
       displayName: 'Run tests'
       inputs:
         command: test
-        arguments: '--configuration Release --logger trx --collect "Code coverage"'
+        arguments: '--configuration Release --no-build --logger trx --collect "Code coverage"'
         nobuild: true
         projects: '**/FileParser.Test.csproj'
         publishTestResults: true
