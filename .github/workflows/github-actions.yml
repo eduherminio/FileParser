@@ -25,7 +25,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1.4.0
       with:
-        dotnet-version: 3.1.102
+        dotnet-version: 3.1.300
     - name: Give permissions to CI scripts
       run: chmod -R 777 ./ci/
     - name: Build

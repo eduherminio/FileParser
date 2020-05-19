@@ -16,6 +16,7 @@ schedules:
 variables:
   Agent: 'windows-2019'
   BuildConfiguration: 'Release'   # configuration to pack, does not work with build step
+  SdkVersion: '3.1.x'
 
 stages:
 - stage: CI
@@ -26,6 +27,12 @@ stages:
     pool:
       vmImage: $(Agent)
     steps:
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk v$(SdkVersion)'
+      inputs:
+        packageType: sdk
+        version: '$(SdkVersion)'
 
     - task: SonarCloudPrepare@1
       inputs:
@@ -60,7 +67,7 @@ stages:
 - stage: CD
   displayName: 'Generate package(s)'
   dependsOn: 'CI'
-  condition: and(succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['PackageVersion'], ''))
+  condition: and(succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
   - job: cd
     displayName: 'Generate package(s)'
@@ -71,6 +78,12 @@ stages:
     - checkout: self
       persistCredentials: true
       clean: true
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk v$(SdkVersion)'
+      inputs:
+        packageType: sdk
+        version: '$(SdkVersion)'
 
     - task: NuGetToolInstaller@1
       displayName: 'Setup NuGet'
@@ -90,11 +103,12 @@ stages:
       displayName: 'Build'
       inputs:
         command: build
-        arguments: '--configuration Release'
+        arguments: '--configuration Release /p:ContinuousIntegrationBuild=true'
         projects: './src/FileParserSolution.sln'
 
     - task: DotNetCoreCLI@2
       displayName: 'Modify project version'
+      condition: ne(variables['PackageVersion'], '')
       inputs:
         command: build
         arguments: '--configuration Release /t:ReplaceVersion /p:VersionTag=$(PackageVersion)'
@@ -127,6 +141,7 @@ stages:
 
     - task: NuGetCommand@2
       displayName: 'Push NuGet package'
+      condition: ne(variables['PackageVersion'], '')
       inputs:
         command: 'push'
         packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
@@ -136,6 +151,7 @@ stages:
 
     - task: NuGetCommand@2
       displayName: 'Push GitHub package'
+      condition: ne(variables['PackageVersion'], '')
       inputs:
         command: 'push'
         packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
@@ -145,6 +161,7 @@ stages:
 
     - task: CmdLine@2
       displayName: 'Commit and push version increment'
+      condition: and(eq(variables['NoCommit'], ''), ne(variables['PackageVersion'], ''))
       inputs:
         workingDirectory: $(Build.SourcesDirectory)
         script: |
