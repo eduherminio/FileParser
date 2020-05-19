@@ -14,8 +14,6 @@ schedules:
     - master
 
 variables:
-  Agent: 'windows-2019'
-  BuildConfiguration: 'Release'   # configuration to pack, does not work with build step
   SdkVersion: '3.1.x'
 
 stages:
@@ -24,9 +22,24 @@ stages:
   jobs:
   - job: ci
     displayName: 'Build and run tests'
+
+    strategy:
+      maxParallel: 3
+      matrix:
+        linux:
+          imageName: 'ubuntu-latest'
+        mac:
+          imageName: 'macOS-latest'
+        windows:
+          imageName: 'windows-latest'
     pool:
-      vmImage: $(Agent)
-    steps:
+      vmImage: $(imageName)
+
+    variables:
+      disable.coverage.autogenerate: 'true'
+      EscapedComma: '%2c'
+      TestResults: '$(Agent.TempDirectory)'
+      CoverageResults: '$(Build.SourcesDirectory)/CoverageResults'
 
     - task: UseDotNet@2
       displayName: 'Use .NET Core sdk v$(SdkVersion)'
@@ -35,12 +48,17 @@ stages:
         version: '$(SdkVersion)'
 
     - task: SonarCloudPrepare@1
+      displayName: 'Prepare SonarCloud analysis'
+      condition: eq(variables['imageName'], 'windows-latest')
       inputs:
         SonarCloud: 'FileParser_SonarCloud'
         organization: 'eduherminio-github'
         scannerMode: 'MSBuild'
         projectKey: 'FileParser'
         projectName: 'FileParser'
+        extraProperties: |
+            sonar.cs.opencover.reportsPaths="$(Build.SourcesDirectory)/**/coverage.opencover.xml"
+            sonar.cs.vstest.reportsPaths="$(TestResults)/**/*.trx"
 
     - task: DotNetCoreCLI@2
       displayName: 'Build'
@@ -53,14 +71,39 @@ stages:
       displayName: 'Run tests'
       inputs:
         command: test
-        arguments: '--configuration Release --no-build --logger trx --collect "Code coverage"'
+        arguments: >-
+            --configuration Release --no-build
+            /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura$(EscapedComma)opencover"
+            /p:CoverletOutput=./CoverageResults/ /p:ExcludeByFile="**/*Exceptions.cs$(EscapedComma)**/*Test.cs"
         nobuild: true
         projects: '**/FileParser.Test.csproj'
         publishTestResults: true
 
+    - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+      displayName: 'Generate tests report'
+      condition: eq(variables['imageName'], 'ubuntu-latest')
+      inputs:
+        reports: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+        targetdir: '$(CoverageResults)'
+        reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+        assemblyfilters: '-xunit*'
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish code coverage'
+      condition: eq(variables['imageName'], 'ubuntu-latest')
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(CoverageResults)/Cobertura.xml'
+        reportDirectory: '$(CoverageResults)'
+        pathToSources: '$(Build.SourcesDirectory)'
+
     - task: SonarCloudAnalyze@1
+      displayName: 'Perform SonarCloud analysis'
+      condition: eq(variables['imageName'], 'windows-latest')
 
     - task: SonarCloudPublish@1
+      displayName: 'Publish SonarCloud analysis'
+      condition: eq(variables['imageName'], 'windows-latest')
       inputs:
         pollingTimeoutSec: '300'
 
@@ -72,7 +115,7 @@ stages:
   - job: cd
     displayName: 'Generate package(s)'
     pool:
-      vmImage: $(Agent)
+      vmImage: ubuntu-latest
     steps:
 
     - checkout: self
@@ -119,11 +162,10 @@ stages:
       inputs:
         command: 'pack'
         arguments: '--configuration Release'
-        configuration: '$(BuildConfiguration)'
+        configuration: 'Release'
         packagesToPack: '**/FileParser.csproj'
         nobuild: true
         packDirectory: '$(Build.SourcesDirectory)/Artifacts'
-        versioningScheme: 'off'     # We're using ReplaceVersion target instead
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish artifact with NuGet package and its symbols'
