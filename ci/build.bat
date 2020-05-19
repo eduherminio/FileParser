@@ -1,1 +1,1 @@
-dotnet build ./src/FileParser --configuration Release --force --no-incremental --framework netstandard2.1
+dotnet build ./src/FileParser --configuration Release --force --no-incremental

@@ -6,7 +6,7 @@
 set -e
 
 dotnet restore ./src
-dotnet build ./src/FileParser --configuration Release --force --no-incremental --framework netstandard2.1
+dotnet build ./src/FileParser --configuration Release --force --no-incremental
 
 revision=${TRAVIS_JOB_ID:=1}
 revision=$(printf "%04d" $revision)
