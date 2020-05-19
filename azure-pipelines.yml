@@ -75,7 +75,7 @@ stages:
         arguments: >-
             --configuration Release --no-build
             /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura$(EscapedComma)opencover"
-            /p:CoverletOutput=./CoverageResults/ /p:ExcludeByFile="**/*Exceptions.cs$(EscapedComma)**/*Test.cs"
+            /p:CoverletOutput=./CoverageResults/ /p:ExcludeByFile="**/*Exception.cs$(EscapedComma)**/*Test.cs"
         nobuild: true
         projects: '**/FileParser.Test.csproj'
         publishTestResults: true
