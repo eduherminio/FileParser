@@ -144,19 +144,19 @@ stages:
             git config --replace-all user.name "Azure DevOps"
 
     - task: DotNetCoreCLI@2
-      displayName: 'Build'
-      inputs:
-        command: build
-        arguments: '--configuration Release /p:ContinuousIntegrationBuild=true'
-        projects: './src/FileParserSolution.sln'
-
-    - task: DotNetCoreCLI@2
       displayName: 'Modify project version'
       condition: ne(variables['PackageVersion'], '')
       inputs:
         command: build
         arguments: '--configuration Release /t:ReplaceVersion /p:VersionTag=$(PackageVersion)'
         projects: '**/FileParser.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
+      inputs:
+        command: build
+        arguments: '--configuration Release /p:ContinuousIntegrationBuild=true'
+        projects: './src/FileParserSolution.sln'
 
     - task: DotNetCoreCLI@2
       displayName: 'Generate NuGet package'

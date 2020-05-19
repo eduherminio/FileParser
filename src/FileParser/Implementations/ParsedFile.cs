@@ -122,6 +122,11 @@ namespace FileParser
         /// </summary>
         /// <param name="path"></param>
         /// <param name="existingSeparator">Word separator</param>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <exception cref="DirectoryNotFoundException"></exception>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
         public static Queue<IParsedLine> ParseFile(string path, string existingSeparator = null)
         {
@@ -153,9 +158,6 @@ namespace FileParser
             }
             catch (Exception e)
             {
-                // Possible exceptions:
-                // FileNotFoundException, DirectoryNotFoundException, IOException, ArgumentException
-
                 Print.WriteLine(e.Message);
                 Print.WriteLine("(path: {0}", path);
                 throw;
