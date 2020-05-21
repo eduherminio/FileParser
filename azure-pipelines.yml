@@ -132,7 +132,7 @@ stages:
     - task: NuGetToolInstaller@1
       displayName: 'Setup NuGet'
       inputs:
-        versionSpec: '5.3.1'
+        versionSpec: '5.5.0'
         checkLatest: true
 
     - task: CmdLine@2
@@ -199,7 +199,7 @@ stages:
         command: 'push'
         packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
-        publishFeedCredentials: 'GitHubPackageRegistry'
+        publishFeedCredentials: 'FileParser_GitHub'
         verbosityPush: 'Detailed'
 
     - task: CmdLine@2
