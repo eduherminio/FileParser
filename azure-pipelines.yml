@@ -150,8 +150,8 @@ stages:
     displayName: 'Generate package(s)'
     pool:
       vmImage: ubuntu-latest
-    steps:
 
+    steps:
     - checkout: self
       persistCredentials: true
       clean: true
@@ -214,9 +214,7 @@ stages:
           git switch $(Build.SourceBranchName)
           git status
           git commit -am "Release v$(PackageVersion)"
-          git tag -a v$(PackageVersion) -m "v$(PackageVersion)"
           git push
-          git push --tags
 
     - task: CmdLine@2
       displayName: 'Tag version release'
