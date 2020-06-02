@@ -197,7 +197,6 @@ stages:
 
     - task: CmdLine@2
       displayName: 'Modify FileParser version'
-      condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
       inputs:
         failOnStderr: true
         script: |
