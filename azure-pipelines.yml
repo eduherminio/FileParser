@@ -161,6 +161,14 @@ stages:
         artifact: FileParser
         path: $(Build.SourcesDirectory)/FileParser/Artifacts/
 
+    - task: CmdLine@2
+      displayName: 'Setup git profile
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)/FileParser
+        script: |
+          git config --replace-all user.email "azure@devops.com"
+          git config --replace-all user.name "Azure DevOps"
+
     - task: NuGetToolInstaller@1
       displayName: 'Setup NuGet'
       inputs:
@@ -203,11 +211,20 @@ stages:
       inputs:
         workingDirectory: $(Build.SourcesDirectory)/FileParser
         script: |
-          git config --replace-all user.email "azure@devops.com"
-          git config --replace-all user.name "Azure DevOps"
           git switch $(Build.SourceBranchName)
           git status
           git commit -am "Release v$(PackageVersion)"
           git tag -a v$(PackageVersion) -m "v$(PackageVersion)"
           git push
+          git push --tags
+
+    - task: CmdLine@2
+      displayName: 'Tag version release'
+      condition: and(succeeded(), eq(variables['NoCommit'], ''), eq(variables['NoTag'], ''))
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)/FileParser
+        script: |
+          git switch $(Build.SourceBranchName)
+          git status
+          git tag -a v$(PackageVersion) -m "v$(PackageVersion)"
           git push --tags
