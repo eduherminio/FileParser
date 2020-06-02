@@ -1,10 +1,5 @@
 name: $(BuildID)
 
-trigger:
-  branches:
-    include:
-    - master
-
 schedules:
 - cron: "1 0 * * 1"
   displayName: 'Weekly build'
@@ -15,13 +10,14 @@ schedules:
 
 variables:
   SdkVersion: '3.1.x'
+  DotnetVersionCliVersion: '2.0.0-next.7'
 
 stages:
 - stage: CI
-  displayName: 'Build and run tests'
+  displayName: 'CI'
   jobs:
   - job: ci
-    displayName: 'Build and run tests'
+    displayName: 'CI'
 
     strategy:
       maxParallel: 3
@@ -36,6 +32,8 @@ stages:
       vmImage: $(imageName)
 
     variables:
+      DefaultPackageVersion: '0.0.0-ci-$(Build.BuildNumber)'
+      PackageVersion: '$(DefaultPackageVersion)'
       disable.coverage.autogenerate: 'true'
       EscapedComma: '%2c'
       TestResults: '$(Agent.TempDirectory)'
@@ -47,6 +45,16 @@ stages:
       inputs:
         packageType: sdk
         version: '$(SdkVersion)'
+
+    - task: CmdLine@2
+      displayName: 'Modify FileParser version'
+      condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
+      inputs:
+        failOnStderr: true
+        script: |
+            dotnet new tool-manifest
+            dotnet tool install dotnet-version-cli --version $(DotnetVersionCliVersion)
+            dotnet version -f src/FileParser/FileParser.csproj --skip-vcs $(PackageVersion)
 
     - task: SonarCloudPrepare@1
       displayName: 'Prepare SonarCloud analysis'
@@ -62,10 +70,17 @@ stages:
             sonar.cs.vstest.reportsPaths="$(TestResults)/**/*.trx"
 
     - task: DotNetCoreCLI@2
+      displayName: 'Restore'
+      inputs:
+        command: restore
+        arguments: '--configuration Release'
+        projects: './src/FileParserSolution.sln'
+
+    - task: DotNetCoreCLI@2
       displayName: 'Build'
       inputs:
         command: build
-        arguments: '--configuration Release'
+        arguments: '--configuration Release --no-restore /p:ContinuousIntegrationBuild=true'
         projects: './src/FileParserSolution.sln'
 
     - task: DotNetCoreCLI@2
@@ -82,7 +97,7 @@ stages:
 
     - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
       displayName: 'Generate tests report'
-      condition: eq(variables['imageName'], 'ubuntu-latest')
+      condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
       inputs:
         reports: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
         targetdir: '$(CoverageResults)'
@@ -91,12 +106,30 @@ stages:
 
     - task: PublishCodeCoverageResults@1
       displayName: 'Publish code coverage'
-      condition: eq(variables['imageName'], 'ubuntu-latest')
+      condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
       inputs:
         codeCoverageTool: Cobertura
         summaryFileLocation: '$(CoverageResults)/Cobertura.xml'
         reportDirectory: '$(CoverageResults)'
         pathToSources: '$(Build.SourcesDirectory)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Generate NuGet package'
+      condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
+      inputs:
+        command: 'pack'
+        arguments: '--configuration Release'
+        configuration: 'Release'
+        packagesToPack: '**/FileParser.csproj'
+        nobuild: true
+        packDirectory: '$(Build.SourcesDirectory)/FileParser/Artifacts'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish artifact with NuGet package and its symbols'
+      condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
+      inputs:
+        pathtoPublish: '$(Build.SourcesDirectory)/FileParser/Artifacts/'
+        artifactName: 'FileParser'
 
     - task: SonarCloudAnalyze@1
       displayName: 'Perform SonarCloud analysis'
@@ -111,23 +144,30 @@ stages:
 - stage: CD
   displayName: 'Generate package(s)'
   dependsOn: 'CI'
-  condition: and(succeeded('CI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded('CI'), ne(variables['PackageVersion'], variables['DefaultPackageVersion']), ne(variables['Push'], ''))
   jobs:
   - job: cd
     displayName: 'Generate package(s)'
     pool:
       vmImage: ubuntu-latest
-    steps:
 
+    steps:
     - checkout: self
       persistCredentials: true
       clean: true
 
-    - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk v$(SdkVersion)'
+    - task: DownloadPipelineArtifact@2
       inputs:
-        packageType: sdk
-        version: '$(SdkVersion)'
+        artifact: FileParser
+        path: $(Build.SourcesDirectory)/FileParser/Artifacts/
+
+    - task: CmdLine@2
+      displayName: 'Setup git profile'
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)/FileParser
+        script: |
+          git config --replace-all user.email "azure@devops.com"
+          git config --replace-all user.name "Azure DevOps"
 
     - task: NuGetToolInstaller@1
       displayName: 'Setup NuGet'
@@ -135,83 +175,53 @@ stages:
         versionSpec: '5.5.0'
         checkLatest: true
 
-    - task: CmdLine@2
-      displayName: 'Setup Git'
-      inputs:
-        workingDirectory: $(Build.SourcesDirectory)
-        script: |
-            git config --replace-all user.email "azure@devops.com"
-            git config --replace-all user.name "Azure DevOps"
-
-    - task: DotNetCoreCLI@2
-      displayName: 'Modify project version'
-      condition: ne(variables['PackageVersion'], '')
-      inputs:
-        command: build
-        arguments: '--configuration Release /t:ReplaceVersion /p:VersionTag=$(PackageVersion)'
-        projects: '**/FileParser.csproj'
-
-    - task: DotNetCoreCLI@2
-      displayName: 'Build'
-      inputs:
-        command: build
-        arguments: '--configuration Release /p:ContinuousIntegrationBuild=true'
-        projects: './src/FileParserSolution.sln'
-
-    - task: DotNetCoreCLI@2
-      displayName: 'Generate NuGet package'
-      inputs:
-        command: 'pack'
-        arguments: '--configuration Release'
-        configuration: 'Release'
-        packagesToPack: '**/FileParser.csproj'
-        nobuild: true
-        packDirectory: '$(Build.SourcesDirectory)/Artifacts'
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish artifact with NuGet package and its symbols'
-      inputs:
-        pathtoPublish: '$(Build.SourcesDirectory)/Artifacts/'
-        artifactName: 'FileParser'
-
-    - task: DotNetCoreCLI@2
-      displayName: 'Test Nuget package locally'
-      inputs:
-        command: test
-        arguments: '--configuration Release --logger trx"'
-        nobuild: true
-        projects: '**/*NugetTest.csproj'
-
     - task: NuGetCommand@2
       displayName: 'Push NuGet package'
-      condition: ne(variables['PackageVersion'], '')
+      condition: and(succeeded(), eq(variables['NoNuGetPush'], ''))
       inputs:
         command: 'push'
-        packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
+        packagesToPush: '$(Build.SourcesDirectory)/FileParser/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
         publishFeedCredentials: 'FileParser_NuGet'
         verbosityPush: 'Detailed'
 
     - task: NuGetCommand@2
       displayName: 'Push GitHub package'
-      condition: ne(variables['PackageVersion'], '')
+      condition: and(succeeded(), eq(variables['NoGitHubPush'], ''))
       inputs:
         command: 'push'
-        packagesToPush: '$(Build.SourcesDirectory)/Artifacts/*.nupkg'
+        packagesToPush: '$(Build.SourcesDirectory)/FileParser/Artifacts/*.nupkg'
         nuGetFeedType: 'external'
         publishFeedCredentials: 'FileParser_GitHub'
         verbosityPush: 'Detailed'
 
     - task: CmdLine@2
-      displayName: 'Commit and push version increment'
-      condition: and(eq(variables['NoCommit'], ''), ne(variables['PackageVersion'], ''))
+      displayName: 'Modify FileParser version'
       inputs:
-        workingDirectory: $(Build.SourcesDirectory)
+        failOnStderr: true
         script: |
-          git checkout master
+            dotnet new tool-manifest
+            dotnet tool install dotnet-version-cli --version $(DotnetVersionCliVersion)
+            dotnet version -f src/FileParser/FileParser.csproj --skip-vcs $(PackageVersion)
+
+    - task: CmdLine@2
+      displayName: 'Commit and push version increment'
+      condition: and(succeeded(), eq(variables['NoCommit'], ''))
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)/FileParser
+        script: |
+          git switch $(Build.SourceBranchName)
           git status
-          git add -A
-          git commit -m "Release v$(PackageVersion)"
-          git tag -a v$(PackageVersion) -m "v$(PackageVersion)"
+          git commit -am "Release v$(PackageVersion)"
           git push
+
+    - task: CmdLine@2
+      displayName: 'Tag version release'
+      condition: and(succeeded(), eq(variables['NoCommit'], ''), eq(variables['NoTag'], ''))
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)/FileParser
+        script: |
+          git switch $(Build.SourceBranchName)
+          git status
+          git tag -a v$(PackageVersion) -m "v$(PackageVersion)"
           git push --tags

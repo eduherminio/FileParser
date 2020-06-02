@@ -25,7 +25,4 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
-  <Import Project="FileParser.targets" />
-  <Import Project="FileParser.tasks" />
-
 </Project>
