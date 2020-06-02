@@ -162,7 +162,7 @@ stages:
         path: $(Build.SourcesDirectory)/FileParser/Artifacts/
 
     - task: CmdLine@2
-      displayName: 'Setup git profile'
+      displayName: 'Setup git profile
       inputs:
         workingDirectory: $(Build.SourcesDirectory)/FileParser
         script: |
