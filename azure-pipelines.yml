@@ -122,7 +122,7 @@ stages:
         configuration: 'Release'
         packagesToPack: '**/FileParser.csproj'
         nobuild: true
-        packDirectory: '$(Build.SourcesDirectory)/Artifacts'
+        packDirectory: '$(Build.SourcesDirectory)/FileParser/Artifacts'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish artifact with NuGet package and its symbols'
