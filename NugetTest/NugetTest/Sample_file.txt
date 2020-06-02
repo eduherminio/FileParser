@@ -1,3 +1,0 @@
- 23  food    
-  3  100 200 300    apple peer 
- 4  400   500    600 700 banana    meat  fish       
