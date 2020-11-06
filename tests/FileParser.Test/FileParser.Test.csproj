@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FileParser\FileParser.csproj" />
+    <ItemsToCopy Include="$(MSBuildThisFileDirectory)\TestFiles\*.*" />
   </ItemGroup>
 
   <ItemGroup>
-    <ItemsToCopy Include="$(MSBuildThisFileDirectory)\TestFiles\*.*" />
+    <ProjectReference Include="..\..\src\FileParser\FileParser.csproj" />
   </ItemGroup>
 
   <Target Name="CopyInputFilesToOutputDir" AfterTargets="Build">
