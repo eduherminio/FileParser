@@ -1,17 +1,18 @@
 language: csharp
-dist: xenial
+os:
+- linux
+- osx
+- windows
+dist: bionic
 sudo: required
 mono: none
-dotnet: 3.1
-branches:
-    only:
-        - master
-before_script:
-    - chmod -R 777 ./ci/
+dotnet: 5.0.100-rc.2.20479.15
 script:
-    - ./ci/build.sh
-    - ./ci/test.sh
+    - dotnet restore
+    - dotnet build --no-restore -c Release /p:DeterministicBuild=true
+    - dotnet test --no-build -c Release --logger trx --collect "Code coverage"
+    - revision=${TRAVIS_JOB_ID:=1}
+    - revision=$(printf "%04d" $revision)
 notifications:
     email:
-        - on_success: always
         - on_failure: always

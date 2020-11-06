@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>FileParser</Title>
@@ -12,7 +11,7 @@
     <Description>
       File parser designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
     </Description>
-    <PackageLicenseUrl>https://github.com/eduherminio/FileParser/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/eduherminio/FileParser</PackageProjectUrl>
     <RepositoryUrl>https://github.com/eduherminio/FileParser</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

@@ -13,11 +13,11 @@ namespace FileParser
         /// <param name="str"></param>
         /// <param name="typeConverter"></param>
         /// <returns></returns>
-        public static T Convert<T>(string str, TypeConverter typeConverter = null)
+        public static T Convert<T>(string str, TypeConverter? typeConverter = null)
         {
             if (typeof(T).IsPrimitive)
             {
-                return typeConverter == null
+                return typeConverter is null
                     ? TConverter.ChangeType<T>(str)
                     : TConverter.ChangeType<T>(str, typeConverter);
             }

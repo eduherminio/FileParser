@@ -77,12 +77,6 @@ namespace FileParser.Test
             Queue<string> testQueue = new Queue<string>(new string[] { string.Empty });
             ParsedLine testLine = new ParsedLine(testQueue);
             Assert.Throws<ParsingException>(() => testLine.NextElement<char>());
-
-            const string stringNull = null;
-            testQueue = new Queue<string>(new string[] { stringNull });
-            testLine = new ParsedLine(testQueue);
-
-            Assert.Throws<ParsingException>(() => testLine.NextElement<char>());
         }
     }
 }

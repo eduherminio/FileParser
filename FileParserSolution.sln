@@ -3,23 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileParser", "FileParser\FileParser.csproj", "{C8AA97F4-4C59-49DF-ACF4-944CA78D221F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileParser", "src\FileParser\FileParser.csproj", "{C8AA97F4-4C59-49DF-ACF4-944CA78D221F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileParser.Test", "FileParser.Test\FileParser.Test.csproj", "{EA8321AC-899B-417B-8E67-056AA5EB340E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileParser.Test", "tests\FileParser.Test\FileParser.Test.csproj", "{EA8321AC-899B-417B-8E67-056AA5EB340E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8E3B14F-7393-4CEF-9EDB-2E630190FACD}"
 	ProjectSection(SolutionItems) = preProject
-		..\.travis.yml = ..\.travis.yml
-		..\azure-pipelines.yml = ..\azure-pipelines.yml
-		..\ci\build.bat = ..\ci\build.bat
-		..\ci\build.sh = ..\ci\build.sh
-		..\.circleci\config.yml = ..\.circleci\config.yml
-		DeterministicBuild.targets = DeterministicBuild.targets
+		.travis.yml = .travis.yml
+		azure-pipelines.yml = azure-pipelines.yml
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.circleci\config.yml = .circleci\config.yml
 		Directory.Build.props = Directory.Build.props
-		Directory.Build.targets = Directory.Build.targets
-		..\.github\workflows\github-actions.yml = ..\.github\workflows\github-actions.yml
-		..\ci\test.bat = ..\ci\test.bat
-		..\ci\test.sh = ..\ci\test.sh
+		.github\workflows\github-actions.yml = .github\workflows\github-actions.yml
+		.github\workflows\publish.yml = .github\workflows\publish.yml
 	EndProjectSection
 EndProject
 Global
