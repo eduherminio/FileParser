@@ -50,7 +50,7 @@ namespace FileParser
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        List<T> ToList<T>(string lineSeparatorToAdd = null);
+        List<T> ToList<T>(string? lineSeparatorToAdd = null);
 
         /// <summary>
         /// Returns remaining elements as a single string, separated by given wordSeparator and lineSeparator
@@ -58,7 +58,7 @@ namespace FileParser
         /// <param name="wordSeparator"></param>
         /// <param name="lineSeparator"></param>
         /// <returns></returns>
-        string ToSingleString(string wordSeparator = " ", string lineSeparator = null);
+        string ToSingleString(string wordSeparator = " ", string? lineSeparator = null);
 
         /// <summary>
         /// Appends a line to the end of the file
