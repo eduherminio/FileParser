@@ -9,8 +9,7 @@ schedules:
     - master
 
 variables:
-  SdkVersion: '3.1.x'
-  DotnetVersionCliVersion: '2.0.0-next.7'
+  SdkVersion: '5.0.100-rc.2.20479.15'
 
 stages:
 - stage: CI
@@ -32,8 +31,6 @@ stages:
       vmImage: $(imageName)
 
     variables:
-      DefaultPackageVersion: '0.0.0-ci-$(Build.BuildNumber)'
-      PackageVersion: '$(DefaultPackageVersion)'
       disable.coverage.autogenerate: 'true'
       EscapedComma: '%2c'
       TestResults: '$(Agent.TempDirectory)'
@@ -45,16 +42,6 @@ stages:
       inputs:
         packageType: sdk
         version: '$(SdkVersion)'
-
-    - task: CmdLine@2
-      displayName: 'Modify FileParser version'
-      condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
-      inputs:
-        failOnStderr: true
-        script: |
-            dotnet new tool-manifest
-            dotnet tool install dotnet-version-cli --version $(DotnetVersionCliVersion)
-            dotnet version -f src/FileParser/FileParser.csproj --skip-vcs $(PackageVersion)
 
     - task: SonarCloudPrepare@1
       displayName: 'Prepare SonarCloud analysis'
