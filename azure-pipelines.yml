@@ -74,14 +74,14 @@ stages:
       inputs:
         command: restore
         arguments: '--configuration Release'
-        projects: './src/FileParserSolution.sln'
+        projects: './FileParserSolution.sln'
 
     - task: DotNetCoreCLI@2
       displayName: 'Build'
       inputs:
         command: build
         arguments: '--configuration Release --no-restore /p:DeterministicBuild=true'
-        projects: './src/FileParserSolution.sln'
+        projects: './FileParserSolution.sln'
 
     - task: DotNetCoreCLI@2
       displayName: 'Run tests'
