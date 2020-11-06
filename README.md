@@ -30,9 +30,11 @@
 [sonarbugslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=bugs
 [sonarcodesmellslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=code_smells
 
-**FileParser** is a **.NET Standard** library designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
+**FileParser** is a **.NET** library designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
 
-It is also available (since v1.0) for .NET Framework 4.6, and I'll do my best to keep it that way in future FileParser versions. More info about .NET Standard & .NET Framework compatibility can be found [here](https://docs.microsoft.com/es-es/dotnet/standard/net-standard#net-implementation-support).
+- .NET Framework 4.6 was supported until v1.4.x.
+- .NET Standard 2.0 and 2.1 were supported until v1.6.x.
+- `Nullable` is enabled from 1.6.x.
 
 ## Purpose
 
