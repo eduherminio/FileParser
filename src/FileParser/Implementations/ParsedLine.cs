@@ -163,9 +163,10 @@ namespace FileParser
                 throw new ParsingException("String is empty");
             }
 
+            char nextChar = str[0];
             str = str[1..];
 
-            return str[0];
+            return nextChar;
         }
 
         /// <summary>
