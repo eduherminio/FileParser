@@ -11,11 +11,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Give permissions to CI scripts
-          command: chmod -R 777 ./ci/
+          name: Restore
+          command: dotnet restore
       - run:
           name: Build
-          command: ./ci/build.sh
+          command: dotnet build --no-restore -c Release /p:DeterministicBuild=true
       - run:
           name: Test
-          command: ./ci/test.sh
+          command: dotnet test --no-build -c Release --logger trx --collect "Code coverage"

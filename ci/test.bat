@@ -1,1 +1,0 @@
-dotnet test ./src/FileParser.Test --framework=netcoreapp3.1 --logger trx --collect "Code coverage"

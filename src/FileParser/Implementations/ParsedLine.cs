@@ -163,7 +163,7 @@ namespace FileParser
                 throw new ParsingException("String is empty");
             }
 
-            char nextChar = str.First();
+            char nextChar = str[0];
             str = str.Substring(1);
 
             return nextChar;

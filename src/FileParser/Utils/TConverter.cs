@@ -15,9 +15,9 @@ namespace FileParser
     /// </summary>
     internal static class TConverter
     {
-        internal static T ChangeType<T>(object value, TypeConverter typeConverter = null)
+        internal static T ChangeType<T>(object value, TypeConverter? typeConverter = null)
         {
-            return typeConverter == null
+            return typeConverter is null
                     ? (T)ChangeType(typeof(T), value)
                     : (T)typeConverter.ConvertFrom(value);
         }
@@ -40,7 +40,7 @@ namespace FileParser
         {
             double result;
 
-            string doubleAsString = value.ToString();
+            string doubleAsString = value.ToString() ?? throw new ParsingException($"Error parsing value as double");
             IEnumerable<char> doubleAsCharList = doubleAsString.ToList();
 
             if (doubleAsCharList.Count(ch => ch == '.' || ch == ',') <= 1)

@@ -44,7 +44,7 @@ namespace FileParser
         /// </summary>
         /// <param name="path">FilePath</param>
         /// <param name="existingSeparator">Word separator (space by default)</param>
-        public ParsedFile(string path, string existingSeparator = null)
+        public ParsedFile(string path, string? existingSeparator = null)
             : base(ParseFile(path, existingSeparator))
         {
         }
@@ -73,7 +73,7 @@ namespace FileParser
             return this.Last();
         }
 
-        public List<T> ToList<T>(string lineSeparatorToAdd = null)
+        public List<T> ToList<T>(string? lineSeparatorToAdd = null)
         {
             List<T> list = new List<T>();
 
@@ -81,7 +81,7 @@ namespace FileParser
             {
                 foreach (IParsedLine parsedLine in this)
                 {
-                    parsedLine.Append(lineSeparatorToAdd);
+                    parsedLine.Append(lineSeparatorToAdd!);
                 }
             }
 
@@ -93,7 +93,7 @@ namespace FileParser
             return list;
         }
 
-        public string ToSingleString(string wordSeparator = " ", string lineSeparator = null)
+        public string ToSingleString(string wordSeparator = " ", string? lineSeparator = null)
         {
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -128,19 +128,17 @@ namespace FileParser
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public static Queue<IParsedLine> ParseFile(string path, string existingSeparator = null)
+        public static Queue<IParsedLine> ParseFile(string path, string? existingSeparator = null)
         {
             Queue<IParsedLine> parsedFile = new Queue<IParsedLine>();
 
             try
             {
-                StreamReader reader = new StreamReader(path);
-
-                using (reader)
+                using (StreamReader reader = new StreamReader(path))
                 {
                     while (!reader.EndOfStream)
                     {
-                        string original_line = reader.ReadLine();
+                        string? original_line = reader.ReadLine();
 
                         // TODO: Evaluate if is it worth giving the user the option of detecting these kind of lines?
                         if (string.IsNullOrWhiteSpace(original_line))
@@ -164,7 +162,7 @@ namespace FileParser
             }
         }
 
-        private static ICollection<string> ProcessLine(string original_line, string separator)
+        private static ICollection<string> ProcessLine(string original_line, string? separator)
         {
             List<string> wordsInLine = original_line
                 .Split(separator?.ToCharArray())
