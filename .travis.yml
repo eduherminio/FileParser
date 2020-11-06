@@ -6,7 +6,7 @@ os:
 dist: bionic
 sudo: required
 mono: none
-dotnet: 5.0.100-rc.2.20479.15
+dotnet: 5.0
 script:
     - dotnet restore
     - dotnet build --no-restore -c Release /p:DeterministicBuild=true
