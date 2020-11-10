@@ -1,6 +1,7 @@
 <Project>
 
   <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>Enable</Nullable>
   </PropertyGroup>

@@ -2,7 +2,7 @@ language: csharp
 dist: bionic
 sudo: required
 mono: none
-dotnet: 3.1
+dotnet: 5.0
 script:
     - dotnet restore
     - dotnet build --no-restore -c Release /p:DeterministicBuild=true

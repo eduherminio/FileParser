@@ -164,7 +164,7 @@ namespace FileParser
             }
 
             char nextChar = str[0];
-            str = str.Substring(1);
+            str = str[1..];
 
             return nextChar;
         }

@@ -81,7 +81,7 @@ namespace FileParser
             {
                 foreach (IParsedLine parsedLine in this)
                 {
-                    parsedLine.Append(lineSeparatorToAdd!);
+                    parsedLine.Append(lineSeparatorToAdd);
                 }
             }
 
