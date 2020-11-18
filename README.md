@@ -13,22 +13,7 @@
 
 [![Nuget][nugetlogo]][nugetlink]
 
-[azuredevopslogo]: https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=master
-[azuredevopslink]: https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=master
-[githubactionslogo]: https://github.com/eduherminio/FileParser/workflows/CI%20GitHub%20Actions/badge.svg
-[githubactionslink]: https://github.com/eduherminio/FileParser/actions
-[traviscilogo]: https://travis-ci.com/eduherminio/FileParser.svg?branch=master
-[traviscilink]: https://travis-ci.com/eduherminio/FileParser
-[circlecilogo]: https://circleci.com/gh/eduherminio/FileParser/tree/master.svg?style=svg
-[circlecilink]: https://circleci.com/gh/eduherminio/FileParser/tree/master
-[nugetlogo]: https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget
-[nugetlink]: https://www.nuget.org/packages/FileParser
-[sonarqubelink]: https://sonarcloud.io/dashboard?id=FileParser
-[sonarqualitylogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=alert_status
-[sonarcoveragelogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=coverage
-[sonarvulnerabilitieslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=vulnerabilities
-[sonarbugslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=bugs
-[sonarcodesmellslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=code_smells
+[![API][apimundologo]][apimundolink]
 
 **FileParser** is a **.NET** library designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
 
@@ -153,3 +138,22 @@ Besides the WIKI, some real (own) projects where it has been used are:
 If anyone else ever happens to use FileParser, I'll be happy to accept suggestions and solve any doubts.
 
 Just open an issue :)
+
+[githubactionslogo]: https://github.com/eduherminio/FileParser/workflows/CI%20GitHub%20Actions/badge.svg
+[githubactionslink]: https://github.com/eduherminio/FileParser/actions
+[azuredevopslogo]: https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=master
+[azuredevopslink]: https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=master
+[traviscilogo]: https://travis-ci.com/eduherminio/FileParser.svg?branch=master
+[traviscilink]: https://travis-ci.com/eduherminio/FileParser
+[circlecilogo]: https://circleci.com/gh/eduherminio/FileParser/tree/master.svg?style=svg
+[circlecilink]: https://circleci.com/gh/eduherminio/FileParser/tree/master
+[nugetlogo]: https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget
+[nugetlink]: https://www.nuget.org/packages/FileParser
+[apimundologo]: https://img.shields.io/badge/FileParser%20API-Apimundo-728199.svg
+[apimundolink]: https://apimundo.com/organizations/nuget-org/nuget-feeds/public/packages/FileParser/versions/latest?tab=types
+[sonarqubelink]: https://sonarcloud.io/dashboard?id=FileParser
+[sonarqualitylogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=alert_status
+[sonarcoveragelogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=coverage
+[sonarvulnerabilitieslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=vulnerabilities
+[sonarbugslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=bugs
+[sonarcodesmellslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=code_smells
