@@ -68,13 +68,13 @@ jobs:
 
     - name: 'Generate test coverage report'
       continue-on-error: true
-      uses: danielpalme/ReportGenerator-GitHub-Action@4.8.0
+      uses: danielpalme/ReportGenerator-GitHub-Action@4.8.1
       with:
         reports: 'tests/**/*.cobertura.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline_AzurePipelines_Dark'
         assemblyfilters: '+*'
-        classfilters: '+*'
+        classfilters: '+*;-*Exception'
         filefilters: '+*'
         verbosity: 'Info'
         title: '${{ env.PROJECT_NAME }} #${{ github.run_number }} (${{ env.GITHUB_REF_SLUG }})'
@@ -113,6 +113,7 @@ jobs:
         nuget push '${{ env.ARTIFACT_DIR }}/*.nupkg' -ApiKey ${{ secrets.GitHubToken }} -Source https://nuget.pkg.github.com/eduherminio/index.json -SkipDuplicate -Verbosity detailed
 
     - name: Commit and push version increment
+      continue-on-error: true
       if: github.event.inputs.should_commit_new_version == 'true'
       run: |
         git switch ${{ env.GITHUB_REF_SLUG }}

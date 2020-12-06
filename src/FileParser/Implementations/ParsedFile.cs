@@ -114,6 +114,16 @@ namespace FileParser
 
         public void Append(IParsedLine parsedLine) => Enqueue(parsedLine);
 
+        public static List<List<string>> ReadAllGroupsOfLines(string path)
+        {
+            return File.ReadAllText(path)
+                .Replace("\r", "")
+                .Split("\n\n")
+                .Where(str => !string.IsNullOrEmpty(str))
+                .Select(str => str.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList())
+                .ToList();
+        }
+
         #region Private methods
 
         /// <summary>
