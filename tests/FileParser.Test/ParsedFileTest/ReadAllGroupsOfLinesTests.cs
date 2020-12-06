@@ -8,6 +8,9 @@ namespace FileParser.Test.ParsedFileTest
     {
         private readonly string _sampleFolderPath = "TestFiles" + Path.DirectorySeparatorChar;
 
+        /// <summary>
+        /// Test case taken from https://github.com/eduherminio/AoC2020/blob/main/src/AoC_2020/Day_06.cs
+        /// </summary>
         [Fact]
         public void ReadAllGroupsOfLines()
         {
