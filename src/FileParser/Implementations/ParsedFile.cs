@@ -117,7 +117,7 @@ namespace FileParser
         public static List<List<string>> ReadAllGroupsOfLines(string path)
         {
             return File.ReadAllText(path)
-                .Replace("\r", "")
+                .Replace("\r\n", "\n")
                 .Split("\n\n")
                 .Where(str => !string.IsNullOrEmpty(str))
                 .Select(str => str.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList())
