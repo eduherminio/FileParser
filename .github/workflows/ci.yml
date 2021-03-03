@@ -64,7 +64,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN2 }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"eduherminio_FileParser" /o:"eduherminio-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.scanner.force-deprecated-java-version=true
