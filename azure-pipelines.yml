@@ -43,19 +43,6 @@ stages:
         packageType: sdk
         version: '$(SdkVersion)'
 
-    - task: SonarCloudPrepare@1
-      displayName: 'Prepare SonarCloud analysis'
-      condition: eq(variables['imageName'], 'windows-latest')
-      inputs:
-        SonarCloud: 'FileParser_SonarCloud'
-        organization: 'eduherminio-github'
-        scannerMode: 'MSBuild'
-        projectKey: 'FileParser'
-        projectName: 'FileParser'
-        extraProperties: |
-            sonar.cs.opencover.reportsPaths="$(Build.SourcesDirectory)/**/coverage.opencover.xml"
-            sonar.cs.vstest.reportsPaths="$(TestResults)/**/*.trx"
-
     - task: DotNetCoreCLI@2
       displayName: 'Restore'
       inputs:
@@ -74,10 +61,7 @@ stages:
       displayName: 'Run tests'
       inputs:
         command: test
-        arguments: >-
-            --configuration Release --no-build
-            /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura$(EscapedComma)opencover"
-            /p:CoverletOutput=./CoverageResults/ /p:ExcludeByFile="**/*Exception.cs$(EscapedComma)**/*Test.cs"
+        arguments: --configuration Release --no-build --collect:"XPlat Code Coverage"
         nobuild: true
         projects: '**/FileParser.Test.csproj'
         publishTestResults: true
@@ -86,10 +70,11 @@ stages:
       displayName: 'Generate tests report'
       condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
       inputs:
-        reports: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+        reports: '$(Agent.TempDirectory)/**/*.cobertura.xml'
         targetdir: '$(CoverageResults)'
         reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
         assemblyfilters: '-xunit*'
+        classfilters: '+*;-*Exception'
 
     - task: PublishCodeCoverageResults@1
       displayName: 'Publish code coverage'
@@ -118,12 +103,3 @@ stages:
         pathtoPublish: '$(Build.SourcesDirectory)/FileParser/Artifacts/'
         artifactName: 'FileParser'
 
-    - task: SonarCloudAnalyze@1
-      displayName: 'Perform SonarCloud analysis'
-      condition: eq(variables['imageName'], 'windows-latest')
-
-    - task: SonarCloudPublish@1
-      displayName: 'Publish SonarCloud analysis'
-      condition: eq(variables['imageName'], 'windows-latest')
-      inputs:
-        pollingTimeoutSec: '300'
