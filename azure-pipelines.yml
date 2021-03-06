@@ -6,7 +6,7 @@ schedules:
   always: true
   branches:
     include:
-    - master
+    - main
 
 variables:
   SdkVersion: '5.0.100'
