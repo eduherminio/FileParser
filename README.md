@@ -25,7 +25,7 @@
 
 This project was born with a very specific purpose: providing a tool with whom easily parse files with a known structure, ideally being as flexible and easy to use as C++ standard IO approach.
 
-For those who don't understand what I mean, here's a simple Use Case ([also reposited](https://github.com/eduherminio/FileParser/tree/master/Examples)):
+For those who don't understand what I mean, here's a simple Use Case ([also reposited](https://github.com/eduherminio/FileParser/tree/main/Examples)):
 
 Given the following `input.txt`, which contains an integer n (>=0) followed by n doubles and a final string,
 
@@ -141,19 +141,19 @@ Just open an issue :)
 
 [githubactionslogo]: https://github.com/eduherminio/FileParser/workflows/CI%20GitHub%20Actions/badge.svg
 [githubactionslink]: https://github.com/eduherminio/FileParser/actions
-[azuredevopslogo]: https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=master
-[azuredevopslink]: https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=master
-[traviscilogo]: https://travis-ci.com/eduherminio/FileParser.svg?branch=master
+[azuredevopslogo]: https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=main
+[azuredevopslink]: https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=main
+[traviscilogo]: https://travis-ci.com/eduherminio/FileParser.svg?branch=main
 [traviscilink]: https://travis-ci.com/eduherminio/FileParser
-[circlecilogo]: https://circleci.com/gh/eduherminio/FileParser/tree/master.svg?style=svg
-[circlecilink]: https://circleci.com/gh/eduherminio/FileParser/tree/master
+[circlecilogo]: https://circleci.com/gh/eduherminio/FileParser/tree/main.svg?style=svg
+[circlecilink]: https://circleci.com/gh/eduherminio/FileParser/tree/main
 [nugetlogo]: https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget
 [nugetlink]: https://www.nuget.org/packages/FileParser
 [apimundologo]: https://img.shields.io/badge/FileParser%20API-Apimundo-728199.svg
 [apimundolink]: https://apimundo.com/organizations/nuget-org/nuget-feeds/public/packages/FileParser/versions/latest?tab=types
-[sonarqubelink]: https://sonarcloud.io/dashboard?id=FileParser
-[sonarqualitylogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=alert_status
-[sonarcoveragelogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=coverage
-[sonarvulnerabilitieslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=vulnerabilities
-[sonarbugslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=bugs
-[sonarcodesmellslogo]: https://sonarcloud.io/api/project_badges/measure?project=FileParser&metric=code_smells
+[sonarqubelink]: https://sonarcloud.io/dashboard?id=eduherminio_FileParser
+[sonarqualitylogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=alert_status
+[sonarcoveragelogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=coverage
+[sonarvulnerabilitieslogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=vulnerabilities
+[sonarbugslogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=bugs
+[sonarcodesmellslogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=code_smells
