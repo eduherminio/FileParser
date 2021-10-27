@@ -42,7 +42,6 @@ stages:
       inputs:
         packageType: sdk
         version: '$(SdkVersion)'
-        includePreviewVersions: true
 
     - task: DotNetCoreCLI@2
       displayName: 'Restore'
