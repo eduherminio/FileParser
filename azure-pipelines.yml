@@ -9,7 +9,7 @@ schedules:
     - main
 
 variables:
-  SdkVersion: '5.0.100'
+  SdkVersion: '5.0.x'
 
 stages:
 - stage: CI
@@ -38,7 +38,7 @@ stages:
 
     steps:
     - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk v$(SdkVersion)'
+      displayName: 'Use .NET sdk v$(SdkVersion)'
       inputs:
         packageType: sdk
         version: '$(SdkVersion)'
