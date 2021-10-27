@@ -38,10 +38,11 @@ stages:
 
     steps:
     - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk v$(SdkVersion)'
+      displayName: 'Use .NET sdk v$(SdkVersion)'
       inputs:
         packageType: sdk
         version: '$(SdkVersion)'
+        includePreviewVersions: true
 
     - task: DotNetCoreCLI@2
       displayName: 'Restore'
