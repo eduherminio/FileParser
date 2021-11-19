@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 using Xunit;
 
 namespace FileParser.Test.ParsedFileTest
@@ -14,10 +11,10 @@ namespace FileParser.Test.ParsedFileTest
             const string fileName = "CustomLineParse.txt";
             const string sampleContent = "  3  1154 508 100    vegetable ";
 
-            List<long> expectedList = new List<long>() { 1154, 508, 100 };
+            List<long> expectedList = new() { 1154, 508, 100 };
             const string expectedString = "vegetable";
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -48,9 +45,9 @@ namespace FileParser.Test.ParsedFileTest
             const string line1 = "+-*/!?#$%&";
             const string line2 = "@()[]{}\"";
 
-            StringBuilder parsedFile = new StringBuilder(string.Empty);
+            StringBuilder parsedFile = new(string.Empty);
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new(fileName))
             {
                 writer.WriteLine(Math.PI.ToString());
                 writer.WriteLine(line1);

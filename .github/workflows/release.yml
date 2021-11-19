@@ -1,4 +1,4 @@
-name: Release
+﻿name: Release
 
 on:
   workflow_dispatch:
@@ -51,7 +51,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
 
     - name: Set version to ${{ github.event.inputs.new_package_version }}
       shell: pwsh
@@ -118,7 +118,7 @@ jobs:
       run: |
         git switch ${{ env.GITHUB_REF_SLUG }}
         git status
-        git commit -am "Release v${{ github.event.inputs.new_package_version }}"
+        git commit -am "🚀 Release v${{ github.event.inputs.new_package_version }}"
         git push
 
     - name: Create git tag

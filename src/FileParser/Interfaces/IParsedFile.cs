@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace FileParser
+﻿namespace FileParser
 {
     public interface IParsedFile
     {

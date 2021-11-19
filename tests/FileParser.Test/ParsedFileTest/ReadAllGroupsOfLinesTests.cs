@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Linq;
-using Xunit;
+﻿using Xunit;
 
 namespace FileParser.Test.ParsedFileTest
 {

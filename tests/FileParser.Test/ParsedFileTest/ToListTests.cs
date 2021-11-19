@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Xunit;
 
 namespace FileParser.Test.ParsedFileTest
@@ -46,7 +43,7 @@ namespace FileParser.Test.ParsedFileTest
             const string separator = "$$$$$$$";
             const string sampleContent = "   $$$$$$$one$$$$$$$two$$$$$$$three$$$$$$$four$$$$$$$   ";
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -63,7 +60,7 @@ namespace FileParser.Test.ParsedFileTest
             const string fileName = "Sample_ListOfbools.txt";
             const string sampleContent = " true false true";
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -78,7 +75,7 @@ namespace FileParser.Test.ParsedFileTest
             const string fileName = "Sample_ListOfints.txt";
             const string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -93,7 +90,7 @@ namespace FileParser.Test.ParsedFileTest
             const string fileName = "Sample_ListOfints.txt";
             const string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -108,7 +105,7 @@ namespace FileParser.Test.ParsedFileTest
             const string fileName = "Sample_ListOfints.txt";
             const string sampleContent = " 0 1 2  3  4    5 6 7 8 9 ";
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new(fileName))
             {
                 writer.WriteLine(sampleContent);
             }
@@ -124,7 +121,7 @@ namespace FileParser.Test.ParsedFileTest
             ICollection<double> vectorOfDoubles = new List<double>() { 0.0, 1.10, 2.2, 3.30, 4, 5.5, 6.60, 7.7, 8.8000, 9 };
             string vectorToWrite = string.Join(" ", vectorOfDoubles);   // Avoiding dependency on culture (. or ,)
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new(fileName))
             {
                 writer.WriteLine(vectorToWrite);
             }
