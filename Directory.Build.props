@@ -4,9 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>Enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-    <PropertyGroup Condition="'$(DeterministicBuild)' == 'true'">
+  <PropertyGroup Condition="'$(DeterministicBuild)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Xunit;
+﻿using Xunit;
 
 namespace FileParser.Test
 {
