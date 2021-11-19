@@ -37,10 +37,8 @@ namespace FileParser.Test
         {
             const string fileName = "Any.txt";
 
-            using (StreamWriter writer = new StreamWriter(fileName))
-            {
-                Assert.Throws<IOException>(() => new ParsedFile(fileName));
-            }
+            using StreamWriter writer = new(fileName);
+            Assert.Throws<IOException>(() => new ParsedFile(fileName));
         }
 
         [Fact]
@@ -71,8 +69,8 @@ namespace FileParser.Test
 
             Assert.Throws<ParsingException>(() => line.NextElement<object>());
 
-            Queue<string> testQueue = new Queue<string>(new string[] { string.Empty });
-            ParsedLine testLine = new ParsedLine(testQueue);
+            Queue<string> testQueue = new(new string[] { string.Empty });
+            ParsedLine testLine = new(testQueue);
             Assert.Throws<ParsingException>(() => testLine.NextElement<char>());
         }
     }

@@ -61,7 +61,7 @@ namespace FileParser
 
         public List<T> ToList<T>()
         {
-            List<T> list = new List<T>();
+            List<T> list = new();
 
             while (!Empty)
             {
@@ -73,7 +73,7 @@ namespace FileParser
 
         public string ToSingleString(string wordSeparator = " ")
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new();
 
             while (!Empty)
             {

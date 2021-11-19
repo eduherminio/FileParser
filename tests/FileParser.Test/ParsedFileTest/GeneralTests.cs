@@ -14,8 +14,8 @@ namespace FileParser.Test.ParsedFileTest
             // Following lines firstly indicate how many numeric elements are following.
             // After those numeric elements, they include an unknown number of items.
 
-            List<int> numberList = new List<int>();
-            List<string> stringList = new List<string>();
+            List<int> numberList = new();
+            List<string> stringList = new();
 
             IParsedFile file = new ParsedFile(_sampleFolderPath + "Sample_file.txt");
 
@@ -82,8 +82,8 @@ namespace FileParser.Test.ParsedFileTest
 
             while (!file.Empty)
             {
-                List<int> peekedNumberList = new List<int>();
-                List<string> peekedStringList = new List<string>();
+                List<int> peekedNumberList = new();
+                List<string> peekedStringList = new();
 
                 IParsedLine peekedLine = file.PeekNextLine();
                 int peekedCounter = peekedLine.PeekNextElement<int>();

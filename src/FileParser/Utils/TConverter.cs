@@ -16,7 +16,7 @@ namespace FileParser
         {
             return typeConverter is null
                     ? (T)ChangeType(typeof(T), value)
-                    : (T)typeConverter.ConvertFrom(value);
+                    : (T)typeConverter.ConvertFrom(value)!;
         }
 
         private static object ChangeType(Type t, object value)
@@ -29,7 +29,7 @@ namespace FileParser
             {
                 TypeConverter tc = TypeDescriptor.GetConverter(t);
 
-                return tc.ConvertFrom(value);
+                return tc.ConvertFrom(value)!;
             }
         }
 
@@ -37,7 +37,7 @@ namespace FileParser
         {
             double result;
 
-            string doubleAsString = value.ToString() ?? throw new ParsingException($"Error parsing value as double");
+            string doubleAsString = value.ToString() ?? throw new ParsingException("Error parsing value as double");
             IEnumerable<char> doubleAsCharList = doubleAsString.ToList();
 
             if (doubleAsCharList.Count(ch => ch == '.' || ch == ',') <= 1)

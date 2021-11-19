@@ -71,7 +71,7 @@ namespace FileParser
 
         public List<T> ToList<T>(string? lineSeparatorToAdd = null)
         {
-            List<T> list = new List<T>();
+            List<T> list = new();
 
             if (!string.IsNullOrEmpty(lineSeparatorToAdd))
             {
@@ -91,7 +91,7 @@ namespace FileParser
 
         public string ToSingleString(string wordSeparator = " ", string? lineSeparator = null)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new();
 
             while (!Empty)
             {
@@ -136,11 +136,11 @@ namespace FileParser
         /// <returns></returns>
         public static Queue<IParsedLine> ParseFile(string path, string? existingSeparator = null)
         {
-            Queue<IParsedLine> parsedFile = new Queue<IParsedLine>();
+            Queue<IParsedLine> parsedFile = new();
 
             try
             {
-                using (StreamReader reader = new StreamReader(path))
+                using (StreamReader reader = new(path))
                 {
                     while (!reader.EndOfStream)
                     {

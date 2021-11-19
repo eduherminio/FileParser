@@ -5,17 +5,17 @@ namespace FileParser
     [Serializable]
     public class ParsingException : Exception
     {
-        private const string _genericMessage = "Exception triggered during parsing process";
+        private const string GenericMessage = "Exception triggered during parsing process";
 
-        public ParsingException() : base(_genericMessage)
+        public ParsingException() : base(GenericMessage)
         {
         }
 
-        public ParsingException(string message) : base(message ?? _genericMessage)
+        public ParsingException(string message) : base(message ?? GenericMessage)
         {
         }
 
-        public ParsingException(string message, Exception inner) : base(message ?? _genericMessage, inner)
+        public ParsingException(string message, Exception inner) : base(message ?? GenericMessage, inner)
         {
         }
 

@@ -9,7 +9,7 @@ schedules:
     - main
 
 variables:
-  SdkVersion: '5.0.x'
+  SdkVersion: '6.0.x'
 
 stages:
 - stage: CI
