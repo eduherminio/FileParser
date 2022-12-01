@@ -120,6 +120,31 @@ namespace FileParser
                 .ToList();
         }
 
+        public static List<List<T>> ReadAllGroupsOfLines<T>(string path)
+        {
+            if (typeof(T) == typeof(char))
+            {
+                throw new NotSupportedException($"{nameof(ReadAllGroupsOfLines)}<T> does not support T = char, " +
+                    "use ReadAllGroupsOfLines<string> instead and split the strings yourself");
+            }
+
+            if (typeof(T) == typeof(string))
+            {
+                throw new NotSupportedException($"{nameof(ReadAllGroupsOfLines)}<T> does not support T = string, " +
+                    "use non-generic ReadAllGroupsOfLines instead");
+            }
+
+            return File.ReadAllText(path)
+                    .Replace("\r\n", "\n")
+                    .Split("\n\n")
+                    .Where(str => !string.IsNullOrEmpty(str))
+                    .Select(str => str
+                        .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(str => StringConverter.Convert<T>(str))
+                        .ToList())
+                    .ToList();
+        }
+
         #region Private methods
 
         /// <summary>
