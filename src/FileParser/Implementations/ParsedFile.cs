@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using FileParser.Utils;
+using System.Text;
 using Print = System.Diagnostics.Debug;
 
 namespace FileParser
@@ -122,6 +123,8 @@ namespace FileParser
 
         public static List<List<T>> ReadAllGroupsOfLines<T>(string path)
         {
+            TypeValidator.ValidateSupportedType<T>();
+
             if (typeof(T) == typeof(char))
             {
                 throw new NotSupportedException($"{nameof(ReadAllGroupsOfLines)}<T> does not support T = char, " +
