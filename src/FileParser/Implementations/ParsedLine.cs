@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using FileParser.Utils;
+using System.Text;
 
 namespace FileParser
 {
@@ -43,7 +44,7 @@ namespace FileParser
 
         public T ElementAt<T>(int index)
         {
-            ValidateSupportedType<T>();
+            TypeValidator.ValidateSupportedType<T>();
 
             string element = this.ElementAt(index);
 
@@ -52,7 +53,7 @@ namespace FileParser
 
         public T LastElement<T>()
         {
-            ValidateSupportedType<T>();
+            TypeValidator.ValidateSupportedType<T>();
 
             string element = this.Last();
 
@@ -98,7 +99,7 @@ namespace FileParser
         /// <returns></returns>
         private T Extract<T>()
         {
-            ValidateSupportedType<T>();
+            TypeValidator.ValidateSupportedType<T>();
 
             string stringToConvert = Dequeue();
 
@@ -110,8 +111,7 @@ namespace FileParser
             {
                 if (this.Any())
                 {
-                    throw new NotSupportedException("Extract<char> can only be used with one-length Queues" +
-                       " Try using ExtractChar<string> instead, after parsing each string with Extract<string>()");
+                    throw new NotSupportedException("Extract<char> can only be used with one-string lines (one-length Queues)");
                 }
 
                 char nextChar = ExtractChar(ref stringToConvert);
@@ -133,19 +133,11 @@ namespace FileParser
         /// <returns></returns>
         private T Peek<T>()
         {
-            ValidateSupportedType<T>();
+            TypeValidator.ValidateSupportedType<T>();
 
             string stringToConvert = Peek();
 
             return StringConverter.Convert<T>(stringToConvert);
-        }
-
-        private static void ValidateSupportedType<T>()
-        {
-            if (!SupportedTypes.Contains(typeof(T)))
-            {
-                throw new NotSupportedException("Parsing to " + typeof(T).ToString() + "is not supported yet");
-            }
         }
 
         /// <summary>
@@ -165,22 +157,6 @@ namespace FileParser
 
             return nextChar;
         }
-
-        /// <summary>
-        /// Supported parsing conversions
-        /// </summary>
-        private static HashSet<Type> SupportedTypes { get; } = new HashSet<Type>()
-        {
-            typeof(bool),
-            typeof(char),
-            typeof(string),
-            typeof(short),
-            typeof(int),
-            typeof(long),
-            typeof(double),
-            typeof(object)
-        };
-
         #endregion
     }
 }
