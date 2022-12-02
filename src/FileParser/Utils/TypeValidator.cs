@@ -10,8 +10,11 @@ internal static class TypeValidator
         typeof(bool),
         typeof(char),
         typeof(string),
+        typeof(ushort),
         typeof(short),
         typeof(int),
+        typeof(uint),
+        typeof(ulong),
         typeof(long),
         typeof(double),
         typeof(object)
