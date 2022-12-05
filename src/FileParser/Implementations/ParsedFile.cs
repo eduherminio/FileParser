@@ -113,27 +113,29 @@ namespace FileParser
 
         public static List<List<string>> ReadAllGroupsOfLines(string path)
         {
-            var allLines = File.ReadAllLines(path);
-
             var currentGroup = new List<string>();
-            var result = new List<List<string>>(allLines.Length)
+            var result = new List<List<string>>()
             {
                 currentGroup
             };
 
-            foreach (var line in allLines)
+            using (var streamReader = new StreamReader(path))
             {
-                if (line.Length == 0)
+                string? line;
+                while ((line = streamReader.ReadLine()) != null)
                 {
-                    if (currentGroup.Count != 0)
+                    if (line.Length == 0)
                     {
-                        currentGroup = new List<string>();
-                        result.Add(currentGroup);
+                        if (currentGroup.Count != 0)
+                        {
+                            currentGroup = new List<string>();
+                            result.Add(currentGroup);
+                        }
                     }
-                }
-                else
-                {
-                    currentGroup.Add(line);
+                    else
+                    {
+                        currentGroup.Add(line);
+                    }
                 }
             }
 
@@ -161,27 +163,29 @@ namespace FileParser
                     "use non-generic ReadAllGroupsOfLines instead");
             }
 
-            var allLines = File.ReadAllLines(path);
-
             var currentGroup = new List<T>();
-            var result = new List<List<T>>(allLines.Length)
+            var result = new List<List<T>>()
             {
                 currentGroup
             };
 
-            foreach (var line in allLines)
+            using (var streamReader = new StreamReader(path))
             {
-                if (line.Length == 0)
+                string? line;
+                while ((line = streamReader.ReadLine()) != null)
                 {
-                    if (currentGroup.Count != 0)
+                    if (line.Length == 0)
                     {
-                        currentGroup = new List<T>();
-                        result.Add(currentGroup);
+                        if (currentGroup.Count != 0)
+                        {
+                            currentGroup = new List<T>();
+                            result.Add(currentGroup);
+                        }
                     }
-                }
-                else
-                {
-                    currentGroup.Add(StringConverter.Convert<T>(line));
+                    else
+                    {
+                        currentGroup.Add(StringConverter.Convert<T>(line));
+                    }
                 }
             }
 
