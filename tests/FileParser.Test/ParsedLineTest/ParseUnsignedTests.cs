@@ -28,9 +28,9 @@ namespace FileParser.Test.ParsedLineTest
             Assert.Equal(2147483648, firstLine.NextElement<ulong>());
             Assert.True(firstLine.Empty);
 
-            Assert.Throws<ArgumentException>(() => secondLine.PeekNextElement<ushort>());
-            Assert.Throws<ArgumentException>(() => secondLine.PeekNextElement<uint>());
-            Assert.Throws<ArgumentException>(() => secondLine.PeekNextElement<ulong>());
+            Assert.Throws<OverflowException>(() => secondLine.PeekNextElement<ushort>());
+            Assert.Throws<OverflowException>(() => secondLine.PeekNextElement<uint>());
+            Assert.Throws<OverflowException>(() => secondLine.PeekNextElement<ulong>());
         }
     }
 }

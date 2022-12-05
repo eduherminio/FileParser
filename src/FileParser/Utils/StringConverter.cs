@@ -14,6 +14,21 @@ namespace FileParser
         /// <returns></returns>
         public static T Convert<T>(string str, TypeConverter? typeConverter = null)
         {
+            return default(T) switch
+            {
+                short => (T)(object)short.Parse(str),
+                ushort => (T)(object)ushort.Parse(str),
+                int => (T)(object)int.Parse(str),
+                uint => (T)(object)uint.Parse(str),
+                long => (T)(object)long.Parse(str),
+                ulong => (T)(object)ulong.Parse(str),
+                // double => (T)(object)double.Parse(str),   // Causes issues with commas and dots separators, since it doesn't use the logic in TConverter.ParseDouble();
+                _ => GenericConvert<T>(str, typeConverter)
+            };
+        }
+
+        internal static T GenericConvert<T>(string str, TypeConverter? typeConverter = null)
+        {
             if (typeof(T).IsPrimitive)
             {
                 return typeConverter is null
