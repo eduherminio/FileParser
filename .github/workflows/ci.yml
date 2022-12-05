@@ -112,7 +112,7 @@ jobs:
         reports: 'tests/**/*.cobertura.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline_AzurePipelines_Dark;SonarQube'
-        assemblyfilters: '+*'
+        assemblyfilters: '+*;-*.Benchmark'
         classfilters: '+*;-*Exception'
         filefilters: '+*'
         verbosity: 'Info'
