@@ -13,7 +13,6 @@
  */
 
 using BenchmarkDotNet.Attributes;
-using FileParser;
 
 namespace FileParser.Benchmark;
 
