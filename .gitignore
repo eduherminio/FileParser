@@ -296,3 +296,6 @@ commands.bat
 *Output.txt
 *.exe
 *.out
+
+# BenchmarkDotNet artifacts
+BenchmarkDotNet.Artifacts/

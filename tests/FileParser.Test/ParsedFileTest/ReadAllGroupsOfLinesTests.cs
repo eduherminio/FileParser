@@ -27,5 +27,23 @@ namespace FileParser.Test.ParsedFileTest
                      .Count(ch => group.All(str => str.Contains(ch)));
                 }));
         }
+
+        /// <summary>
+        /// Test case taken from https://github.com/eduherminio/AoC2020/blob/main/src/AoC_2020/Day_06.cs
+        /// </summary>
+        [Fact]
+        public void ReadAllGroupsOfLines_Emptyfile()
+        {
+            const string filename = nameof(ReadAllGroupsOfLines_Emptyfile);
+            string fileContent = Environment.NewLine + Environment.NewLine + "\r\n" + "\n";
+
+            using (StreamWriter writer = new(filename))
+            {
+                writer.WriteLine(fileContent);
+            }
+            var parsed = ParsedFile.ReadAllGroupsOfLines(filename);
+
+            Assert.Empty(parsed);
+        }
     }
 }
