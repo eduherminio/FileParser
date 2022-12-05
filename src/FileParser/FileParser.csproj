@@ -24,4 +24,8 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Benchmark" />
+  </ItemGroup>
+
 </Project>

@@ -113,12 +113,36 @@ namespace FileParser
 
         public static List<List<string>> ReadAllGroupsOfLines(string path)
         {
-            return File.ReadAllText(path)
-                .Replace("\r\n", "\n")
-                .Split("\n\n")
-                .Where(str => !string.IsNullOrEmpty(str))
-                .Select(str => str.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList())
-                .ToList();
+            var allLines = File.ReadAllLines(path);
+
+            var currentGroup = new List<string>();
+            var result = new List<List<string>>(allLines.Length)
+            {
+                currentGroup
+            };
+
+            foreach (var line in allLines)
+            {
+                if (line.Length == 0)
+                {
+                    if (currentGroup.Count != 0)
+                    {
+                        currentGroup = new List<string>();
+                        result.Add(currentGroup);
+                    }
+                }
+                else
+                {
+                    currentGroup.Add(line);
+                }
+            }
+
+            if (currentGroup.Count == 0)
+            {
+                result.Remove(currentGroup);
+            }
+
+            return result;
         }
 
         public static List<List<T>> ReadAllGroupsOfLines<T>(string path)
@@ -137,15 +161,36 @@ namespace FileParser
                     "use non-generic ReadAllGroupsOfLines instead");
             }
 
-            return File.ReadAllText(path)
-                    .Replace("\r\n", "\n")
-                    .Split("\n\n")
-                    .Where(str => !string.IsNullOrEmpty(str))
-                    .Select(str => str
-                        .Split('\n', StringSplitOptions.RemoveEmptyEntries)
-                        .Select(str => StringConverter.Convert<T>(str))
-                        .ToList())
-                    .ToList();
+            var allLines = File.ReadAllLines(path);
+
+            var currentGroup = new List<T>();
+            var result = new List<List<T>>(allLines.Length)
+            {
+                currentGroup
+            };
+
+            foreach (var line in allLines)
+            {
+                if (line.Length == 0)
+                {
+                    if (currentGroup.Count != 0)
+                    {
+                        currentGroup = new List<T>();
+                        result.Add(currentGroup);
+                    }
+                }
+                else
+                {
+                    currentGroup.Add(StringConverter.Convert<T>(line));
+                }
+            }
+
+            if (currentGroup.Count == 0)
+            {
+                result.Remove(currentGroup);
+            }
+
+            return result;
         }
 
         #region Private methods
