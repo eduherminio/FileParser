@@ -38,6 +38,12 @@ jobs:
       PROJECT_NAME: FileParser
 
     steps:
+
+    - name: Install hub tool
+      if: github.event.inputs.should_create_github_release == 'true'
+      run: |
+        sudo apt-get update && sudo apt-get install -y hub
+
     - uses: actions/checkout@v4
 
     - name: Configure git user
@@ -51,7 +57,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
 
     - name: Set version to ${{ github.event.inputs.new_package_version }}
       shell: pwsh

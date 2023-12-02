@@ -9,7 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileParser.Test", "tests\Fi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8E3B14F-7393-4CEF-9EDB-2E630190FACD}"
 	ProjectSection(SolutionItems) = preProject
-		.travis.yml = .travis.yml
 		azure-pipelines.yml = azure-pipelines.yml
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		.circleci\config.yml = .circleci\config.yml
@@ -17,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileParser.Benchmark", "src\FileParser.Benchmark\FileParser.Benchmark.csproj", "{600D80DB-4DCB-47BE-9761-30C8CD584C32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileParser.Benchmark", "src\FileParser.Benchmark\FileParser.Benchmark.csproj", "{600D80DB-4DCB-47BE-9761-30C8CD584C32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
