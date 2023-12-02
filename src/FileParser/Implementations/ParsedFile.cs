@@ -42,7 +42,9 @@ namespace FileParser
         /// <param name="path">FilePath</param>
         /// <param name="existingSeparator">Word separator (space by default)</param>
         public ParsedFile(string path, string? existingSeparator = null)
+#pragma warning disable CS0618 // Type or member is obsolete - will keep it as private
             : base(ParseFile(path, existingSeparator))
+#pragma warning restore CS0618 // Type or member is obsolete
         {
         }
 
@@ -211,6 +213,7 @@ namespace FileParser
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
+        [Obsolete("This method exposes internal functionality and was made public accidentally. It will be removed in next major release, please used ParsedFile constructor instead.")]
         public static Queue<IParsedLine> ParseFile(string path, string? existingSeparator = null)
         {
             Queue<IParsedLine> parsedFile = new();
