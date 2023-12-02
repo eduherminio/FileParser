@@ -62,7 +62,7 @@ namespace FileParser
 
         public List<T> ToList<T>()
         {
-            List<T> list = new();
+            List<T> list = [];
 
             while (!Empty)
             {

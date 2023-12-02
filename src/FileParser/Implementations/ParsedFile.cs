@@ -44,9 +44,7 @@ namespace FileParser
         /// <param name="existingSeparator">Word separator (space by default)</param>
         /// <param name="ignoreEmptyItems"></param>
         public ParsedFile(string path, string? existingSeparator = null, bool ignoreEmptyItems = true)
-#pragma warning disable CS0618 // Type or member is obsolete - will keep it as private
-            : base(ParseFile(path, existingSeparator, ignoreEmptyItems))
-#pragma warning restore CS0618 // Type or member is obsolete
+            : base(ParseFile(path, ignoreEmptyItems, existingSeparator))
         {
         }
 
@@ -76,7 +74,7 @@ namespace FileParser
 
         public List<T> ToList<T>(string? lineSeparatorToAdd = null)
         {
-            List<T> list = new();
+            List<T> list = [];
 
             if (!string.IsNullOrEmpty(lineSeparatorToAdd))
             {
@@ -132,7 +130,7 @@ namespace FileParser
                     {
                         if (currentGroup.Count != 0)
                         {
-                            currentGroup = new List<string>();
+                            currentGroup = [];
                             result.Add(currentGroup);
                         }
                     }
@@ -182,7 +180,7 @@ namespace FileParser
                     {
                         if (currentGroup.Count != 0)
                         {
-                            currentGroup = new List<T>();
+                            currentGroup = [];
                             result.Add(currentGroup);
                         }
                     }
@@ -208,16 +206,15 @@ namespace FileParser
         /// Queue&lt;IParsedLine&gt; ~~ Queues of 'words' inside of a queue of lines
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="existingSeparator">Word separator</param>
         /// <param name="ignoreEmptyItems"></param>
+        /// <param name="existingSeparator">Word separator</param>
         /// <exception cref="FileNotFoundException"></exception>
         /// <exception cref="DirectoryNotFoundException"></exception>
         /// <exception cref="IOException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        [Obsolete("This method exposes internal functionality and was made public accidentally. It will be removed in next major release, please used ParsedFile constructor instead.")]
-        public static Queue<IParsedLine> ParseFile(string path, string? existingSeparator = null, bool ignoreEmptyItems = true)
+        private static Queue<IParsedLine> ParseFile(string path, bool ignoreEmptyItems, string? existingSeparator = null)
         {
             Queue<IParsedLine> parsedFile = new();
 

@@ -11,7 +11,7 @@ namespace FileParser.Test.ParsedFileTest
             const string fileName = "CustomLineParse.txt";
             const string sampleContent = "  3  1154 508 100    vegetable ";
 
-            List<long> expectedList = new() { 1154, 508, 100 };
+            List<long> expectedList = [1154, 508, 100];
             const string expectedString = "vegetable";
 
             using (StreamWriter writer = new(fileName))
@@ -54,8 +54,8 @@ namespace FileParser.Test.ParsedFileTest
                 writer.WriteLine(line2);
             }
 
-            IParsedFile file = new ParsedFile(fileName);
-            IParsedLine firstParsedLine = file.NextLine();
+            var file = new ParsedFile(fileName);
+            var firstParsedLine = file.NextLine();
             int nLines = Convert.ToInt32(Math.Floor(firstParsedLine.NextElement<double>())) - 1;
             for (int iLine = 0; iLine < nLines; ++iLine)
             {
@@ -89,7 +89,7 @@ namespace FileParser.Test.ParsedFileTest
                 writer.WriteLine(line2);
             }
 
-            IParsedFile file = new ParsedFile(fileName, "||");
+            var file = new ParsedFile(fileName, "||");
 
             int index = 0;
             var line = file.NextLine();
@@ -122,7 +122,7 @@ namespace FileParser.Test.ParsedFileTest
                 writer.WriteLine(line4);
             }
 
-            IParsedFile file = new ParsedFile(fileName, ",", ignoreEmptyItems: false);
+            var file = new ParsedFile(fileName, ",", ignoreEmptyItems: false);
 
             var headerLine = file.NextLine();
             var buckets = new List<List<string>>(headerLine.ToList<string>().Select(header => new List<string>(1000) { ModifyString(header) }));
@@ -138,10 +138,17 @@ namespace FileParser.Test.ParsedFileTest
 
             static string ModifyString(string str) => str.ToLowerInvariant();
 
-            Assert.Equal(new[] { "firstname", "john", "cthulhu", "bugs" }, buckets[0]);
-            Assert.Equal(new[] { "lastname", "doe", "", "bunny" }, buckets[1]);
-            Assert.Equal(new[] { "age", "66", "1000", "33" }, buckets[2]);
-            Assert.Equal(new[] { "eyecolor", "brown", "black", "white" }, buckets[3]);
+            string[] expected = ["firstname", "john", "cthulhu", "bugs"];
+            Assert.Equal(expected, buckets[0]);
+
+            string[] expected1 = ["lastname", "doe", "", "bunny"];
+            Assert.Equal(expected1, buckets[1]);
+
+            string[] expected2 = ["age", "66", "1000", "33"];
+            Assert.Equal(expected2, buckets[2]);
+
+            string[] expected3 = ["eyecolor", "brown", "black", "white"];
+            Assert.Equal(expected3, buckets[3]);
         }
 
         [Fact]
@@ -161,7 +168,7 @@ namespace FileParser.Test.ParsedFileTest
                 writer.WriteLine(line4);
             }
 
-            IParsedFile file = new ParsedFile(fileName, ",", ignoreEmptyItems: false);
+            var file = new ParsedFile(fileName, ",", ignoreEmptyItems: false);
 
             file.NextLine();
 
