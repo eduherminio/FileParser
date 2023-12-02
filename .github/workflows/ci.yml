@@ -74,7 +74,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"eduherminio_FileParser" /o:"eduherminio-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.scanner.force-deprecated-java-version=true
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"eduherminio_FileParser" /o:"eduherminio-github" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.scanner.force-deprecated-java-version=true
 
     - name: '[Ubuntu] Set version to -ci-${{ github.run_number }}'
       if: matrix.os == 'ubuntu-latest'
@@ -135,4 +135,4 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        .\.sonar\scanner\dotnet-sonarscanner end
