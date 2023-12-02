@@ -259,7 +259,7 @@ namespace FileParser
 
             if (ignoreEmptyItems)
             {
-                wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);   // Probably not needed, but just in case
+                wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);
             }
 
             return wordsInLine;

@@ -130,7 +130,7 @@ namespace FileParser.Test.ParsedFileTest
             while (!file.Empty)
             {
                 var line = file.NextLine().ToList<string>();
-                for(int index = 0; index < line.Count; ++index)
+                for (int index = 0; index < line.Count; ++index)
                 {
                     buckets[index].Add(ModifyString(line[index]));
                 }
@@ -143,13 +143,15 @@ namespace FileParser.Test.ParsedFileTest
             Assert.Equal(new[] { "age", "66", "1000", "33" }, buckets[2]);
             Assert.Equal(new[] { "eyecolor", "brown", "black", "white" }, buckets[3]);
         }
-        
+
         [Fact]
         public void ParseCsvFile()
         {
             const string fileName = "ParseCsvFile.txt";
-            const string line1 = "Name,Age,BirtDate,Score";
-            const string line4 = "Abraham,10,12/12/1990,9.05";
+            const string line1 = "Name,Age,Score";
+            const string line2 = "Abraham,10,9.05";
+            const string line3 = "Babilon,,64.05";
+            const string line4 = "Croc,99,";
 
             using (StreamWriter writer = new(fileName))
             {
@@ -161,24 +163,27 @@ namespace FileParser.Test.ParsedFileTest
 
             IParsedFile file = new ParsedFile(fileName, ",", ignoreEmptyItems: false);
 
-            var headerLine = file.NextLine();
-            var buckets = new List<List<string>>(headerLine.ToList<string>().Select(header => new List<string>(1000) { ModifyString(header) }));
+            file.NextLine();
 
-            while (!file.Empty)
-            {
-                var line = file.NextLine().ToList<string>();
-                for(int index = 0; index < line.Count; ++index)
-                {
-                    buckets[index].Add(ModifyString(line[index]));
-                }
-            }
+            var line = file.NextLine();
 
-            static string ModifyString(string str) => str.ToLowerInvariant();
+            Assert.Equal("Abraham", line.NextElement<string>());
+            Assert.Equal(10, line.NextElement<int>());
+            Assert.Equal(9.05, line.NextElement<double>());
 
-            Assert.Equal(new[] { "firstname", "john", "cthulhu", "bugs" }, buckets[0]);
-            Assert.Equal(new[] { "lastname", "doe", "", "bunny" }, buckets[1]);
-            Assert.Equal(new[] { "age", "66", "1000", "33" }, buckets[2]);
-            Assert.Equal(new[] { "eyecolor", "brown", "black", "white" }, buckets[3]);
+            line = file.NextLine();
+
+            Assert.Equal("Babilon", line.NextElement<string>());
+            Assert.Equal(default, line.NextElement<int>());
+            Assert.Equal(64.05, line.NextElement<double>());
+
+            line = file.NextLine();
+
+            Assert.Equal("Croc", line.NextElement<string>());
+            Assert.Equal(99, line.NextElement<int>());
+            Assert.Equal(default, line.NextElement<double>());
+
+            Assert.True(file.Empty);
         }
     }
 }

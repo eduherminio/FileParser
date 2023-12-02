@@ -14,10 +14,11 @@ namespace FileParser
         /// <returns></returns>
         public static T Convert<T>(string str, TypeConverter? typeConverter = null)
         {
-            if (str?.Length == 0)
+            if (str.Length == 0)
             {
-                return (T)(object)default;
+                return default!;
             }
+
             return default(T) switch
             {
                 short => (T)(object)short.Parse(str),
