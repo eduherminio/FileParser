@@ -31,8 +31,9 @@ namespace FileParser
         /// </summary>
         /// <param name="path">FilePath</param>
         /// <param name="existingSeparator">Word separator (space by default)</param>
-        public ParsedFile(string path, char[] existingSeparator)
-            : this(path, new string(existingSeparator))
+        /// <param name="ignoreEmptyItems"></param>
+        public ParsedFile(string path, char[] existingSeparator, bool ignoreEmptyItems = true)
+            : this(path, new string(existingSeparator), ignoreEmptyItems)
         {
         }
 
@@ -41,9 +42,10 @@ namespace FileParser
         /// </summary>
         /// <param name="path">FilePath</param>
         /// <param name="existingSeparator">Word separator (space by default)</param>
-        public ParsedFile(string path, string? existingSeparator = null)
+        /// <param name="ignoreEmptyItems"></param>
+        public ParsedFile(string path, string? existingSeparator = null, bool ignoreEmptyItems = true)
 #pragma warning disable CS0618 // Type or member is obsolete - will keep it as private
-            : base(ParseFile(path, existingSeparator))
+            : base(ParseFile(path, existingSeparator, ignoreEmptyItems))
 #pragma warning restore CS0618 // Type or member is obsolete
         {
         }
@@ -207,6 +209,7 @@ namespace FileParser
         /// </summary>
         /// <param name="path"></param>
         /// <param name="existingSeparator">Word separator</param>
+        /// <param name="ignoreEmptyItems"></param>
         /// <exception cref="FileNotFoundException"></exception>
         /// <exception cref="DirectoryNotFoundException"></exception>
         /// <exception cref="IOException"></exception>
@@ -214,7 +217,7 @@ namespace FileParser
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
         [Obsolete("This method exposes internal functionality and was made public accidentally. It will be removed in next major release, please used ParsedFile constructor instead.")]
-        public static Queue<IParsedLine> ParseFile(string path, string? existingSeparator = null)
+        public static Queue<IParsedLine> ParseFile(string path, string? existingSeparator = null, bool ignoreEmptyItems = true)
         {
             Queue<IParsedLine> parsedFile = new();
 
@@ -233,7 +236,7 @@ namespace FileParser
                         }
                         // end TODO
 
-                        IParsedLine parsedLine = new ParsedLine(ProcessLine(original_line, existingSeparator));
+                        IParsedLine parsedLine = new ParsedLine(ProcessLine(original_line, existingSeparator, ignoreEmptyItems));
                         parsedFile.Enqueue(parsedLine);
                     }
                 }
@@ -248,13 +251,16 @@ namespace FileParser
             }
         }
 
-        private static ICollection<string> ProcessLine(string original_line, string? separator)
+        private static ICollection<string> ProcessLine(string original_line, string? separator, bool ignoreEmptyItems)
         {
             List<string> wordsInLine = original_line
                 .Split(separator?.ToCharArray())
                 .Select(str => str.Trim()).ToList();
 
-            wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);   // Probably not needed, but just in case
+            if (ignoreEmptyItems)
+            {
+                wordsInLine.RemoveAll(string.IsNullOrWhiteSpace);   // Probably not needed, but just in case
+            }
 
             return wordsInLine;
         }
