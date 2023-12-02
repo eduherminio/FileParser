@@ -28,7 +28,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
 
     - name: Setup .NET 5 for sonar
       if: matrix.os == 'windows-latest'
@@ -40,7 +40,7 @@ jobs:
       uses: actions/setup-java@v4
       if: matrix.os == 'windows-latest'
       with:
-        java-version: 11
+        java-version: 17
         distribution: 'zulu'
 
     - name: '[Windows] Cache SonarCloud packages'
