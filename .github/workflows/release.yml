@@ -38,6 +38,12 @@ jobs:
       PROJECT_NAME: FileParser
 
     steps:
+
+    - name: Install hub tool
+      if: github.event.inputs.should_create_github_release == 'true'
+      run: |
+        sudo apt-get update && sudo apt-get install -y hub
+
     - uses: actions/checkout@v4
 
     - name: Configure git user
