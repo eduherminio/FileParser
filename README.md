@@ -2,7 +2,6 @@
 
 [![Azure DevOps][azuredevopslogo]][azuredevopslink]
 [![GitHub Actions][githubactionslogo]][githubactionslink]
-[![Travis CI][traviscilogo]][traviscilink]
 [![Circle CI][circlecilogo]][circlecilink]
 
 [![Sonar Quality][sonarqualitylogo]][sonarqubelink]
@@ -131,7 +130,7 @@ Besides the WIKI, some real (own) projects where it has been used are:
 - [Google #HashCode 2018](https://github.com/eduherminio/Google_HashCode_2018/blob/master/GoogleHashCode2018/Project/Manager.cs#L63).
 - [Google #HashCode 2020](https://github.com/eduherminio/Google_HashCode_2020/blob/master/GoogleHashCode/BookManager.cs#L167).
 - [Advent of Code 2018](https://github.com/eduherminio/advent-of-code-2018).
-- [Advent of Code 2019](https://github.com/eduherminio/AoC2019).
+- [Advent of Code 2023](https://github.com/eduherminio/AoC2023).
 
 ## Contributing, issues, suggestions, doubts
 
@@ -139,12 +138,10 @@ If anyone else ever happens to use FileParser, I'll be happy to accept suggestio
 
 Just open an issue :)
 
-[githubactionslogo]: https://github.com/eduherminio/FileParser/workflows/CI%20GitHub%20Actions/badge.svg
-[githubactionslink]: https://github.com/eduherminio/FileParser/actions
+[githubactionslogo]: https://github.com/eduherminio/FileParser/actions/workflows/ci.yml/badge.svg
+[githubactionslink]: https://github.com/eduherminio/FileParser/actions/workflows/ci.yml
 [azuredevopslogo]: https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=main
 [azuredevopslink]: https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=main
-[traviscilogo]: https://travis-ci.com/eduherminio/FileParser.svg?branch=main
-[traviscilink]: https://travis-ci.com/eduherminio/FileParser
 [circlecilogo]: https://circleci.com/gh/eduherminio/FileParser/tree/main.svg?style=svg
 [circlecilink]: https://circleci.com/gh/eduherminio/FileParser/tree/main
 [nugetlogo]: https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget
