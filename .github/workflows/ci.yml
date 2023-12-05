@@ -26,13 +26,13 @@ jobs:
       uses: rlespinasse/github-slug-action@v3.x
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
     - name: Setup .NET 5 for sonar
       if: matrix.os == 'windows-latest'
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 5.0.x
 
