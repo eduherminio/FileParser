@@ -116,7 +116,7 @@ jobs:
     - name: Push to GitHub packages registry
       if: github.event.inputs.should_push_github == 'true'
       run: |
-        nuget push '${{ env.ARTIFACT_DIR }}/*.nupkg' -ApiKey ${{ secrets.GitHubToken }} -Source https://nuget.pkg.github.com/eduherminio/index.json -SkipDuplicate -Verbosity detailed
+        nuget push '${{ env.ARTIFACT_DIR }}/*.nupkg' -ApiKey ${{ secrets.GITHUB_TOKEN }} -Source https://nuget.pkg.github.com/eduherminio/index.json -SkipDuplicate -Verbosity detailed
 
     - name: Commit and push version increment
       continue-on-error: true
@@ -138,7 +138,7 @@ jobs:
     - name: Create GitHub release and upload assets
       if: github.event.inputs.should_create_github_release == 'true' && github.event.inputs.should_tag_new_version == 'true'
       env:
-        GITHUB_TOKEN: ${{ secrets.GitHubToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         set -x
         assets=()
