@@ -14,6 +14,8 @@
 
 [![API][apimundologo]][apimundolink]
 
+[![BuiltWithDot.Net shield](https://builtwithdot.net/project/446/file-parser/badge)](https://builtwithdot.net/project/446/file-parser)
+
 **FileParser** is a **.NET** library designed to read text files line-by-line, saving each line's content into basic types vars (int, double, string, etc.).
 
 - .NET Framework 4.6 was supported until v1.4.x.
