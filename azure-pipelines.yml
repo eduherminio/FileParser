@@ -9,7 +9,7 @@ schedules:
     - main
 
 variables:
-  SdkVersion: '8.0.x'
+  SdkVersion: '10.0.x'
 
 stages:
 - stage: CI
@@ -48,14 +48,14 @@ stages:
       inputs:
         command: restore
         arguments: '--configuration Release'
-        projects: './FileParserSolution.sln'
+        projects: './FileParserSolution.slnx'
 
     - task: DotNetCoreCLI@2
       displayName: 'Build'
       inputs:
         command: build
         arguments: '--configuration Release --no-restore /p:DeterministicBuild=true'
-        projects: './FileParserSolution.sln'
+        projects: './FileParserSolution.slnx'
 
     - task: DotNetCoreCLI@2
       displayName: 'Run tests'

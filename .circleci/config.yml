@@ -2,13 +2,14 @@ version: 2.1
 executors:
   fileparser-executor:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:8.0
+      - image: mcr.microsoft.com/dotnet/sdk:10.0
     working_directory: ~/FileParser
 
 jobs:
   build:
     executor: fileparser-executor
     steps:
+      - apt-get update && apt-get install -y openssh-client
       - checkout
       - run:
           name: Restore

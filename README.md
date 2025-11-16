@@ -4,12 +4,6 @@
 [![GitHub Actions][githubactionslogo]][githubactionslink]
 [![Circle CI][circlecilogo]][circlecilink]
 
-[![Sonar Quality][sonarqualitylogo]][sonarqubelink]
-[![Code coverage][sonarcoveragelogo]][sonarqubelink]
-[![Sonar vulnerabilities][sonarvulnerabilitieslogo]][sonarqubelink]
-[![Sonar bugs][sonarbugslogo]][sonarqubelink]
-[![Sonar code smells][sonarcodesmellslogo]][sonarqubelink]
-
 [![Nuget][nugetlogo]][nugetlink]
 
 [![API][apimundologo]][apimundolink]
@@ -148,9 +142,3 @@ Just open an issue :)
 [nugetlink]: https://www.nuget.org/packages/FileParser
 [apimundologo]: https://img.shields.io/badge/FileParser%20API-Apimundo-728199.svg
 [apimundolink]: https://apimundo.com/organizations/nuget-org/nuget-feeds/public/packages/FileParser/versions/latest?tab=types
-[sonarqubelink]: https://sonarcloud.io/dashboard?id=eduherminio_FileParser
-[sonarqualitylogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=alert_status
-[sonarcoveragelogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=coverage
-[sonarvulnerabilitieslogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=vulnerabilities
-[sonarbugslogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=bugs
-[sonarcodesmellslogo]: https://sonarcloud.io/api/project_badges/measure?project=eduherminio_FileParser&metric=code_smells
