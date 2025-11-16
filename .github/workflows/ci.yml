@@ -81,12 +81,3 @@ jobs:
         name: ${{ env.PROJECT_NAME }}-coverage-ci-${{ github.run_number }}
         path: coveragereport/
         if-no-files-found: error
-
-    - name: '[Windows] Perform SonarCloud analysis'
-      if: matrix.os == 'windows-latest'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      shell: powershell
-      run: |
-        .\.sonar\scanner\dotnet-sonarscanner end
