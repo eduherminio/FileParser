@@ -248,11 +248,11 @@ public class ParsedFile : Queue<IParsedLine>, IParsedFile
         }
     }
 
-    private static ICollection<string> ProcessLine(string original_line, string? separator, bool ignoreEmptyItems)
+    private static List<string> ProcessLine(string original_line, string? separator, bool ignoreEmptyItems)
     {
-        List<string> wordsInLine = original_line
+        List<string> wordsInLine = [.. original_line
             .Split(separator?.ToCharArray())
-            .Select(str => str.Trim()).ToList();
+            .Select(str => str.Trim())];
 
         if (ignoreEmptyItems)
         {

@@ -33,12 +33,13 @@ internal static class TConverter
         }
     }
 
+#pragma warning disable CA1859 // Use concrete types when possible for improved performance
     private static object ParseDouble(object value)
     {
         double result;
 
         string doubleAsString = value.ToString() ?? throw new ParsingException("Error parsing value as double");
-        IEnumerable<char> doubleAsCharList = doubleAsString.ToList();
+        IEnumerable<char> doubleAsCharList = [.. doubleAsString];
 
         if (doubleAsCharList.Count(ch => ch == '.' || ch == ',') <= 1)
         {
@@ -73,6 +74,7 @@ internal static class TConverter
 
         return result as object;
     }
+#pragma warning restore CA1859 // Use concrete types when possible for improved performance
 
     internal static TypeConverter GetTypeConverter(Type t)
     {

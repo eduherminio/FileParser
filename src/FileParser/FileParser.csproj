@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net10.0;net8.0</TargetFrameworks>
+    <NoWarn>$(NoWarn),IDE0130</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
