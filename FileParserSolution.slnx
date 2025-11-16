@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".circleci/config.yml" />
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/release.yml" />
+    <File Path="azure-pipelines.yml" />
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="src/FileParser.Benchmark/FileParser.Benchmark.csproj" />
+  <Project Path="src/FileParser/FileParser.csproj" />
+  <Project Path="tests/FileParser.Test/FileParser.Test.csproj" />
+</Solution>
