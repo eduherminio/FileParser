@@ -66,7 +66,7 @@ stages:
         projects: '**/FileParser.Test.csproj'
         publishTestResults: true
 
-    - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+    - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@v5
       displayName: 'Generate tests report'
       condition: and(succeeded(), eq(variables['imageName'], 'ubuntu-latest'))
       inputs:
