@@ -123,6 +123,7 @@ jobs:
         if-no-files-found: error
 
     - name: NuGet login (OIDC → temp API key)
+      if: github.event.inputs.should_push_nuget == 'true'
       uses: NuGet/login@v1
       id: login
       with:
