@@ -1,7 +1,6 @@
 # FileParser
 
 [![GitHub Actions][githubactionslogo]][githubactionslink]
-[![Azure DevOps][azuredevopslogo]][azuredevopslink]
 
 [![Nuget][nugetlogo]][nugetlink]
 
@@ -133,8 +132,6 @@ Just open an issue :)
 
 [githubactionslogo]: https://github.com/eduherminio/FileParser/actions/workflows/ci.yml/badge.svg
 [githubactionslink]: https://github.com/eduherminio/FileParser/actions/workflows/ci.yml
-[azuredevopslogo]: https://dev.azure.com/eduherminio/FileParser/_apis/build/status/eduherminio.FileParser?branchName=main
-[azuredevopslink]: https://dev.azure.com/eduherminio/FileParser/_build/latest?definitionId=1&branchName=main
 [nugetlogo]: https://img.shields.io/nuget/v/FileParser.svg?style=flat-square&label=nuget
 [nugetlink]: https://www.nuget.org/packages/FileParser
 [apimundologo]: https://img.shields.io/badge/FileParser%20API-Apimundo-728199.svg

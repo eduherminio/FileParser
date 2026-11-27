@@ -109,7 +109,7 @@ public class ParsedLine : Queue<string>, IParsedLine
         }
         else if (typeof(T) == typeof(char))
         {
-            if (this.Any())
+            if (this.Count != 0)
             {
                 throw new NotSupportedException("Extract<char> can only be used with one-string lines (one-length Queues)");
             }
