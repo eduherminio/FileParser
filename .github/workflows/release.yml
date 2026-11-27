@@ -33,6 +33,7 @@ on:
         default: true
         required: false
 
+
 jobs:
   release:
     if: github.actor == 'eduherminio'
@@ -40,6 +41,7 @@ jobs:
 
     permissions:
       id-token: write
+      packages: write
 
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
